@@ -7,8 +7,6 @@ import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import com.google.gson.Gson;
-
 /**
  * Class Name:      Exam
  * Table Name:      ExamTable

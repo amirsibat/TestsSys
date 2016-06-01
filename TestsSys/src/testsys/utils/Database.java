@@ -21,8 +21,6 @@ public class Database {
 
     private static Database INSTANCE;
     private BasicDataSource mBasicDataSource;
-    private Connection mConnection;
-
     /**
      * @throws NamingException 
      * @throws Exception failed to initial data source context
