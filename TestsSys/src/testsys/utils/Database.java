@@ -1,6 +1,7 @@
 package testsys.utils;
 
 import java.sql.Connection;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -11,7 +12,7 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
-import org.apache.tomcat.dbcp.dbcp.BasicDataSource;
+import org.apache.commons.dbcp.BasicDataSource;
 
 import testsys.constants.AppConstants;
 
