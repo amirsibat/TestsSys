@@ -1,7 +1,7 @@
 package testsys.utils;
 
 import java.sql.Connection;
-
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -13,6 +13,8 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
 import org.apache.commons.dbcp.BasicDataSource;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import testsys.constants.AppConstants;
 
@@ -56,6 +58,39 @@ public class Database {
         connection.close();
         return objectListToReturn;
     }
+    
+    public JSONArray executeListQueryAsJSON(String statementString, String[] columnNames, String[] columnTypes, Object... params) throws Exception {
+    	JSONArray objectListToReturn = new JSONArray();
+        Connection connection = mBasicDataSource.getConnection();
+        PreparedStatement statement = connection.prepareStatement(statementString);
+        for (int i = 0; i < params.length; i++) {
+            statement.setObject(i, params[i]);
+        }
+        ResultSet resultSet = statement.executeQuery();
+        while (resultSet.next()) {
+            JSONObject tempObject = new JSONObject();
+            for (int i = 0; i < columnNames.length; i++) {
+				switch (columnTypes[i]) {
+				case "TEXT":
+					tempObject.put(columnNames[i], (String) resultSet.getObject(columnNames[i]));
+					break;
+				case "INTEGER":
+					tempObject.put(columnNames[i], (Integer) resultSet.getObject(columnNames[i]));
+					break;
+				case "DATE":
+					tempObject.put(columnNames[i], (Date) resultSet.getObject(columnNames[i]));
+					break;
+				default:
+					break;
+				}
+                
+            }
+            objectListToReturn.put(tempObject);
+        }
+        statement.close();
+        connection.close();
+        return objectListToReturn;
+    }
 
     public HashMap<String, Object> executeSingleQuery(String statementString, String[] columnNames, Object... params) throws Exception {
         HashMap<String, Object> objectToReturn = null;
@@ -75,6 +110,39 @@ public class Database {
         connection.close();
         return objectToReturn;
     }
+    
+    public JSONObject executeSingleQueryAsJSON(String statementString, String[] columnNames,String[] columnTypes, Object... params) throws Exception {
+        JSONObject objectToReturn = null;
+        Connection connection = mBasicDataSource.getConnection();
+        PreparedStatement statement = connection.prepareStatement(statementString);
+        for (int i = 0; i < params.length; i++) {
+            statement.setObject(i, params[i]);
+        }
+        ResultSet resultSet = statement.executeQuery();
+        if (resultSet.next()) {
+            objectToReturn = new JSONObject();
+            for (int i = 0; i < columnNames.length; i++) {
+            	switch (columnTypes[i]) {
+				case "TEXT":
+					objectToReturn.put(columnNames[i], (String) resultSet.getObject(columnNames[i]));
+					break;
+				case "INTEGER":
+					objectToReturn.put(columnNames[i], (Integer) resultSet.getObject(columnNames[i]));
+					break;
+				case "DATE":
+					objectToReturn.put(columnNames[i], (Date) resultSet.getObject(columnNames[i]));
+					break;
+				default:
+					break;
+				}
+                
+            }
+        }
+        statement.close();
+        connection.close();
+        return objectToReturn;
+    }
+    
 
     public Boolean executeUpdate(String statementString, Object... params) throws Exception {
         Connection connection = mBasicDataSource.getConnection();

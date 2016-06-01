@@ -43,4 +43,8 @@ public class SqlColumns {
             PROFESSION_ID,
             PROFESSION_NAME
     };
+    public static final String[] PROFESSION_ALL_COLUMNS_TYPES = {
+            "TEXT",
+            "TEXT"
+    };
 }

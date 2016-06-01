@@ -1,11 +1,11 @@
 package testsys.models;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import testsys.utils.Database;
 import testsys.utils.SqlColumns;
@@ -66,6 +66,11 @@ public class Profession {
 		return profession;
 	}
 
+	public static JSONObject getProfessionByProfessionIdAsJSON(String professionId) throws Exception {
+		return Database.getInstance().executeSingleQueryAsJSON(SqlStatements.PROFESSION_GET_PROFESSION_BY_PROFESSION_ID,
+				SqlColumns.PROFESSION_ALL_COLUMNS, SqlColumns.PROFESSION_ALL_COLUMNS_TYPES, professionId);
+	}
+
 	/**
 	 * Fetch all Courses from the database where professionColumn equals to this
 	 * profession Id
@@ -79,21 +84,18 @@ public class Profession {
 
 		List<HashMap<String, Object>> results = Database.getInstance().executeListQuery(
 				SqlStatements.COURSE_GET_PROFESSION_COURSES, SqlColumns.PROFESSION_ALL_COLUMNS, this.mId);
-
-		Database database = Database.getInstance();
-		Connection connection = database.getConnection();
-		PreparedStatement statement = connection.prepareStatement(SqlStatements.COURSE_GET_PROFESSION_COURSES);
-		statement.setString(0, this.mId);
-		ResultSet resultSet = statement.executeQuery();
-		if (resultSet.next()) {
-			String id = resultSet.getString(SqlColumns.COURSE_ID);
-			String name = resultSet.getString(SqlColumns.COURSE_NAME);
-			String teacherId = resultSet.getString(SqlColumns.COURSE_TEACHER_ID);
-			String professionId = resultSet.getString(SqlColumns.COURSE_PROFESSION_ID);
+		for (int i = 0; i < results.size(); i++) {
+			String id = (String) results.get(i).get(SqlColumns.COURSE_ID);
+			String name = (String) results.get(i).get(SqlColumns.COURSE_NAME);
+			String teacherId = (String) results.get(i).get(SqlColumns.COURSE_TEACHER_ID);
+			String professionId = (String) results.get(i).get(SqlColumns.COURSE_PROFESSION_ID);
 			courseList.add(new Course(id, name, teacherId, professionId));
 		}
-		statement.close();
-		connection.close();
 		return courseList;
+	}
+
+	public JSONArray getCoursesListAsJSON() throws Exception {
+		return Database.getInstance().executeListQueryAsJSON(SqlStatements.COURSE_GET_PROFESSION_COURSES,
+				SqlColumns.PROFESSION_ALL_COLUMNS, SqlColumns.PROFESSION_ALL_COLUMNS_TYPES, this.mId);
 	}
 }
