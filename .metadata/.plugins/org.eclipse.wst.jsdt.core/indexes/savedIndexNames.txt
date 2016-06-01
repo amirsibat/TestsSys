@@ -1,7 +1,6 @@
-INDEX VERSION 1.3+C:\Users\Amir\workspace\TestsSys\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
-3689446512.index
-2476127772.index
-3474717409.index
-2152087306.index
-1523212972.index
-823660546.index
+INDEX VERSION 1.3+/Users/david/TestsSys/.metadata/.plugins/org.eclipse.wst.jsdt.core/indexes
+476340870.index
+3708233423.index
+3001181606.index
+730404791.index
+314999648.index
