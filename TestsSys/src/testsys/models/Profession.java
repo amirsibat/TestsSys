@@ -77,7 +77,7 @@ public class Profession {
 	public List<Course> getCoursesList() throws Exception {
 		List<Course> courseList = new ArrayList<>();
 
-		HashMap<String, Object> results = Database.getInstance().executeListQuery(
+		List<HashMap<String, Object>> results = Database.getInstance().executeListQuery(
 				SqlStatements.COURSE_GET_PROFESSION_COURSES, SqlColumns.PROFESSION_ALL_COLUMNS, this.mId);
 
 		Database database = Database.getInstance();

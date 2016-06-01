@@ -9,6 +9,9 @@ import java.util.List;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
+import javax.naming.NamingException;
+
+import org.apache.tomcat.dbcp.dbcp.BasicDataSource;
 
 import testsys.constants.AppConstants;
 
@@ -20,15 +23,16 @@ public class Database {
     private Connection mConnection;
 
     /**
+     * @throws NamingException 
      * @throws Exception failed to initial data source context
      */
-    public Database() {
+    public Database() throws NamingException {
         Context context = new InitialContext();
         mBasicDataSource = (BasicDataSource) context.lookup(AppConstants.DB_DATASOURCE);
 
     }
 
-    public static Database getInstance() {
+    public static Database getInstance() throws NamingException {
         if (INSTANCE == null)
             INSTANCE = new Database();
         return INSTANCE;
