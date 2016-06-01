@@ -37,7 +37,8 @@
   <!-- parameters (default values are in square brackets):                  -->
   <!--                                                                      -->
   <!--   debug               Debugging detail level for messages logged     -->
-  <!--                       by this servlet.  [0]                          -->
+  <!--                       by this servlet. Useful values are 0, 1, and   -->
+  <!--                       11 where higher values mean more detail. [0]   -->
   <!--                                                                      -->
   <!--   fileEncoding        Encoding to be used to read static resources   -->
   <!--                       [platform default]                             -->
@@ -93,8 +94,6 @@
   <!--   showServerInfo      Should server information be presented in the  -->
   <!--                       response sent to clients when directory        -->
   <!--                       listings is enabled? [true]                    -->
-  
-		
 
     <servlet>
         <servlet-name>default</servlet-name>
@@ -229,6 +228,11 @@
   <!--                                                                      -->
   <!--   xpoweredBy          Determines whether X-Powered-By response       -->
   <!--                       header is added by generated servlet.  [false] -->
+  <!--                                                                      -->
+  <!--   quoteAttributeEL    When EL is used in an attribute value on a     -->
+  <!--                       JSP page should the rules for quoting of       -->
+  <!--                       attributes described in JSP.1.6 be applied to  -->
+  <!--                       the expression? [true]                         -->
 
     <servlet>
         <servlet-name>jsp</servlet-name>
@@ -318,7 +322,21 @@
   <!--                        Recommended value: WEB-INF/cgi                -->
   <!--                                                                      -->
   <!--   debug                Debugging detail level for messages logged    -->
-  <!--                        by this servlet.  [0]                         -->
+  <!--                        by this servlet. Useful values range from 0   -->
+  <!--                        to 5 where 0 means no logging and 5 means     -->
+  <!--                        maximum logging. Values of 10 or more mean    -->
+  <!--                        maximum logging plus debug info added to the  -->
+  <!--                        HTTP response. If an error occurs and debug   -->
+  <!--                        is 10 or more the standard error page         -->
+  <!--                        mechanism will be disabled and a response     -->
+  <!--                        body with debug information will be produced. -->
+  <!--                        Note that any value of 10 or more has the     -->
+  <!--                        same effect as a value of 10. If set to 10 or -->
+  <!--                        more the standard error page mechanism will   -->
+  <!--                        be disabled and a debug page shown instead.   -->
+  <!--                        The debug page is not considered secure and   -->
+  <!--                        should not be enabled for production systems. -->
+  <!--                        [0]                                           -->
   <!--                                                                      -->
   <!--   executable           Name of the executable used to run the        -->
   <!--                        script. [perl]                                -->
@@ -334,7 +352,7 @@
   <!--                        reading of stderr to complete before          -->
   <!--                        terminating the CGI process. [2000]           -->
 
-  <!--
+<!--
     <servlet>
         <servlet-name>cgi</servlet-name>
         <servlet-class>org.apache.catalina.servlets.CGIServlet</servlet-class>
@@ -346,17 +364,10 @@
           <param-name>cgiPathPrefix</param-name>
           <param-value>WEB-INF/cgi</param-value>
         </init-param>
-        <init-param>
-          <param-name>executable</param-name>
-          <param-value>C:\Python27\python.exe</param-value>
-        </init-param>
-        <init-param>
-          <param-name>passShellEnvironment</param-name>
-          <param-value>true</param-value>
-        </init-param>
          <load-on-startup>5</load-on-startup>
-    </servlet> 
+    </servlet>
 -->
+
 
   <!-- ================ Built In Servlet Mappings ========================= -->
 
