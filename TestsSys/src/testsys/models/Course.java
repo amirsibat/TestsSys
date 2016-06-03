@@ -153,4 +153,6 @@ public class Course {
     public List<Record> getRecordsList() throws Exception {
         return Record.getRecordsByCourseId(this.mId);
     }
+    
+   
 }

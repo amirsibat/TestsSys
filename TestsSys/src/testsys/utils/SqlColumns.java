@@ -18,20 +18,19 @@ public class SqlColumns {
     };
 
 
-
-
-
     /**
      * QuestionTable column keys
-     * TEXT ID, TEXT QuestionText,INTEGER CorrectAnswer, TEXT TeacherID, TEXT CourseID, TEXT QuestionOptions
      */
     public static final String QUESTION_ID = "ID";
     public static final String QUESTION_QUESTION_TEXT = "QuestionText";
     public static final String QUESTION_CORRECT_ANSWER = "CorrectAnswer";
     public static final String QUESTION_TEACHER_ID = "TeacherID";
-    public static final String QUESTION_COURSE_ID = "CourseID";
-    public static final String QUESTION_QUESTION_OPTIONS = "QuestionOptions";
-
+    public static final String QUESTION_PROFESSION_ID = "CourseID";
+    public static final String QUESTION_QUESTION_OPTIONS1 = "QuestionOptions1";
+    public static final String QUESTION_QUESTION_OPTIONS2 = "QuestionOptions2";
+    public static final String QUESTION_QUESTION_OPTIONS3 = "QuestionOptions3";
+    public static final String QUESTION_QUESTION_OPTIONS4 = "QuestionOptions4";
+    public static final String QUESTION_COURSES_LIST = "CoursesList";
 
     /**
      * Profession column keys
@@ -47,4 +46,20 @@ public class SqlColumns {
             "TEXT",
             "TEXT"
     };
+    
+    
+    /**
+     * Exam column kets
+     */
+    public static final String EXAM_ID = "ID";
+    public static final String EXAM_TEACHER_ID = "TeacherID";
+    public static final String EXAM_DESCRIPTION = "Description";
+    public static final String EXAM_DESCRIPTION_TEACHER = "DescriptionTeacher";
+    public static final String EXAM_DATE_ADDED = "DateAdded";
+    public static final String EXAM_DURATION = "Duration";
+    public static final String EXAM_QUESTIONS_LIST = "QuestionsList";
+    public static final String EXAM_COURSE_ID = "CourseID";
+    public static final String EXAM_PROFESSION_ID = "ProfessionID";
+    public static final String EXAM_STATUS = "Status";    
+    
 }
