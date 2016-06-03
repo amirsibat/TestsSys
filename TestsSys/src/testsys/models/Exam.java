@@ -16,7 +16,7 @@ import testsys.utils.SqlStatements;
  * QuestionsList
  */
 public class Exam {
-	// sdd
+	
 	public enum ExamStatus{NEW, USED}
 	
 	public String mId;

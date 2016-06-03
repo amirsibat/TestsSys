@@ -1,3 +1,11 @@
 .recommenders/
 .metadata/
 
+RemoteSystemsTempFiles/
+Servers/
+TestsSys/TestsSys/.settings/
+TestsSys/TestsSys/build/classes/testsys/models/QuestionsGrade.class
+TestsSys/TestsSys/build/
+TestsSys/TestsSys/.classpath
+TestsSys/TestsSys/.project
+TestsSys/build/
