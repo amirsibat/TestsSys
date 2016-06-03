@@ -106,6 +106,13 @@ public class Exam {
 		mStatus = ExamStatus.values()[statusInt];
 	}
 
+	
+	public boolean createExam(String id, Teacher author, String description, String descriptionTeacher, Date date, Integer duration,
+			String questionsList, String courseId, String professionId, int statusInt){
+		
+		return false;
+	}
+	
 	/**
 	 * Insert exam instance as new exam in the database
 	 *

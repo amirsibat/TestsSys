@@ -87,9 +87,8 @@ public class Profession {
 		for (int i = 0; i < results.size(); i++) {
 			String id = (String) results.get(i).get(SqlColumns.COURSE_ID);
 			String name = (String) results.get(i).get(SqlColumns.COURSE_NAME);
-			String teacherId = (String) results.get(i).get(SqlColumns.COURSE_TEACHER_ID);
 			String professionId = (String) results.get(i).get(SqlColumns.COURSE_PROFESSION_ID);
-			courseList.add(new Course(id, name, teacherId, professionId));
+			courseList.add(new Course(id, name, professionId));
 		}
 		return courseList;
 	}

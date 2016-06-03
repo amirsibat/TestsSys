@@ -2,19 +2,58 @@ package testsys.utils;
 
 public class SqlColumns {
 
+	
+	/**
+	 * UserTable columns keys
+	 */
+	public static final String USER_ID = "ID";
+	public static final String USER_USERNAME = "Username";
+	public static final String USER_PASSWORD = "Password";
+	public static final String USER_FIRST_NAME = "FirstName";
+	public static final String USER_LAST_NAME = "LastName";
+	public static final String USER_DESCRIPTION = "Description";
+	public static final String USER_COURSES = "Courses";
+	public static final String USER_TYPE = "UserType";
+	public static final String[] USER_ALL_COLUMNS = {
+			USER_ID,
+			USER_USERNAME,
+			USER_PASSWORD,
+			USER_FIRST_NAME,
+			USER_LAST_NAME,
+			USER_DESCRIPTION,
+			USER_COURSES,
+			USER_TYPE
+    };
+	public static final String[] USER_ALL_COLUMNS_TYPES = {
+            "TEXT",
+            "TEXT",
+            "TEXT",
+            "TEXT",
+            "TEXT",
+            "TEXT",
+            "TEXT",
+            "INTEGER"
+    };
+	
+	
+	
+	
     /**
      * CourseTable column keys
      * TEXT ID, TEXT Name,TEXT TeacherID, TEXT ProfessionID
      */
     public static final String COURSE_ID = "ID";
     public static final String COURSE_NAME = "Name";
-    public static final String COURSE_TEACHER_ID = "TeacherID";
     public static final String COURSE_PROFESSION_ID = "ProfessionID";
     public static final String[] COURSE_ALL_COLUMNS = {
             COURSE_ID,
             COURSE_NAME,
-            COURSE_TEACHER_ID,
-            COURSE_PROFESSION_ID,
+            COURSE_PROFESSION_ID
+    };
+    public static final String[] COURSE_ALL_COLUMNS_TYPES = {
+            "TEXT",
+            "TEXT",
+            "TEXT"
     };
 
 
@@ -31,6 +70,32 @@ public class SqlColumns {
     public static final String QUESTION_QUESTION_OPTIONS3 = "QuestionOptions3";
     public static final String QUESTION_QUESTION_OPTIONS4 = "QuestionOptions4";
     public static final String QUESTION_COURSES_LIST = "CoursesList";
+    public static final String[] QUESTION_ALL_COLUMNS = {
+    		QUESTION_ID,
+    		QUESTION_QUESTION_TEXT,
+    		QUESTION_CORRECT_ANSWER,
+    		QUESTION_TEACHER_ID,
+    		QUESTION_PROFESSION_ID,
+    		QUESTION_QUESTION_OPTIONS1,
+    		QUESTION_QUESTION_OPTIONS2,
+    		QUESTION_QUESTION_OPTIONS3,
+    		QUESTION_QUESTION_OPTIONS4,
+    		QUESTION_COURSES_LIST
+    };
+    public static final String[] QUESTION_ALL_COLUMNS_TYPES = {
+            "TEXT",
+            "TEXT",
+            "INETEGER",
+            "TEXT",
+            "TEXT",
+            "TEXT",
+            "TEXT",
+            "TEXT",
+            "TEXT",
+            "TEXT",
+    };
+    
+    
 
     /**
      * Profession column keys
@@ -49,7 +114,7 @@ public class SqlColumns {
     
     
     /**
-     * Exam column kets
+     * Exam column keys
      */
     public static final String EXAM_ID = "ID";
     public static final String EXAM_TEACHER_ID = "TeacherID";
@@ -61,5 +126,27 @@ public class SqlColumns {
     public static final String EXAM_COURSE_ID = "CourseID";
     public static final String EXAM_PROFESSION_ID = "ProfessionID";
     public static final String EXAM_STATUS = "Status";    
-    
+    public static final String[] EXAM_ALL_COLUMNS = {
+    		EXAM_ID,
+    		EXAM_TEACHER_ID,
+    		EXAM_DESCRIPTION,
+    		EXAM_DESCRIPTION_TEACHER,
+    		EXAM_DATE_ADDED,
+    		EXAM_DURATION,
+    		EXAM_QUESTIONS_LIST,
+    		EXAM_COURSE_ID,
+    		EXAM_PROFESSION_ID,
+    		EXAM_STATUS
+    };
+    public static final String[] EXAM_ALL_COLUMNS_TYPES = {
+            "TEXT",
+            "TEXT",
+            "TEXT",
+            "TEXT",
+            "DATE",
+            "INTEGER",
+            "TEXT",
+            "TEXT",
+            "INTEGER"
+    };
 }

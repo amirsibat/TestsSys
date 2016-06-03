@@ -17,7 +17,6 @@ public class Course {
 
     private String mId;
     private String mName;
-    private Teacher mTeacher;
     private Profession mProfession;
 
     /**
@@ -34,10 +33,9 @@ public class Course {
      * @param teacherId Course's teacher owner.
      * @throws Exception exception if failed to get profession instance
      */
-    public Course(String id, String name, String teacherId, String professionId) throws Exception {
+    public Course(String id, String name, String professionId) throws Exception {
         this.mId = id;
         this.mName = name;
-        this.mTeacher = Teacher.getTeacherByTeacherId(teacherId);
         this.mProfession = Profession.getProfessionByProfessionId(professionId);
     }
 
@@ -57,13 +55,6 @@ public class Course {
         mName = name;
     }
 
-    public Teacher getTeacher() {
-        return mTeacher;
-    }
-
-    public void setTeacher(Teacher teacher) {
-        mTeacher = teacher;
-    }
 
     /**
      * Insert course instance as new course in the database
@@ -74,7 +65,6 @@ public class Course {
         Database.getInstance().executeUpdate(SqlStatements.COURSE_INSERT_NEW_COURSE,
                 mId,
                 mName,
-                mTeacher.getId(),
                 mProfession.getId());
     }
 
@@ -86,7 +76,6 @@ public class Course {
     public void update() throws Exception {
         Database.getInstance().executeUpdate(SqlStatements.COURSE_UPDATE_EXISTING_COURSE,
                 mName,
-                mTeacher.getId(),
                 mProfession.getId()
                 ,mId);
     }
@@ -117,9 +106,7 @@ public class Course {
         if(results != null){
             String id = (String) results.get(SqlColumns.COURSE_ID);
             String name = (String) results.get(SqlColumns.COURSE_NAME);
-            String teacherId = (String) results.get(SqlColumns.COURSE_TEACHER_ID);
             String professionId = (String) results.get(SqlColumns.COURSE_PROFESSION_ID);
-            course = new Course(id, name, teacherId, professionId);
         }
         return course;
     }

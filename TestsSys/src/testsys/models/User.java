@@ -4,14 +4,14 @@ import java.util.List;
 
 public class User {
     public enum Type{MANAGER,TEACHER,STUDENT}
-    private String id;
-    private String username;
-    private String firstName;
-    private String lastName;
-    private String description;
-    private String picture;
-    private List<String> courses;
-    private Type type;
+    public String id;
+    public String username;
+    public String firstName;
+    public String lastName;
+    public String description;
+    public String picture;
+    public List<String> courses;
+    public Type type;
 
     /**
      * User Constructor
@@ -34,65 +34,5 @@ public class User {
         this.courses = courses;
         this.type = type;
     }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getPicture() {
-        return picture;
-    }
-
-    public void setPicture(String picture) {
-        this.picture = picture;
-    }
-
-    public List<String> getCourses() {
-        return courses;
-    }
-
-    public void setCourses(List<String> courses) {
-        this.courses = courses;
-    }
-
-    public Type getType() {
-        return type;
-    }
-
+    
 }
