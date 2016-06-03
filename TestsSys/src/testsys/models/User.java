@@ -14,6 +14,8 @@ public class User {
     public Type type;
 
     /**
+     * dsds
+     * sdsd
      * User Constructor
      * @param id
      * @param username login credential
