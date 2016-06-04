@@ -14,7 +14,7 @@ import testsys.utils.SqlStatements;
  * Table Columns:   TEXT ID, TEXT Name,TEXT TeacherID, TEXT ProfessionID
  */
 public class Course {
-	//amir test zzzzzzz
+	
     private String mId;
     private String mName;
     private Profession mProfession;

@@ -35,4 +35,17 @@ public class User {
         this.type = type;
     }
     
+	/**
+	 * @param Username user name
+	 * @return User user if exist, null otherwise
+	 * @throws SQLException SQL syntax error,NullPointer,...
+	 * @throws NamingException if constants name are not valid.
+	 **/
+    public User isUserExist(String Username){
+   
+    User tempUser=null;
+    
+    
+    return tempUser;
+    }
 }
