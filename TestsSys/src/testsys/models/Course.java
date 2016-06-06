@@ -1,8 +1,10 @@
 package testsys.models;
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 import testsys.utils.Database;
 import testsys.utils.SqlColumns;
@@ -14,7 +16,7 @@ import testsys.utils.SqlStatements;
  * Table Columns:   TEXT ID, TEXT Name,TEXT TeacherID, TEXT ProfessionID
  */
 public class Course {
-	
+
     public String mId;
     public String mName;
     public Profession mProfession;
@@ -22,14 +24,15 @@ public class Course {
     /**
      * Default Constructor
      */
-    public Course(){
+    public Course() {
 
     }
+
     /**
      * Course Constructor
      *
-     * @param id      Course id
-     * @param name    Course name
+     * @param id        Course id
+     * @param name      Course name
      * @param teacherId Course's teacher owner.
      * @throws Exception exception if failed to get profession instance
      */
@@ -61,7 +64,7 @@ public class Course {
         Database.getInstance().executeUpdate(SqlStatements.COURSE_UPDATE_EXISTING_COURSE,
                 mName,
                 mProfession.mId
-                ,mId);
+                , mId);
     }
 
     /**
@@ -82,17 +85,9 @@ public class Course {
      */
     public static Course getCourseByCourseId(String courseId) throws Exception {
 
-
-        HashMap<String, Object> results = Database.getInstance().executeSingleQuery(
+        return hashMapToObject(Database.getInstance().executeSingleQuery(
                 SqlStatements.COURSE_GET_COURSE_BY_ID,
-                SqlColumns.COURSE_ALL_COLUMNS, courseId);
-        Course course = null;
-        if(results != null){
-            String id = (String) results.get(SqlColumns.COURSE_ID);
-            String name = (String) results.get(SqlColumns.COURSE_NAME);
-            String professionId = (String) results.get(SqlColumns.COURSE_PROFESSION_ID);
-        }
-        return course;
+                SqlColumns.COURSE_ALL_COLUMNS, courseId));
     }
 
     /**
@@ -124,6 +119,22 @@ public class Course {
     public List<Record> getRecordsList() throws Exception {
         return Record.getRecordsByCourseId(this.mId);
     }
-    
-   
+
+
+    public static List<Course> getCoursesByProfessionId(String professionId) {
+        List<HashMap<String, Object>> results = Database.getInstance().executeListQuery(SqlStatements.COURSE_GET_PROFESSION_COURSES, SqlColumns.COURSE_ALL_COLUMNS, professionId);
+        List<Course> courseList = new ArrayList<>();
+        for (int i = 0; i < results.size(); i++) {
+            courseList.add(hashMapToObject(results.get(i)));
+        }
+        return courseList;
+    }
+
+
+    public static Course hashMapToObject(HashMap<String, Objects> hashMapProfession) throws Exception {
+        String id = (String) results.get(SqlColumns.COURSE_ID);
+        String name = (String) results.get(SqlColumns.COURSE_NAME);
+        String professionId = (String) results.get(SqlColumns.COURSE_PROFESSION_ID);
+        return new Course(id, name, professionId);
+    }
 }
