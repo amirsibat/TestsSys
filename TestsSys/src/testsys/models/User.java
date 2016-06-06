@@ -1,6 +1,9 @@
 package testsys.models;
 
+import testsys.utils.Database;
+import testsys.utils.L;
 import testsys.utils.SqlColumns;
+import testsys.utils.SqlStatements;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -72,11 +75,13 @@ public class User {
      * @throws SQLException    SQL syntax error,NullPointer,...
      * @throws NamingException if constants name are not valid.
      **/
-    public static User isUserExist(String Username, String Password) {
-        // TODO DAVID
-        User tempUser = null;
-
-        return tempUser;
+    public static User isUserExist(String username, String password) {
+    	try{
+    		return hashMapToObject(Database.getInstance().executeSingleQuery(SqlStatements.USER_LOGIN, SqlColumns.USER_ALL_COLUMNS, username, password));
+    	}catch(Exception e){
+    		L.err(e);
+    		return null;
+    	}
     }
 
 
