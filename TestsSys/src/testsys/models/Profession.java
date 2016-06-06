@@ -50,7 +50,7 @@ public class Profession {
      * Fetch all Courses from the database where professionColumn equals to this
      * profession Id
      *
-     * @return profession associated courses list, else empty list
+     * @return profession associated mCourses list, else empty list
      * @throws Exception failed to execute SQL query
      */
     public List<Course> getCoursesList() throws Exception {

@@ -2,9 +2,15 @@ package testsys.models;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.json.JSONObject;
+import testsys.utils.Database;
+import testsys.utils.SqlColumns;
+import testsys.utils.SqlStatements;
+
+import javax.xml.crypto.Data;
 
 /**
  * Class Name:      Record
@@ -21,7 +27,8 @@ public class Record {
     /**
      * Default Constructor
      */
-    public Record(){}
+    public Record() {
+    }
 
     /**
      * Record Constructor
@@ -40,21 +47,19 @@ public class Record {
         mExtraData = extraData;
     }
 
-    /**
-     * Record Constructor
-     *
-     * @param id        record id
-     * @param student   associated student object
-     * @param course    associated course object
-     * @param exam      associated exam object
-     * @param extraData json string contains exam and questions grade
-     * @throws Exception failed to parse extraData to JSONObject
-     */
     public Record(String id, Student student, Course course, Exam exam, String extraData) throws Exception {
         mId = id;
         mStudent = student;
         mCourse = course;
         mExam = exam;
+        mExtraData = new JSONObject(extraData);
+    }
+
+    public Record(String id, String studentId, String courseId, String examId, String extraData) throws Exception {
+        mId = id;
+        mStudent = (Student) User.getUserByUserId(studentId);
+        mCourse = Course.getCourseByCourseId(courseId);
+        mExam = Exam.getExamByExamId(examId);
         mExtraData = new JSONObject(extraData);
     }
 
@@ -137,7 +142,12 @@ public class Record {
      * @throws Exception failed to execute SQL query
      */
     public static List<Record> getRecordsByStudentId(String studentId) throws Exception {
-        return new ArrayList<>();
+        List<Record> recordList = new ArrayList<>();
+        List<HashMap<String, Object>> objectsList = Database.getInstance().executeListQuery(SqlStatements.RECORD_GET_RECORDS_BY_STUDENT_ID, SqlColumns.RECORD_ALL_COLUMNS, studentId);
+        for (int i = 0; i < objectsList.size(); i++) {
+            recordList.add(hashMapToObject(objectsList.get(i)));
+        }
+        return recordList;
     }
 
     /**
@@ -149,6 +159,17 @@ public class Record {
      */
     public static List<Record> getRecordsByCourseId(String courseId) throws Exception {
         return new ArrayList<>();
+    }
+
+
+    public static Record hashMapToObject(HashMap<String, Object> objectHashMap) throws Exception {
+        String id = (String) objectHashMap.get(SqlColumns.RECORD_ID);
+        String student = (String) objectHashMap.get(SqlColumns.RECORD_STUDENT_ID);
+        String course = (String) objectHashMap.get(SqlColumns.RECORD_COURSE_ID);
+        String exam = (String) objectHashMap.get(SqlColumns.RECORD_EXAM_ID);
+        String extraData = (String) objectHashMap.get(SqlColumns.RECORD_EXTRA_DATA);
+
+        return new Record(id, student, course, exam, extraData);
     }
 
 }

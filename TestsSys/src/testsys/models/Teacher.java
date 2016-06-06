@@ -17,8 +17,8 @@ public class Teacher extends User {
      * @param description personal details
      * @param courses     list of course ids separated by commas in the DB
      */
-    public Teacher(String id, String username, String firstName, String lastName, String description, List<String> courses, Type type) {
-        super(id, username, firstName, lastName, description, courses, Type.TEACHER);
+    public Teacher(String id, String username, String firstName, String lastName, String description, List<String> courses) throws Exception{
+        super(id, username, firstName, lastName, description, courses, Type.TEACHER.ordinal());
     }
 
     public static Teacher getTeacherByTeacherId(String teacherId) {

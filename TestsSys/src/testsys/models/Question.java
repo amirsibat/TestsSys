@@ -46,7 +46,7 @@ public class Question {
 	 * @param options
 	 *            Array contains list of answers text maintain order
 	 * @param courses
-	 *            Array contains list of courses maintain order
+	 *            Array contains list of mCourses maintain order
 	 */
 	public Question(String id, String text, Integer correctAnswer, Teacher author, Profession profession,
 			String options1, String options2, String options3, String options4, List<Course> courses) {
@@ -78,7 +78,7 @@ public class Question {
 	 *            Array Text separated by commas contains list of answers text
 	 *            maintain order
 	 * @param coursesAsString
-	 *            Array Text separated by commas contains list of courses
+	 *            Array Text separated by commas contains list of mCourses
 	 * @throws Exception
 	 *             failed to retrieve course by courseId, or invalid optionsList
 	 */

@@ -1,5 +1,11 @@
 package testsys.models;
 
+import testsys.utils.Database;
+import testsys.utils.SqlColumns;
+import testsys.utils.SqlStatements;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -17,8 +23,8 @@ public class Student extends User {
      * @param description personal details
      * @param courses     list of course ids separated by commas in the DB
      */
-    public Student(String id, String username, String firstName, String lastName, String description, List<String> courses) {
-        super(id, username, firstName, lastName, description, courses, Type.STUDENT);
+    public Student(String id, String username, String firstName, String lastName, String description, List<String> courses) throws Exception{
+        super(id, username, firstName, lastName, description, courses, Type.STUDENT.ordinal());
     }
 
     /**
@@ -29,6 +35,16 @@ public class Student extends User {
      * @throws Exception failed to execute SQL query
      */
     public static List<Student> getStudentsByCourseId(String courseId) throws Exception {
-        return null;
+        List<Student> studentList = new ArrayList<>();
+        List<HashMap<String, Object>> students = Database.getInstance().executeListQuery(SqlStatements.STUDENT_GET_STUDENTS_BY_COURSE_ID, SqlColumns.USER_ALL_COLUMNS, courseId);
+        for(int i=0; i<students.size(); i++){
+            studentList.add((Student) hashMapToObject(students.get(i)));
+        }
+        return studentList;
     }
+
+    public List<Record> getExams() throws Exception {
+        return Record.getRecordsByStudentId(this.mId);
+    }
+
 }

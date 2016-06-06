@@ -24,7 +24,6 @@ public class SqlStatements {
     public static final String RECORD_CREATE_TABLE = "CREATE TABLE " + RECORD_TABLE + "  (ID VARCHAR(10), StudentID VARCHAR(4), CourseID VARCHAR(2), ExamID VARCHAR(6), ExtraData VARCHAR(2000), PRIMARY KEY (ID))";
 
 
-
     /**
      * ProfessionTable Statements
      */
@@ -70,6 +69,9 @@ public class SqlStatements {
             + SqlColumns.USER_TYPE
             + ") VALUES(?,?,?,?,?,?,?,?)";
     public static final String USER_DELETE = "DELETE FROM " + USER_TABLE + " WHERE " + SqlColumns.USER_ID + "=?";
+
+    public static final String STUDENT_GET_STUDENTS_BY_COURSE_ID = "SELECT * FROM " + USER_TABLE + " WHERE "
+            + SqlColumns.USER_TYPE + "=? and " + SqlColumns.USER_COURSES + " LIKE '%?%'";
 
 
     /**
@@ -126,6 +128,6 @@ public class SqlStatements {
     /**
      * RecordTable Statements
      */
-
+    public static final String RECORD_GET_RECORDS_BY_STUDENT_ID = "SELECT * FROM " + RECORD_TABLE + " WHERE " + SqlColumns.RECORD_ID + "=?";
 
 }

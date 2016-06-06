@@ -110,6 +110,10 @@ public class Exam {
         }
     }
 
+    public static Exam getExamByExamId(String examId) throws Exception{
+        return HashMapToObject(Database.getInstance().executeSingleQuery(SqlStatements.EXAM_GET_EXAM_BY_EXAM_ID, SqlColumns.EXAM_ALL_COLUMNS, examId));
+    }
+
     /**
      * Insert exam instance as new exam in the database
      *
@@ -155,17 +159,6 @@ public class Exam {
             examsList.add(HashMapToObject(examsHash.get(i)));
         }
         return examsList;
-    }
-
-    /**
-     * Fetch exam from the database where ExamColumn equals to examId parameter
-     *
-     * @param examId
-     * @return Exam instance if found, else null
-     * @throws Exception failed to execute SQL query
-     */
-    public Exam getExamByExamId(String examId) throws Exception {
-        return HashMapToObject(Database.getInstance().executeSingleQuery(SqlStatements.EXAM_GET_EXAM_BY_EXAM_ID, SqlColumns.EXAM_ALL_COLUMNS, examId));
     }
 
     /**
