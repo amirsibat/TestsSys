@@ -9,7 +9,6 @@ public class User {
     public String mFirstName;
     public String mLastName;
     public String mDescription;
-    public String mPicture;
     public List<String> courses;
     public Type type;
 
@@ -24,13 +23,12 @@ public class User {
      * @param courses list of course ids separated by commas in the DB
      * @param type the type of the user
      */
-    public User(String id, String username, String firstName, String lastName, String description, String picture, List<String> courses, Type type) {
+    public User(String id, String username, String firstName, String lastName, String description, List<String> courses, Type type) {
         this.mId = id;
         this.mUsername = username;
         this.mFirstName = firstName;
         this.mLastName = lastName;
         this.mDescription = description;
-        this.mPicture = picture;
         this.courses = courses;
         this.type = type;
     }

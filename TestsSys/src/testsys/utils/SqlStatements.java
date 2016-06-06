@@ -1,20 +1,36 @@
 package testsys.utils;
 
 public class SqlStatements {
+	
+	/** 
+	 * Table names
+	 */
+	public static final String PROFESSION_TABLE = "ProfessionTable";
+	public static final String COURSE_TABLE = "CourseTable";
+	public static final String USER_TABLE = "UserTable";
+	public static final String QUESTION_TABLE = "QuestionTable";
+	public static final String EXAM_TABLE = "ExamTable";
+	
+
+	/**
+	 * Create Tables
+	 */
+	public static final String PROFESSION_CREATE_TABLE = "CREATE TABLE " + PROFESSION_TABLE + " (ID VARCHAR(2), Name VARCHAR(30))";
+	public static final String COURSE_CREATE_TABLE = "CREATE TABLE " + COURSE_TABLE + " (ID VARCHAR(2), Name VARCHAR(30), ProfessionID VARCHAR(2))";
+	public static final String USER_CREATE_TABLE = "CREATE TABLE " + USER_TABLE + " (ID VARCHAR(4), Username VARCHAR(30), Password VARCHAR(30), FirstName VARCHAR(30), LastName VARCHAR(30), Description VARCHAR(100), Courses VARCHAR(100), UserType INT)";
+	public static final String QUESTION_CREATE_TABLE = "CREATE TABLE " + QUESTION_TABLE + "  (ID VARCHAR(6), QuestionText VARCHAR(200), CorrectAnswer INT,  TeacherID VARCHAR(4), ProfessionID VARCHAR(2), QuestionOptions1 VARCHAR(200), QuestionOptions2  VARCHAR(200), QuestionOptions3 VARCHAR(200), QuestionOptions4 VARCHAR(200), CoursesList VARCHAR(100))";
 
     /**
      * UserTable
      */
-    public static final String USER_TABLE = "UserTable";
+    
     public static final String USER_LOGIN = "SELECT * FROM " + USER_TABLE + " WHERE " + SqlColumns.USER_USERNAME
             + "=? AND " + SqlColumns.USER_PASSWORD + "=?";
 
     /**
      * CourseTable Statements
      */
-    public static final String COURSE_TABLE = "CourseTable";
-    public static final String COURSE_CREATE_TABLE = "CREATE TABLE IF NOT EXIST '" + COURSE_TABLE
-            + "' (TEXT ID, TEXT Name,TEXT TeacherID, TEXT ProfessionID)";
+    
     public static final String COURSE_GET_COURSE_BY_ID = "SELECT * FROM " + COURSE_TABLE + " WHERE "
             + SqlColumns.COURSE_ID + " = ?";
     public static final String COURSE_GET_PROFESSION_COURSES = "SELECT * FROM " + COURSE_TABLE + " WHERE "
@@ -34,7 +50,7 @@ public class SqlStatements {
     /**
      * QuestionTable Statements
      */
-    public static final String QUESTION_TABLE = "QuestionTable";
+   
     public static final String QUESTION_GET_QUESTION_BY_QUESTION_ID = "SELECT * FROM " + QUESTION_TABLE + " WHERE "
             + SqlColumns.QUESTION_ID + " = ?";
     public static final String QUESTION_INSER_NEW_QUESTION = "INSERT INTO " + QUESTION_TABLE + " ("
@@ -52,14 +68,13 @@ public class SqlStatements {
     /**
      * ProfessionTable Statements
      */
-    public static final String PROFESSION_TABLE = "ProfessionTable";
     public static final String PROFESSION_GET_PROFESSION_BY_PROFESSION_ID = "SELECT * FROM " + PROFESSION_TABLE
             + " WHERE " + SqlColumns.PROFESSION_ID + " = ?";
 
     /**
      * ExamTable Statements
      */
-    public static final String EXAM_TABLE = "ExamTable";
+    
     public static final String EXAM_GET_EXAM_BY_EXAM_ID = "SELECT * FROM " + EXAM_TABLE + " WHERE " + SqlColumns.EXAM_ID + " = ?";
     public static final String EXAM_GET_ALL = "SELECT * FROM " + EXAM_TABLE;
     public static final String EXAM_GET_EXAM_IDS = "SELECT ID FROM " + EXAM_TABLE;
