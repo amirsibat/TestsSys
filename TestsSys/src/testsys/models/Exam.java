@@ -136,7 +136,7 @@ public class Exam {
      * @throws Exception failed to execute SQL query
      */
     public void delete() throws Exception {
-        Database.getInstance().executeUpdate(SqlStatements.EXAM_DELETE_STATEMENT, mId);
+        Database.getInstance().executeUpdate(SqlStatements.EXAM_DELETE, mId);
     }
 
 

@@ -3,7 +3,6 @@ package testsys.utils;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-import javax.naming.NamingException;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -33,7 +32,9 @@ public class ServletsListener implements ServletContextListener {
 			createTable(SqlStatements.PROFESSION_CREATE_TABLE, SqlStatements.PROFESSION_TABLE);
 			createTable(SqlStatements.COURSE_CREATE_TABLE, SqlStatements.COURSE_TABLE);
 			createTable(SqlStatements.USER_CREATE_TABLE, SqlStatements.USER_TABLE);
-			createTable(SqlStatements.QUESTION_CREATE_TABLE, SqlStatements.QUESTION_TABLE);
+			createTable(SqlStatements.EXAM_CREATE_TABLE, SqlStatements.QUESTION_TABLE);
+			createTable(SqlStatements.QUESTION_CREATE_TABLE, SqlStatements.EXAM_TABLE);
+			createTable(SqlStatements.RECORD_CREATE_TABLE, SqlStatements.RECORD_TABLE);
 
 
 			createDummyData();
@@ -70,9 +71,12 @@ public class ServletsListener implements ServletContextListener {
 
 	public void dropTables(){
 		dropTable("DROP TABLE " + SqlStatements.PROFESSION_TABLE, "PROFESSION_TABLE");
-        dropTable("DROP TABLE " + SqlStatements.COURSE_TABLE, "COURSE_TABLE");
-        dropTable("DROP TABLE " + SqlStatements.USER_TABLE, "USER_TABLE");
-        dropTable("DROP TABLE " + SqlStatements.QUESTION_TABLE, "QUESTION_TABLE");
+		dropTable("DROP TABLE " + SqlStatements.COURSE_TABLE, "COURSE_TABLE");
+		dropTable("DROP TABLE " + SqlStatements.USER_TABLE, "USER_TABLE");
+		dropTable("DROP TABLE " + SqlStatements.QUESTION_TABLE, "QUESTION_TABLE");
+		dropTable("DROP TABLE " + SqlStatements.EXAM_TABLE, "EXAM_TABLE");
+		dropTable("DROP TABLE " + SqlStatements.RECORD_TABLE, "RECORD_TABLE");
+
 	}
 
 	public void dropTable(String tableStatement, String name){
@@ -87,7 +91,7 @@ public class ServletsListener implements ServletContextListener {
 
 	public void createDummyData(){
 		try {
-			Database.getInstance().executeUpdate(SqlStatements.USER_CREATE_USER, "0001", "amirs", "pass", "amir", "sibat", "Web developer", "", User.Type.STUDENT.ordinal());
+			Database.getInstance().executeUpdate(SqlStatements.USER_INSERT_NEW_USER, "0001", "amirs", "pass", "amir", "sibat", "Web developer", "", User.Type.STUDENT.ordinal());
 			L.log("User 0001 STUDENT created");
 		} catch (SQLException e1) {
 			if(e1.getSQLState().equals("23505"))
@@ -98,7 +102,7 @@ public class ServletsListener implements ServletContextListener {
 			L.err(e2);
 		}
 		try {
-			Database.getInstance().executeUpdate(SqlStatements.USER_CREATE_USER, "0002", "davida", "pass", "david", "anton", "Math Teacher ", "", User.Type.TEACHER.ordinal());
+			Database.getInstance().executeUpdate(SqlStatements.USER_INSERT_NEW_USER, "0002", "davida", "pass", "david", "anton", "Math Teacher ", "", User.Type.TEACHER.ordinal());
 			L.log("User 0002 TEACHER created");
 		} catch (SQLException e1) {
 			if(e1.getSQLState().equals("23505"))
