@@ -60,7 +60,7 @@ public class LoginUser extends HttpServlet{
         User u = gson.fromJson(jsonFileContent.toString(),User.class);
         
         //check if user already exists.
-        exist = u.isUserExist(u.username);
+        exist = u.isUserExist(u.mUsername);
        
         
         try {

@@ -25,12 +25,12 @@ public class User {
      * @param type the type of the user
      */
     public User(String id, String username, String firstName, String lastName, String description, String picture, List<String> courses, Type type) {
-        this.id = id;
-        this.username = username;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.description = description;
-        this.picture = picture;
+        this.mId = id;
+        this.mUsername = username;
+        this.mFirstName = firstName;
+        this.mLastName = lastName;
+        this.mDescription = description;
+        this.mPicture = picture;
         this.courses = courses;
         this.type = type;
     }

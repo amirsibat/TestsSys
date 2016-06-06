@@ -62,7 +62,7 @@ public class CreateQuestion extends HttpServlet {
 			HttpSession session = request.getSession(true);
 			//get session variable
 			User user = (User) session.getAttribute("user");
-			Teacher teacher = new Teacher(user.id,user.username,user.firstName,user.lastName,user.description,user.picture,user.courses,user.type.TEACHER);
+			/*Teacher teacher = new Teacher(user.id,user.username,user.firstName,user.lastName,user.description,user.picture,user.courses,user.type.TEACHER);*/
 			
 			response.setContentType("application/json; charset=UTF-8");
 			PrintWriter out = response.getWriter();

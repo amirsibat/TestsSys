@@ -47,7 +47,7 @@ public class SessionAuth extends HttpServlet implements SingleThreadModel {
 				// user logged in
 				if(user != null)
 				{
-					out.println("{ \"result\": \"success\",\"username\":\""+user.username+"\"}");
+					out.println("{ \"result\": \"success\",\"username\":\""+user.mUsername+"\"}");
 					out.close();
 				}
 				else

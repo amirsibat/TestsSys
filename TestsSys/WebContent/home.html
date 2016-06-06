@@ -272,24 +272,22 @@
 
 						<h3> Correct Answer</h3>
 						<div class="row">
-							<label class="checkbox-inline"> <input type="checkbox"
-								id="inlineCheckbox1" value="option1"> 1
-							</label> <label class="checkbox-inline"> <input type="checkbox"
-								id="inlineCheckbox2" value="option2"> 2
-							</label> <label class="checkbox-inline"> <input type="checkbox"
-								id="inlineCheckbox3" value="option3"> 3
-							</label> <label class="checkbox-inline"> <input type="checkbox"
-								id="inlineCheckbox4" value="option4"> 4
-							</label>
-						
+									
+							<select class="form-control" id="correctAnswer">
+							  <option value="option1">1</option>
+							  <option value="option2">2</option>
+							  <option value="option3">3</option>
+							  <option value="option4">4</option>
+							</select>
+													
 						<h3>Related Course</h3>
 
 						<div class="input-group">
 
-							<select class="selectpicker" name="courses" multiple>
-								<option value="course">course1</option>
-								<option value="course">course2</option>
-								<option value="course">course3</option>
+							<select class="selectpicker" id="relatedCourses" name="courses" multiple>
+								<option value="course1">course1</option>
+								<option value="course2">course2</option>
+								<option value="course3">course3</option>
 
 							</select>
 
@@ -349,12 +347,6 @@
 	};
 
 	
-	$( "input[type=checkbox]" ).on( "click", function() {
-		
-		$scope.theCorrectAnswer = $( "input:checked" ).val();
-	});
-	
-
 
 
  	$scope.show_question_form = function() {
@@ -374,10 +366,10 @@
 	$scope.btn_post_quest = function() {
 		
 
-        if(($('#txtQuest').val().trim().length > 0 ) && ($('#first-asnwer').val().trim().length > 0) 
-        		&& ($('#second-answer').val().trim().length > 0) 
-        		&& ($('#third-asnwer').val().trim().length > 0) 
-        		&& ($('#fourth-asnwer').val().trim().length > 0) ){
+        if(($('#txtQuest').val().trim().length > 0 ) && ($('#firstAnswer').val().trim().length > 0) 
+        		&& ($('#secondAnswer').val().trim().length > 0) 
+        		&& ($('#thirdAsnwer').val().trim().length > 0) 
+        		&& ($('#fourthAsnwer').val().trim().length > 0) ){
         	
         	//create js object
     		var Quest = new Object();
