@@ -4,7 +4,6 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -151,7 +150,7 @@ public class Exam {
      */
     public static List<Exam> getAllExams() throws Exception {
         List<Exam> examsList = new ArrayList<>();
-        List<HashMap<String, Objects>> examsHash = Database.getInstance().executeListQuery(SqlStatements.EXAM_GET_ALL, SqlColumns.EXAM_ALL_COLUMNS);
+        List<HashMap<String, Object>> examsHash = Database.getInstance().executeListQuery(SqlStatements.EXAM_GET_ALL, SqlColumns.EXAM_ALL_COLUMNS);
         for (int i = 0; i < examsHash.size(); i++) {
             examsList.add(HashMapToObject(examsHash.get(i)));
         }
@@ -179,7 +178,7 @@ public class Exam {
      */
     public static List<Exam> getExamsByCourseId(String courseId) throws Exception {
         List<Exam> examsList = new ArrayList<>();
-        List<HashMap<String, Objects>> examsHash = Database.getInstance().executeListQuery(SqlStatements.EXAM_GET_EXAMS_BY_COURSE_ID, SqlColumns.EXAM_ALL_COLUMNS, courseId);
+        List<HashMap<String, Object>> examsHash = Database.getInstance().executeListQuery(SqlStatements.EXAM_GET_EXAMS_BY_COURSE_ID, SqlColumns.EXAM_ALL_COLUMNS, courseId);
         for (int i = 0; i < examsHash.size(); i++) {
             examsList.add(HashMapToObject(examsHash.get(i)));
         }
@@ -196,7 +195,7 @@ public class Exam {
      */
     public static List<Exam> getExamsByTeacherId(String teacherId) throws Exception {
         List<Exam> examsList = new ArrayList<>();
-        List<HashMap<String, Objects>> examsHash = Database.getInstance().executeListQuery(SqlStatements.EXAM_GET_EXAMS_BY_TEACHER_ID, SqlColumns.EXAM_ALL_COLUMNS, teacherId);
+        List<HashMap<String, Object>> examsHash = Database.getInstance().executeListQuery(SqlStatements.EXAM_GET_EXAMS_BY_TEACHER_ID, SqlColumns.EXAM_ALL_COLUMNS, teacherId);
         for (int i = 0; i < examsHash.size(); i++) {
             examsList.add(HashMapToObject(examsHash.get(i)));
         }
@@ -213,7 +212,7 @@ public class Exam {
      */
     public static List<Exam> getExamsByProfessionId(String professionId) throws Exception {
         List<Exam> examsList = new ArrayList<>();
-        List<HashMap<String, Objects>> examsHash = Database.getInstance().executeListQuery(SqlStatements.EXAM_GET_EXAMS_BY_PROFESSION_ID, SqlColumns.EXAM_ALL_COLUMNS, professionId);
+        List<HashMap<String, Object>> examsHash = Database.getInstance().executeListQuery(SqlStatements.EXAM_GET_EXAMS_BY_PROFESSION_ID, SqlColumns.EXAM_ALL_COLUMNS, professionId);
         for (int i = 0; i < examsHash.size(); i++) {
             examsList.add(HashMapToObject(examsHash.get(i)));
         }
@@ -249,7 +248,7 @@ public class Exam {
     }
 
 
-    private static Exam HashMapToObject(HashMap<String, Object> examHashMap) {
+    private static Exam HashMapToObject(HashMap<String, Object> examHashMap) throws Exception {
         String id = (String) examHashMap.get(SqlColumns.EXAM_ID);
         String teacherId = (String) examHashMap.get(SqlColumns.EXAM_TEACHER_ID);
         String description = (String) examHashMap.get(SqlColumns.EXAM_DESCRIPTION);
@@ -259,7 +258,7 @@ public class Exam {
         String questionsList = (String) examHashMap.get(SqlColumns.EXAM_QUESTIONS_LIST);
         String courseId = (String) examHashMap.get(SqlColumns.EXAM_COURSE_ID);
         String professionId = (String) examHashMap.get(SqlColumns.EXAM_PROFESSION_ID);
-        int statusInt = (int) examHashMap.get(SqlColumns.EXAM_STATU);
+        int statusInt = (int) examHashMap.get(SqlColumns.EXAM_STATUS);
         return new Exam(id, teacherId, description, descriptionTeacher, date, duration, questionsList, courseId, professionId, statusInt);
     }
 
