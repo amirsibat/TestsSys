@@ -31,23 +31,19 @@ public class CreateQuestion extends HttpServlet {
      */
     public CreateQuestion() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		
-		
+
 		try{
 			//wrap input stream with a buffered reader to allow reading the file line by line
 			BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream(),"UTF-8"));

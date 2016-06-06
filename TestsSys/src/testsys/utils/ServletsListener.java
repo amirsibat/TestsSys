@@ -1,16 +1,11 @@
 package testsys.utils;
 
-import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
-
-import org.apache.commons.dbcp.BasicDataSource;
 
 import testsys.constants.AppConstants;
 

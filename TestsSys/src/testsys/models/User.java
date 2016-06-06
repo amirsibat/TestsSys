@@ -19,7 +19,6 @@ public class User {
      * @param firstName personal details
      * @param lastName personal details
      * @param description personal details
-     * @param picture profile picture file path
      * @param courses list of course ids separated by commas in the DB
      * @param type the type of the user
      */

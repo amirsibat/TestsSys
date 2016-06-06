@@ -26,7 +26,6 @@ public class SessionAuth extends HttpServlet implements SingleThreadModel {
      */
     public SessionAuth() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -67,7 +66,6 @@ public class SessionAuth extends HttpServlet implements SingleThreadModel {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 	}
 
 }

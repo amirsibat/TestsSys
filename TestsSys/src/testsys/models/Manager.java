@@ -15,11 +15,10 @@ public class Manager extends User{
      * @param firstName   personal details
      * @param lastName    personal details
      * @param description personal details
-     * @param picture     profile picture file path
      * @param courses     list of course ids separated by commas in the DB
      */
-    public Manager(String id, String username, String firstName, String lastName, String description, String picture, List<String> courses) {
-        super(id, username, firstName, lastName, description, picture, courses, Type.MANAGER);
+    public Manager(String id, String username, String firstName, String lastName, String description, List<String> courses) {
+        super(id, username, firstName, lastName, description, courses, Type.MANAGER);
     }
 
 }
