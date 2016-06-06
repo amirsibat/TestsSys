@@ -123,7 +123,7 @@ public class Question {
 		try {
 			String coursesAsString = "";
 			for (int i = 0; i < mCourses.size(); i++) {
-				coursesAsString += mCourses.get(i).getId() + (i < mCourses.size() - 1 ? "," : "");
+				coursesAsString += mCourses.get(i).mId+ (i < mCourses.size() - 1 ? "," : "");
 			}
 
 			Database.getInstance().executeUpdate(SqlStatements.QUESTION_INSER_NEW_QUESTION, mId, mText, mCorrectAnswer,

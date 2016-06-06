@@ -15,8 +15,8 @@ import testsys.utils.SqlStatements;
  * Profession class required for each Course class
  */
 public class Profession {
-	private String mId;
-	private String mName;
+	public String mId;
+	public String mName;
 
 	/**
 	 * Profession Constructor
@@ -29,21 +29,6 @@ public class Profession {
 		this.mName = name;
 	}
 
-	public String getId() {
-		return mId;
-	}
-
-	public void setId(String id) {
-		this.mId = id;
-	}
-
-	public String getName() {
-		return mName;
-	}
-
-	public void setName(String name) {
-		this.mName = name;
-	}
 
 	/**
 	 * Fetch profession from Database where professionId parameter

@@ -15,9 +15,9 @@ import testsys.utils.SqlStatements;
  */
 public class Course {
 	
-    private String mId;
-    private String mName;
-    private Profession mProfession;
+    public String mId;
+    public String mName;
+    public Profession mProfession;
 
     /**
      * Default Constructor
@@ -39,22 +39,6 @@ public class Course {
         this.mProfession = Profession.getProfessionByProfessionId(professionId);
     }
 
-    public String getId() {
-        return mId;
-    }
-
-    public void setId(String id) {
-        mId = id;
-    }
-
-    public String getName() {
-        return mName;
-    }
-
-    public void setName(String name) {
-        mName = name;
-    }
-
 
     /**
      * Insert course instance as new course in the database
@@ -65,7 +49,7 @@ public class Course {
         Database.getInstance().executeUpdate(SqlStatements.COURSE_INSERT_NEW_COURSE,
                 mId,
                 mName,
-                mProfession.getId());
+                mProfession.mId);
     }
 
     /**
@@ -76,7 +60,7 @@ public class Course {
     public void update() throws Exception {
         Database.getInstance().executeUpdate(SqlStatements.COURSE_UPDATE_EXISTING_COURSE,
                 mName,
-                mProfession.getId()
+                mProfession.mId
                 ,mId);
     }
 

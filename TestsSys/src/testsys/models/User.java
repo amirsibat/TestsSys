@@ -4,12 +4,12 @@ import java.util.List;
 
 public class User {
     public enum Type{MANAGER,TEACHER,STUDENT}
-    public String id;
-    public String username;
-    public String firstName;
-    public String lastName;
-    public String description;
-    public String picture;
+    public String mId;
+    public String mUsername;
+    public String mFirstName;
+    public String mLastName;
+    public String mDescription;
+    public String mPicture;
     public List<String> courses;
     public Type type;
 
