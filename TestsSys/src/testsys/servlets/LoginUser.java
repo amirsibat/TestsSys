@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import testsys.models.User;
@@ -56,13 +57,25 @@ public class LoginUser extends HttpServlet{
 		}
 
 		
-		Gson gson = new GsonBuilder().create();
+		/*Gson gson = new GsonBuilder().create();*/
       /*  User u = gson.fromJson(jsonFileContent.toString(),User.class);*/
+		
         
-        JSONObject u = new JSONObject(jsonFileContent.toString());
+        JSONObject u = null;
+		try {
+			u = new JSONObject(jsonFileContent.toString());
+		} catch (JSONException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
         
         //check if user already exists.
-        exist = u.isUserExist(u.getString("Username"), u.getString("Password") );
+        try {
+			exist = User.isUserExist(u.getString("Username"), u.getString("Password") );
+		} catch (JSONException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
        
         
         try {

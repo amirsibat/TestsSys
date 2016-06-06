@@ -72,7 +72,7 @@ public class User {
      * @throws SQLException    SQL syntax error,NullPointer,...
      * @throws NamingException if constants name are not valid.
      **/
-    public User isUserExist(String Username) {
+    public static User isUserExist(String Username, String Password) {
         // TODO DAVID
         User tempUser = null;
 
