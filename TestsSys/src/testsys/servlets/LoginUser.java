@@ -45,7 +45,7 @@ public class LoginUser extends HttpServlet{
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	
-		User exist;
+		User exist = null;
 		HttpSession session = null;
 		//loop over inputStream
 		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream(),"UTF-8"));
