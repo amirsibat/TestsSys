@@ -117,6 +117,20 @@ public class Question {
 		}
 		return false;
 	}
+	
+	public static boolean createQuestion(String text, Integer correctAnswer, Teacher author, Profession profession,
+			String options1, String options2, String options3, String options4, List<Course> courses) {
+
+		String questionId = generateQuestionId(profession.mId);
+		try {
+			Question newQuestion = new Question(questionId, text, correctAnswer, author, profession, options1,
+					options2, options3, options4, courses);
+			return newQuestion.insert();
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+		}
+		return false;
+	}
 
 	public boolean insert() {
 
