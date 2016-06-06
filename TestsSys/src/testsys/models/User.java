@@ -42,7 +42,7 @@ public class User {
 	 * @throws NamingException if constants name are not valid.
 	 **/
     public User isUserExist(String Username){
-   
+    	// TODO DAVID 
     User tempUser=null;
     
     
