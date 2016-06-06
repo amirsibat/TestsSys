@@ -47,11 +47,16 @@ public class ServletsListener implements ServletContextListener {
 	//utility that checks whether the customer tables already exists
 	private boolean tableAlreadyExists(SQLException e) {
 		boolean exists;
-		if (e.getSQLState().equals("X0Y32")) {
-			exists = true;
-		} else {
-			exists = false;
-		}
+        if(e.getSQLState() != null) {
+            if (e.getSQLState().equals("X0Y32")) {
+                exists = true;
+            } else {
+                exists = false;
+            }
+        }else{
+            exists = false;
+            e.printStackTrace();
+        }
 		return exists;
 	}
 
