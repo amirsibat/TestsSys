@@ -38,7 +38,7 @@ body {
 	padding-top:30px;
 }
 
-#save_quest{
+#save_quest,#reset_quest{
 	margin-bottom: -6%;
 }
 #LoadingViewDiv { 

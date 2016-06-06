@@ -10,18 +10,14 @@
 <!-- Javascript -->
 <script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
 <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js"></script>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/i18n/defaults-*.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/i18n/defaults-*.min.js"></script> -->
 
 
 
 <!-- CSS -->
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/css/bootstrap-select.min.css">
-<link rel="stylesheet"
-	href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/css/bootstrap-select.min.css">
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
 <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet" href="css/style.css">
 
@@ -196,8 +192,8 @@
 					</a>
 				</div>
 				<div class="col-xs-6 col-md-3">
-					<a href="#" class="thumbnail"> <img
-						src="img/default-photo.png" alt="...">
+					<a href="#" class="thumbnail"> <img src="img/default-photo.png"
+						alt="...">
 						<div class="caption">
 							<h3>Show ALL</h3>
 						</div>
@@ -215,7 +211,7 @@
 
 
 		</div>
-
+</div>
 		<div id="LoadingViewDiv">
 			<img src="img/loading_questions.gif" class="loading_questions"
 				alt="loading questions">
@@ -232,8 +228,10 @@
 							<h3>Question's Text</h3>
 							<div class="input-group">
 								<span class="input-group-addon" id="basic-addon1">Question's
-									Text</span> <input type="text" class="form-control" placeholder="Text"
-									aria-describedby="basic-addon1">
+									Text</span>
+								<textarea class="form-control" id="txtQuest"
+									data-ng-model="txtQuest" maxlength="300"
+									placeholder="Your Question" cols="8" rows="4"></textarea>
 							</div>
 
 							<h3>Answers Options</h3>
@@ -242,37 +240,37 @@
 							<div class="input-group">
 								<span class="input-group-addon" id="basic-addon1">Option
 									1</span> <input type="text" class="form-control" aria-label=""
-									placeholder="Answer Text" id="first-answer">
+									placeholder="Answer Text" id="first-answer" data-ng-model="firstAnswer" maxlength="50">
 							</div>
-							<!-- /input-group -->
+							<!-- input-group -->
 
 
 							<div class="input-group">
 								<span class="input-group-addon" id="basic-addon1">Option
 									2</span> <input type="text" class="form-control" aria-label="Answer 1"
-									placeholder="Answer Text" id="second-answer">
+									placeholder="Answer Text" id="second-answer" data-ng-model="secondAnswer" maxlength="50">
 							</div>
-							<!-- /input-group -->
+							
 
 
 							<div class="input-group">
 								<span class="input-group-addon" id="basic-addon1">Option
-									3</span> <input type="text" class="form-control" aria-label="..."
-									placeholder="Answer Text" id="third-answer">
+									3</span> <input type="text" class="form-control" aria-label=""
+									placeholder="Answer Text" id="third-answer" data-ng-model="thirdAnswer" maxlength="50">
 							</div>
-							<!-- /input-group -->
+							
 
 
 							<div class="input-group">
 								<span class="input-group-addon" id="basic-addon1">Option
-									4</span> <input type="text" class="form-control" aria-label="..."
-									placeholder="Answer Text" id="fourth-answer">
+									4</span> <input type="text" class="form-control" aria-label=""
+									placeholder="Answer Text" id="fourth-answer" data-ng-model="fourthAnswer" maxlength="50">
 							</div>
-							<!-- /input-group -->
+							
 						</div>
-						<!-- /.col-lg-6 -->
+						
 
-						<h3>Correct Answer</h3>
+						<h3> Correct Answer</h3>
 						<div class="row">
 							<label class="checkbox-inline"> <input type="checkbox"
 								id="inlineCheckbox1" value="option1"> 1
@@ -283,7 +281,7 @@
 							</label> <label class="checkbox-inline"> <input type="checkbox"
 								id="inlineCheckbox4" value="option4"> 4
 							</label>
-						</div>
+						
 						<h3>Related Course</h3>
 
 						<div class="input-group">
@@ -296,15 +294,17 @@
 							</select>
 
 						</div>
-						
-							
-								
-							
-						
+
+
+
+
+
 					</div>
 					<button type="submit" class="btn btn-primary"
-									data-ng-click="btn_create_quest();" id="save_quest">Save</button>
-					
+						data-ng-click="btn_create_quest();" id="save_quest">Save</button>
+						
+						<button type="reset" class="btn btn-primary"  id="reset_quest">Reset</button>
+
 				</div>
 				<!-- 	END JUMBORTUN 	 -->
 
@@ -349,6 +349,11 @@
 	};
 
 	
+	$( "input[type=checkbox]" ).on( "click", function() {
+		
+		$scope.theCorrectAnswer = $( "input:checked" ).val();
+	});
+	
 
 
 
@@ -364,6 +369,61 @@
 		
 	};
 	
+	
+	// create question func
+	$scope.btn_post_quest = function() {
+		
+
+        if(($('#txtQuest').val().trim().length > 0 ) && ($('#first-asnwer').val().trim().length > 0) 
+        		&& ($('#second-answer').val().trim().length > 0) 
+        		&& ($('#third-asnwer').val().trim().length > 0) 
+        		&& ($('#fourth-asnwer').val().trim().length > 0) ){
+        	
+        	//create js object
+    		var Quest = new Object();
+    	    Quest.QuestionText = $scope.txtQuest;
+    	    Quest.CorrectAnswer = $scope.theCorrectAnswer;
+    	    /* Quest.TeacherID = ""; */
+    	    Quest.QuestionOptions1 = $scope.firstAnswer;
+    	    Quest.QuestionOptions2 = $scope.secondAnswer;
+    	    Quest.QuestionOptions3 = $scope.thirdAnswer;
+    	    Quest.QuestionOptions4 = $scope.fourthAnswer;
+    	    /* Quest.CoursesList = "" ; */
+    	    
+    	    
+    	    //Make and http call to the server
+        	var req = $http({
+                method: "post",
+                url: "/TestsSys/question/CreateQuestion",
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+    	        data: JSON.stringify(Quest)
+
+            });
+            var data = JSON.stringify(Quest);
+
+    	    req.success(function(response) {
+    	    	$('.alertPostQuestSuc').show(1000).delay(3000).hide(1000); // show for 3 seconds and hide
+    	    	//clear form
+    	    	Quest.QuestionText = "";
+    	    	Quest.CorrectAnswer = "";
+    	    	Quest.QuestionOptions1 = "";
+    	    	Quest.QuestionOptions2 = "";
+    	    	Quest.QuestionOptions3 = "";
+    	    	Quest.QuestionOptions4 = "";
+    		});	
+
+        }
+        else{
+        	$('.alertPostQuestEmpty').show(1000).delay(3000).hide(1000); // show for 3 seconds and hide
+        }
+        
+    };
+    
+    
+    
+    
+   
 
 	$scope.btn_all_questions= function() {
 		$('#PageHeader').html($('#btn_all_questions').html()); // change page header
@@ -478,103 +538,16 @@
 	};
 
 
-	// post message func
-	$scope.btn_post_quest = function() {
-		
-        
-    };
+	
 
 
-    // rate question func
-	$scope.LikeQuest = function(questID,Posted_by_userID,nickname){		
-	    
-		$http.get("/WebAppProj/RateQuestion/1/id/"+ Posted_by_userID + "/quest/" +  questID)
-		.success(function(response) {
-			if(response.result == 'success'){
-		    	//alert("You Rated a Question Posted By "+ nickname);
-		    	$('.RateQuestSucDiv').html(response.message).show(1000).delay(3000).hide(1000);
-		    	}
-		    	else if(response.result == 'fail')
-		    		{
-		    			
-		    		//Scroll Up to Top
-			    	$('html, body').animate({
-			            scrollTop: $("#TopDiv").offset().top
-			        }, 1000);
-		    		$('.RateQuestDiv').html(response.message).show(1000).delay(3000).hide(1000);
-		    		}
-		});
-	};
+   
 
 
-		// rate question func
-	$scope.DisLikeQuest = function(questID,Posted_by_userID,nickname){		
-	    
-		$http.get("/WebAppProj/RateQuestion/0/id/"+Posted_by_userID + "/quest/" +  questID)
-		.success(function(response) {
-			if(response.result == 'success'){
-		    	//alert("You Rated a Question Posted By "+nickname);
-		    	$('.RateQuestSucDiv').html(response.message).show(1000).delay(3000).hide(1000);
-		    	}
-		    	else if(response.result == 'fail')
-		    		{
-		    			
-		    		//Scroll Up to Top
-			    	$('html, body').animate({
-			            scrollTop: $("#TopDiv").offset().top
-			        }, 1000);
-		    		$('.RateQuestDiv').html(response.message).show(1000).delay(3000).hide(1000);
-		    		}
-		   
-		});
-		};
+	
 
 
-    // rate answer func
-	$scope.LikeAnswer = function(ansID,Posted_by_userID,nickname){		
-	    
-		$http.get("/WebAppProj/RateAnswer/1/id/"+ Posted_by_userID + "/answer/" +  ansID)
-		.success(function(response) {
-			if(response.result == 'success'){
-		    	//alert("You Rated an Answer Posted By "+nickname);
-		    	$('.RateAnswerSucDiv').html(response.message).show(1000).delay(3000).hide(1000);
-		    	}
-		    	else if(response.result == 'fail')
-		    		{
-		    		
-		    		//Scroll Up to Top
-			    	$('html, body').animate({
-			            scrollTop: $("#TopDiv").offset().top
-			        }, 1000);
-		    		$('.RateAnswerDiv').html(response.message).show(1000).delay(3000).hide(1000);
-		    		}
-		   
-		});
-		};
-
-
-
-	// rate answer func
-	$scope.DisLikeAnswer = function(ansID,Posted_by_userID,nickname){		
-	    
-		$http.get("/WebAppProj/RateAnswer/0/id/"+Posted_by_userID + "/answer/" +  ansID)
-		.success(function(response) {
-			if(response.result == 'success'){
-				//alert("You Rated an Answer Posted By "+nickname);
-				$('.RateAnswerSucDiv').html(response.message).show(1000).delay(3000).hide(1000);
-		    	}
-		    	else if(response.result == 'fail')
-		    		{
-		    		
-		    		//Scroll Up to Top
-			    	$('html, body').animate({
-			            scrollTop: $("#TopDiv").offset().top
-			        }, 1000);
-		    		$('.RateAnswerDiv').html(response.message).show(1000).delay(3000).hide(1000);
-		    		}
-		   
-		});
-		};
+   
 
 
 	//answer quesion func

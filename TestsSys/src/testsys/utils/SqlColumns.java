@@ -64,7 +64,7 @@ public class SqlColumns {
     public static final String QUESTION_QUESTION_TEXT = "QuestionText";
     public static final String QUESTION_CORRECT_ANSWER = "CorrectAnswer";
     public static final String QUESTION_TEACHER_ID = "TeacherID";
-    public static final String QUESTION_PROFESSION_ID = "CourseID";
+    public static final String QUESTION_PROFESSION_ID = "ProfessionID";
     public static final String QUESTION_QUESTION_OPTIONS1 = "QuestionOptions1";
     public static final String QUESTION_QUESTION_OPTIONS2 = "QuestionOptions2";
     public static final String QUESTION_QUESTION_OPTIONS3 = "QuestionOptions3";
