@@ -44,7 +44,7 @@ public class Database {
         Connection connection = mBasicDataSource.getConnection();
         PreparedStatement statement = connection.prepareStatement(statementString);
         for (int i = 0; i < params.length; i++) {
-            statement.setObject(i, params[i]);
+            statement.setObject(i+1, params[i]);
         }
         ResultSet resultSet = statement.executeQuery();
         while (resultSet.next()) {
@@ -64,7 +64,7 @@ public class Database {
         Connection connection = mBasicDataSource.getConnection();
         PreparedStatement statement = connection.prepareStatement(statementString);
         for (int i = 0; i < params.length; i++) {
-            statement.setObject(i, params[i]);
+            statement.setObject(i+1, params[i]);
         }
         ResultSet resultSet = statement.executeQuery();
         while (resultSet.next()) {
@@ -97,7 +97,7 @@ public class Database {
         Connection connection = mBasicDataSource.getConnection();
         PreparedStatement statement = connection.prepareStatement(statementString);
         for (int i = 0; i < params.length; i++) {
-            statement.setObject(i, params[i]);
+            statement.setObject(i+1, params[i]);
         }
         ResultSet resultSet = statement.executeQuery();
         if (resultSet.next()) {
@@ -116,7 +116,7 @@ public class Database {
         Connection connection = mBasicDataSource.getConnection();
         PreparedStatement statement = connection.prepareStatement(statementString);
         for (int i = 0; i < params.length; i++) {
-            statement.setObject(i, params[i]);
+            statement.setObject(i+1, params[i]);
         }
         ResultSet resultSet = statement.executeQuery();
         if (resultSet.next()) {
@@ -148,7 +148,7 @@ public class Database {
         Connection connection = mBasicDataSource.getConnection();
         PreparedStatement statement = connection.prepareStatement(statementString);
         for (int i = 0; i < params.length; i++) {
-            statement.setObject(i, params[i]);
+            statement.setObject(i+1, params[i]);
         }
         Boolean result = statement.execute();
         statement.close();
