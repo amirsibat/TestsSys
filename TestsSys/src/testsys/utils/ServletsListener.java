@@ -2,6 +2,7 @@ package testsys.utils;
 
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.HashMap;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
@@ -27,7 +28,7 @@ public class ServletsListener implements ServletContextListener {
 	public void contextInitialized(ServletContextEvent event) {
 
 		try {
-//			dropTables();
+			//			dropTables();
 
 			createTable(SqlStatements.PROFESSION_CREATE_TABLE, SqlStatements.PROFESSION_TABLE);
 			createTable(SqlStatements.COURSE_CREATE_TABLE, SqlStatements.COURSE_TABLE);
@@ -47,16 +48,16 @@ public class ServletsListener implements ServletContextListener {
 	//utility that checks whether the customer tables already exists
 	private boolean tableAlreadyExists(SQLException e) {
 		boolean exists;
-        if(e.getSQLState() != null) {
-            if (e.getSQLState().equals("X0Y32")) {
-                exists = true;
-            } else {
-                exists = false;
-            }
-        }else{
-            exists = false;
-            e.printStackTrace();
-        }
+		if(e.getSQLState() != null) {
+			if (e.getSQLState().equals("X0Y32")) {
+				exists = true;
+			} else {
+				exists = false;
+			}
+		}else{
+			exists = false;
+			e.printStackTrace();
+		}
 		return exists;
 	}
 
