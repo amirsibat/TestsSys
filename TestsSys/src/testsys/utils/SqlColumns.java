@@ -166,7 +166,7 @@ public class SqlColumns {
             RECORD_COURSE_ID,
             RECORD_EXAM_ID,
             RECORD_EXTRA_DATA
-    }
+    };
 
     public static final String[] RECORD_ALL_COLUMNS_TYPES = {
             "TEXT",
@@ -174,6 +174,6 @@ public class SqlColumns {
             "TEXT",
             "TEXT",
             "TEXT"
-    }
+    };
 
 }

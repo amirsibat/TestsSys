@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.JSONObject;
+
 import testsys.models.User;
 
 import com.google.gson.Gson;
@@ -55,10 +57,12 @@ public class LoginUser extends HttpServlet{
 
 		
 		Gson gson = new GsonBuilder().create();
-        User u = gson.fromJson(jsonFileContent.toString(),User.class);
+      /*  User u = gson.fromJson(jsonFileContent.toString(),User.class);*/
+        
+        JSONObject u = new JSONObject(jsonFileContent.toString());
         
         //check if user already exists.
-        exist = u.isUserExist(u.mUsername);
+        exist = u.isUserExist(u.getString("Username"), u.getString("Password") );
        
         
         try {

@@ -10,14 +10,17 @@
 <!-- Javascript -->
 <script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
 <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js"></script>
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/i18n/defaults-*.min.js"></script> -->
 
 
 
 <!-- CSS -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/css/bootstrap-select.min.css">
-<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/css/bootstrap-select.min.css">
+<link rel="stylesheet"
+	href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
 <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet" href="css/style.css">
 
@@ -86,7 +89,7 @@
 
 <body>
 	<div id="TopDiv"></div>
-	<div id="preloader"></div>
+	<div  id="preloader"></div>
 
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">
@@ -192,10 +195,10 @@
 					</a>
 				</div>
 				<div class="col-xs-6 col-md-3">
-					<a href="#" class="thumbnail"> <img src="img/default-photo.png"
-						alt="...">
+					<a href="#" class="thumbnail" data-ng-click="show_questions_table();"> 
+					<img src="img/default-photo.png" alt="...">
 						<div class="caption">
-							<h3>Show ALL</h3>
+							<h3 id="show_questions_table">Show ALL</h3>
 						</div>
 					</a>
 				</div>
@@ -211,80 +214,86 @@
 
 
 		</div>
-</div>
-		<div id="LoadingViewDiv">
-			<img src="img/loading_questions.gif" class="loading_questions"
-				alt="loading questions">
-		</div>
+	</div>
+	<div id="LoadingViewDiv">
+		<img src="img/loading_questions.gif" class="loading_questions"
+			alt="loading questions">
+	</div>
 
 
-		<!-- 	DISPLAY QUESTIONS FORM 	 -->
+	<!-- 	DISPLAY QUESTIONS FORM 	 -->
 
-		<div id="QuestionDiv" class="QuestionDiv">
-			<div class="container">
-				<div class="jumbotron">
-					<div class="container">
-						<div class="row">
-							<h3>Question's Text</h3>
-							<div class="input-group">
-								<span class="input-group-addon" id="basic-addon1">Question's
-									Text</span>
-								<textarea class="form-control" id="txtQuest"
-									data-ng-model="txtQuest" maxlength="300"
-									placeholder="Your Question" cols="8" rows="4"></textarea>
-							</div>
-
-							<h3>Answers Options</h3>
-
-
-							<div class="input-group">
-								<span class="input-group-addon" id="basic-addon1">Option
-									1</span> <input type="text" class="form-control" aria-label=""
-									placeholder="Answer Text" id="first-answer" data-ng-model="firstAnswer" maxlength="50">
-							</div>
-							<!-- input-group -->
-
-
-							<div class="input-group">
-								<span class="input-group-addon" id="basic-addon1">Option
-									2</span> <input type="text" class="form-control" aria-label="Answer 1"
-									placeholder="Answer Text" id="second-answer" data-ng-model="secondAnswer" maxlength="50">
-							</div>
-							
-
-
-							<div class="input-group">
-								<span class="input-group-addon" id="basic-addon1">Option
-									3</span> <input type="text" class="form-control" aria-label=""
-									placeholder="Answer Text" id="third-answer" data-ng-model="thirdAnswer" maxlength="50">
-							</div>
-							
-
-
-							<div class="input-group">
-								<span class="input-group-addon" id="basic-addon1">Option
-									4</span> <input type="text" class="form-control" aria-label=""
-									placeholder="Answer Text" id="fourth-answer" data-ng-model="fourthAnswer" maxlength="50">
-							</div>
-							
+	<div id="QuestionDiv" class="QuestionDiv">
+		<div class="container">
+			<div class="jumbotron">
+				<div class="container">
+					<div class="row">
+						<h3>Question's Text</h3>
+						<div class="input-group">
+							<span class="input-group-addon" id="basic-addon1">Question's
+								Text</span>
+							<textarea class="form-control" id="txtQuest"
+								data-ng-model="txtQuest" maxlength="300"
+								placeholder="Your Question" cols="8" rows="4"></textarea>
 						</div>
-						
 
-						<h3> Correct Answer</h3>
-						<div class="row">
-									
-							<select class="form-control" id="correctAnswer">
-							  <option value="option1">1</option>
-							  <option value="option2">2</option>
-							  <option value="option3">3</option>
-							  <option value="option4">4</option>
-							</select>
-													
+						<h3>Answers Options</h3>
+
+
+						<div class="input-group">
+							<span class="input-group-addon" id="basic-addon1">Option 1</span>
+							<input type="text" class="form-control" aria-label=""
+								placeholder="Answer Text" id="first-answer"
+								data-ng-model="firstAnswer" maxlength="50">
+						</div>
+						<!-- input-group -->
+
+
+						<div class="input-group">
+							<span class="input-group-addon" id="basic-addon1">Option 2</span>
+							<input type="text" class="form-control" aria-label="Answer 1"
+								placeholder="Answer Text" id="second-answer"
+								data-ng-model="secondAnswer" maxlength="50">
+						</div>
+
+
+
+						<div class="input-group">
+							<span class="input-group-addon" id="basic-addon1">Option 3</span>
+							<input type="text" class="form-control" aria-label=""
+								placeholder="Answer Text" id="third-answer"
+								data-ng-model="thirdAnswer" maxlength="50">
+						</div>
+
+
+
+						<div class="input-group">
+							<span class="input-group-addon" id="basic-addon1">Option 4</span>
+							<input type="text" class="form-control" aria-label=""
+								placeholder="Answer Text" id="fourth-answer"
+								data-ng-model="fourthAnswer" maxlength="50">
+						</div>
+
+					</div>
+
+
+					<h3>Correct Answer</h3>
+					<div class="row">
+
+						<select class="form-control" id="correctAnswer"
+							data-ng-model="correctAnswer">
+							<option value="option1">1</option>
+							<option value="option2">2</option>
+							<option value="option3">3</option>
+							<option value="option4">4</option>
+						</select>
+
 						<h3>Related Course</h3>
 
 						<div class="input-group">
 
-							<select class="selectpicker" id="relatedCourses" name="courses" multiple>
+							<select class="selectpicker" id="relatedCourses"
+								data-ng-model="relatedCourses" name="courses" multiple>
 								<option value="course1">course1</option>
 								<option value="course2">course2</option>
 								<option value="course3">course3</option>
@@ -294,14 +303,11 @@
 						</div>
 
 
-
-
-
 					</div>
 					<button type="submit" class="btn btn-primary"
 						data-ng-click="btn_create_quest();" id="save_quest">Save</button>
-						
-						<button type="reset" class="btn btn-primary"  id="reset_quest">Reset</button>
+
+					<button type="reset" class="btn btn-primary" id="reset_quest">Reset</button>
 
 				</div>
 				<!-- 	END JUMBORTUN 	 -->
@@ -314,13 +320,33 @@
 
 
 		</div>
-		<!-- 	END QUESTIONDIV 	 -->
-
-
+		<!-- 	END CONTAINER 	 -->
 
 
 	</div>
-	<!-- 	END TESTS-CONTAINER 	 -->
+	<!-- 	END QUESTION-DIV 	 -->
+	
+	<div class="listQuestionsDiv" id="listQuestionsDiv">
+	<div class="container">
+		<table class="table table-striped table-bordered">
+			<thead>
+             <tr>
+                <th>number</th>
+                <th>Text</th>
+                <th>Correct Answer</th>
+                <th>Option 1</th>
+                <th>Option 2</th>
+                <th>Option 3</th>
+                <th>Option 4</th>
+                <th>Grade</th>
+                <th>Author</th>
+                <th>Salary</th>
+             </tr>
+        	</thead>
+        	
+		</table>
+		</div>
+		</div>
 
 
 	<!-- AngularJS module -->
@@ -355,12 +381,24 @@
 		$('#LoadingViewDiv').height($('#QuestionDiv').height()).show(); // set LoadingViewDiv height to overly the same area of Questions
 		
 		$('#QuestionDiv').show(); // show QUESTIONS
+		
 
 		
 		$scope.hideLoading(); // call hideLoading fun.
 		
 	};
 	
+	$scope.show_questions_table = function() {
+ 		$('#PageHeader').html($('#show_questions_table').html()); // change page header
+		
+		$('#LoadingViewDiv').height($('#listQuestionsDiv').height()).show(); // set LoadingViewDiv height to overly the same area of Questions
+		
+		$('#listQuestionsDiv').show(); // show QUESTIONS
+
+		
+		$scope.hideLoading(); // call hideLoading fun.
+		
+	};
 	
 	// create question func
 	$scope.btn_post_quest = function() {
@@ -374,13 +412,13 @@
         	//create js object
     		var Quest = new Object();
     	    Quest.QuestionText = $scope.txtQuest;
-    	    Quest.CorrectAnswer = $scope.theCorrectAnswer;
+    	    Quest.CorrectAnswer = $scope.correctAnswer;
     	    /* Quest.TeacherID = ""; */
     	    Quest.QuestionOptions1 = $scope.firstAnswer;
     	    Quest.QuestionOptions2 = $scope.secondAnswer;
     	    Quest.QuestionOptions3 = $scope.thirdAnswer;
     	    Quest.QuestionOptions4 = $scope.fourthAnswer;
-    	    /* Quest.CoursesList = "" ; */
+    	    Quest.CoursesList = $scope.relatedCourses ; 
     	    
     	    
     	    //Make and http call to the server
