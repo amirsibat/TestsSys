@@ -1,10 +1,7 @@
 package testsys.models;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -65,7 +62,7 @@ public class Profession {
                 SqlColumns.PROFESSION_ALL_COLUMNS, SqlColumns.PROFESSION_ALL_COLUMNS_TYPES, this.mId);
     }
 
-    public static Profession hashMapToObject(HashMap<String, Objects> hashMapProfession) throws Exception{
+    public static Profession hashMapToObject(HashMap<String, Object> hashMapProfession) throws Exception{
         String id = (String) hashMapProfession.get(SqlColumns.PROFESSION_ID);
         String name = (String) hashMapProfession.get(SqlColumns.PROFESSION_NAME);
         return new Profession(id, name);

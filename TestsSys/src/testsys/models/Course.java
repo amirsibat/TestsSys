@@ -4,7 +4,6 @@ package testsys.models;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
 
 import testsys.utils.Database;
 import testsys.utils.SqlColumns;
@@ -121,7 +120,7 @@ public class Course {
     }
 
 
-    public static List<Course> getCoursesByProfessionId(String professionId) {
+    public static List<Course> getCoursesByProfessionId(String professionId) throws Exception {
         List<HashMap<String, Object>> results = Database.getInstance().executeListQuery(SqlStatements.COURSE_GET_PROFESSION_COURSES, SqlColumns.COURSE_ALL_COLUMNS, professionId);
         List<Course> courseList = new ArrayList<>();
         for (int i = 0; i < results.size(); i++) {
@@ -131,10 +130,10 @@ public class Course {
     }
 
 
-    public static Course hashMapToObject(HashMap<String, Objects> hashMapProfession) throws Exception {
-        String id = (String) results.get(SqlColumns.COURSE_ID);
-        String name = (String) results.get(SqlColumns.COURSE_NAME);
-        String professionId = (String) results.get(SqlColumns.COURSE_PROFESSION_ID);
+    public static Course hashMapToObject(HashMap<String, Object> hashMapProfession) throws Exception {
+        String id = (String) hashMapProfession.get(SqlColumns.COURSE_ID);
+        String name = (String) hashMapProfession.get(SqlColumns.COURSE_NAME);
+        String professionId = (String) hashMapProfession.get(SqlColumns.COURSE_PROFESSION_ID);
         return new Course(id, name, professionId);
     }
 }

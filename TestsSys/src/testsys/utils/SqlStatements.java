@@ -76,10 +76,10 @@ public class SqlStatements {
             + SqlColumns.EXAM_STATUS + ") VALUES(?,?,?,?,?,?,?,?,?,?) ";
 
     public static final String EXAM_UPDATE_STATEMENT = "UPDATE " + EXAM_TABLE + " SET "
-            + SqlColumns.EXAM_DESCRIPTION + "=? , " +
-            + SqlColumns.EXAM_DESCRIPTION_TEACHER + "=? , " +
-            + SqlColumns.EXAM_DURATION + "=? , " +
-            + SqlColumns.EXAM_QUESTIONS_LIST + "=? , " +
+            + SqlColumns.EXAM_DESCRIPTION + "=? , " 
+            + SqlColumns.EXAM_DESCRIPTION_TEACHER + "=? , " 
+            + SqlColumns.EXAM_DURATION + "=? , " 
+            + SqlColumns.EXAM_QUESTIONS_LIST + "=? , " 
             + SqlColumns.EXAM_STATUS + "=? "
             + " WHERE " + SqlColumns.EXAM_ID + "=?";
 
