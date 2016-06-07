@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,9 +15,13 @@ import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.sun.xml.internal.bind.v2.schemagen.xmlschema.List;
 
 import testsys.models.Question;
+import testsys.models.Teacher;
 import testsys.models.User;
+import testsys.models.Profession;
+import testsys.models.Course;
 /**
  * Servlet implementation class CreateQuestion
  */
@@ -56,15 +61,16 @@ public class CreateQuestion extends HttpServlet {
 			HttpSession session = request.getSession(true);
 			//get session variable
 			User user = (User) session.getAttribute("user");
-			/*Teacher teacher = new Teacher(user.id,user.username,user.firstName,user.lastName,user.description,user.picture,user.mCourses,user.mType.TEACHER);*/
+			
 			
 			response.setContentType("application/json; charset=UTF-8");
 			PrintWriter out = response.getWriter();
 			
 			Gson gson = new GsonBuilder().create();
 			Question m = gson.fromJson(jsonFileContent.toString(),Question.class);
+		
 	        
-	        Question.createQuestion(m.mText, m.mCorrectAnswer, m.mAuthor, m.mProfession, m.mOptions1, m.mOptions2, m.mOptions3, m.mOptions4, m.mCourses);
+	        Question.createQuestion(m.mText, m.mCorrectAnswer, Teacher.getTeacherByTeacherId(user.mId) , Profession.getProfessionByProfessionId("123"), m.mOptions1, m.mOptions2, m.mOptions3, m.mOptions4, m.mCourses);
 			
 	      /*  ArrayList<Question> QuestsArray = new ArrayList<Question>();
 	        QuestsArray = Question.getAllQuestions(); //
@@ -77,7 +83,10 @@ public class CreateQuestion extends HttpServlet {
 	    	
 			}catch (IOException e) {  
 		        e.printStackTrace();  
-		    }
+		    } catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			
 	}
 

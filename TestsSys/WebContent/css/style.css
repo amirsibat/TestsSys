@@ -20,8 +20,8 @@ body {
 }
 
 /*Hide all alerts*/
-.listQuestionsDiv{ display:none; }
-.QuestionDiv{ display:none; }
+.listQuestionsDiv{ display:none; } 
+/* .QuestionDiv{ display:none; } */
 
 .RateQuestDiv{ display:none; }
 .RateAnswerDiv{ display:none; }

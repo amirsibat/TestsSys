@@ -84,10 +84,20 @@ public class LoginUser extends HttpServlet{
         	PrintWriter out = response.getWriter();
         	
         	//login
-            if(exist != null){
+            if(exist != null && exist.mType.toString() == "TEACHER"){
             	session = request.getSession();
     			session.setAttribute("user", exist);
-    			out.println("{ \"result\": \"success\"}");
+    			out.println("{ \"result\": \"successTEACHER\" }");
+    			out.close();
+            }else if(exist != null && exist.mType.toString() == "STUDENT"){
+            	session = request.getSession();
+    			session.setAttribute("user", exist);
+    			out.println("{ \"result\": \"successSTUDENT\" }");
+    			out.close();
+            }else if(exist != null && exist.mType.toString() == "MANAGER"){
+            	session = request.getSession();
+    			session.setAttribute("user", exist);
+    			out.println("{ \"result\": \"successMANAGER\" }");
     			out.close();
             }
             else{ //if not fail to login
