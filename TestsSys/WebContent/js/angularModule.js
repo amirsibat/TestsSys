@@ -1,6 +1,14 @@
 var app = angular.module('TestsApp',[])
 		.controller('TestsController', ['$scope','$sce','$http','$interval', function($scope,$sce,$http,$interval) {
 		
+			
+			var teachersArray,getURL;
+			$http.get("/TestsSys/user/GetAllTeachers")
+			
+			.success(function(response){
+				teachersArray = response;
+
+			});
 
 	$scope.hideLoading = function() {
 		
@@ -87,7 +95,16 @@ var app = angular.module('TestsApp',[])
         }
     };
 
+    
+    
 	
+ // add username to link
+	$scope.getUsernameAsLink = function(username)
+	{
+	return "profile.html?name="+username;
+	};
+
+
 
 	
 	}]);

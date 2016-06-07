@@ -24,4 +24,10 @@ public class Teacher extends User {
     public static Teacher getTeacherByTeacherId(String teacherId) {
         return null;
     }
+    
+    public static Teacher getAllTeachers(){
+    	//TODO david
+    	
+    	return null;
+    }
 }
