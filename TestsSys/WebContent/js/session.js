@@ -1,3 +1,7 @@
+// Global Variables
+
+var gUser;
+
 $(document).ready(function() {
 
 		
@@ -11,6 +15,7 @@ $(document).ready(function() {
 		        success: function(data) {
 		        	if(data.result == "success"){
 						console.log("success");
+						gUser = data.username;
 		    		}
 		        }
 		    	})

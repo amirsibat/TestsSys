@@ -159,7 +159,7 @@ public class Question {
 		return false;
 	}
 
-	public List<Question> getAllQuestionByTeacherId(String teacherId){
+	public static List<Question> getAllQuestionByTeacherId(String teacherId){
 		return new ArrayList<>();
 	}
 	

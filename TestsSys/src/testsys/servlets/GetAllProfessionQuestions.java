@@ -51,7 +51,7 @@ public class GetAllProfessionQuestions extends HttpServlet {
 				HttpSession session = request.getSession(true);
 				//get session variable
 				user = (User) session.getAttribute("user");
-				QuestsArray = Question.getAllQuestionByProfessionId(professionId);
+				QuestsArray = null;
 			
 			
 			Gson gson = new Gson();
