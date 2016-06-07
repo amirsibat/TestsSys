@@ -8,14 +8,16 @@
 
 
 <!-- CSS -->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/css/bootstrap-select.min.css">
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
 <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet" href="css/style.css">
 
+
 <!-- Javascript -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/init.js"></script>
 
@@ -23,6 +25,7 @@
 <!-- AngularJS library -->
 <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>
 <script type="text/javascript" src="js/angularModule.js"></script>
+
 
 </head>
 
@@ -42,7 +45,7 @@
 						class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="cqa.html"><span
+				<a class="navbar-brand" href="/teacher_html_files/teacher.html"><span
 					class="glyphicon glyphicon-home" aria-hidden="true"></span> HOME</a>
 			</div>
 
@@ -54,11 +57,11 @@
 				          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" 
 				          aria-haspopup="true" aria-expanded="false">Question <span class="caret"></span></a>
 				          <ul class="dropdown-menu">
-				            <li><a href="#">New Question</a></li>
+				            <li><a href="/teacher_html_files/newQuestions.hmtl">New Question</a></li>
 				            <li role="separator" class="divider"></li>
-				            <li><a href="#">My Questions</a></li>
+				            <li><a href="/teacher_html_files/myQuestions.html">My Questions</a></li>
 				            <li role="separator" class="divider"></li>
-				            <li><a href="#">All Questions</a></li>
+				            <li><a href="/teacher_html_files/allQuestions.html">All Questions</a></li>
 				        
 				          </ul>
 				        </li>
@@ -66,16 +69,16 @@
 				          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" 
 				          aria-haspopup="true" aria-expanded="false">Exam <span class="caret"></span></a>
 				          <ul class="dropdown-menu">
-				            <li><a href="#">New Exam</a></li>
+				            <li><a href="/teacher_html_files/newExam.html">New Exam</a></li>
 				            <li role="separator" class="divider"></li>
-				            <li><a href="#">My Exams</a></li>
+				            <li><a href="/teacher_html_files/myExams.html">My Exams</a></li>
 				            <li role="separator" class="divider"></li>
-				            <li><a href="#">All Exams</a></li>
+				            <li><a href="/teacher_html_files/allExams.html">All Exams</a></li>
 				        
 				          </ul>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
-					<li><a href="leaderboard.html"><span
+					<li><a href="myCourses.html"><span
 							class="glyphicon glyphicon-signal" aria-hidden="true"></span>
 							My Courses</a></li>
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
@@ -83,7 +86,7 @@
 						aria-expanded="false"><span class="glyphicon glyphicon-user"
 							aria-hidden="true"></span> USER <span class="caret"></span></a>
 						<ul class="dropdown-menu">
-							<li><a href="profile.html">MY PROFILE</a></li>
+							<li><a href="/teacher_html_files/tprofile.html">MY PROFILE</a></li>
 
 							<li role="separator" class="divider"></li>
 							<li><a href="#" id="logout_btn">LOGOUT</a></li>
@@ -97,7 +100,6 @@
 
 
 
-
 	<div class="page-header">
 		<h2 id="PageHeader">TestsSys Dashboard</h2>
 	</div>
@@ -107,129 +109,18 @@
 		data-ng-controller="TestsController">
 		<div class="container">
 
-
-			<div class="alert alert-success alert-dismissible alertPostQuestSuc"
-				role="alert">Question Created successfuly!</div>
-			<div class="alert alert-danger alert-dismissible alertPostQuestEmpty"
-				role="alert">Please Create a Question!</div>
+			<div class="alert alert-success alert-dismissible alertPostQuestSuc" role="alert">Question Created successfuly!
+		</div>
+		<div class="alert alert-danger alert-dismissible alertPostQuestEmpty" role="alert">Please Create a Question!
+		</div>
 
 		</div>
-		
-		
-		
-		<!-- 	DISPLAY QUESTIONS FORM 	 -->
-
-	<div id="QuestionDiv" class="QuestionDiv">
-		<div class="container">
-			<div class="jumbotron">
-				<div class="container">
-					<div class="row">
-						<h3>Question's Text</h3>
-						<div class="input-group">
-							<span class="input-group-addon" id="basic-addon1">Question's
-								Text</span>
-							<textarea class="form-control" id="txtQuest"
-								data-ng-model="txtQuest" maxlength="300"
-								placeholder="Your Question" cols="8" rows="4"></textarea>
-						</div>
-
-						<h3>Answers Options</h3>
-
-
-						<div class="input-group">
-							<span class="input-group-addon" id="basic-addon1">Option 1</span>
-							<input type="text" class="form-control" aria-label=""
-								placeholder="Answer Text" id="firstAnswer"
-								data-ng-model="firstAnswer" maxlength="50">
-						</div>
-						<!-- input-group -->
-
-
-						<div class="input-group">
-							<span class="input-group-addon" id="basic-addon1">Option 2</span>
-							<input type="text" class="form-control" aria-label="Answer 1"
-								placeholder="Answer Text" id="secondAnswer"
-								data-ng-model="secondAnswer" maxlength="50">
-						</div>
-
-
-
-						<div class="input-group">
-							<span class="input-group-addon" id="basic-addon1">Option 3</span>
-							<input type="text" class="form-control" aria-label=""
-								placeholder="Answer Text" id="thirdAsnwer"
-								data-ng-model="thirdAnswer" maxlength="50">
-						</div>
-
-
-
-						<div class="input-group">
-							<span class="input-group-addon" id="basic-addon1">Option 4</span>
-							<input type="text" class="form-control" aria-label=""
-								placeholder="Answer Text" id="fourthAnswer"
-								data-ng-model="fourthAnswer" maxlength="50">
-						</div>
-						
-						<h3>Correct Answer</h3>
-					
-
-						<select class="form-control" id="correctAnswer"
-							data-ng-model="correctAnswer">
-							<option value="1">1</option>
-							<option value="2">2</option>
-							<option value="3">3</option>
-							<option value="4">4</option>
-						</select>
-
-						<h3>Related Course</h3>
-
-						<div class="input-group">
-
-							<select class="selectpicker" id="relatedCourses"
-								data-ng-model="relatedCourses" name="courses" multiple>
-								<option value="course1">course1</option>
-								<option value="course2">course2</option>
-								<option value="course3">course3</option>
-
-							</select>
-
-						</div>
-					</div>
-
-
-					
-
-
-					
-					<button type="button" class="btn btn-primary"
-						data-ng-click="btn_create_quest();" id="save_quest">Save</button>
-
-					<button type="reset" class="btn btn-primary" id="reset_quest">Reset</button>
-
-				</div>
-				<!-- 	END JUMBORTUN 	 -->
-
-
-
-			</div>
-			<!-- 	END CONTAINER 	 -->
-
-
-
-		</div>
-		<!-- 	END CONTAINER 	 -->
-
-
 	</div>
-	<!-- 	END QUESTION-DIV 	 -->
-		
-	</div><!--  END TESTSAPP -->
-	
-	
 	<div id="LoadingViewDiv">
 		<img src="img/loading_questions.gif" class="loading_questions"
 			alt="loading questions">
 	</div>
+
 
 
 </body>

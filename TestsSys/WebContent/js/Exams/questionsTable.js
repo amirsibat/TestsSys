@@ -22,8 +22,10 @@ function format ( d ) {
 
  
 $(document).ready(function() {
+	
+	
     var table = $('#example').DataTable( {
-        "ajax": "/js/Exams/data.txt",
+        "ajax": "TestsSys/question/GetProfessionQuestions",
         "columns": [
             {
                 "className":      'details-control',
@@ -31,7 +33,7 @@ $(document).ready(function() {
                 "data":           null,
                 "defaultContent": ''
             },
-            /*{ "data": "mText" },
+            { "data": "mText" },
             { "data": "mCorrectAnswer" },
             { "data": "mAuthor" },
             { "data": "mProfession" },
@@ -39,11 +41,8 @@ $(document).ready(function() {
             { "data": "mOptions2" },
             { "data": "mOptions3" },
             { "data": "mOptions4" },
-            { "data": "mCourses" }*/
-            { "data": "name" },
-            { "data": "position" },
-            { "data": "office" },
-            { "data": "salary" }
+            { "data": "mCourses" }
+           
         ],
         "order": [[1, 'asc']]
     } );

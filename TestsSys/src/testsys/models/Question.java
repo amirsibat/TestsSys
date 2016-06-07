@@ -163,7 +163,7 @@ public class Question {
 		return new ArrayList<>();
 	}
 	
-	public List<Question> getAllQuestionByProfessionId(String professionId){
+	public static List<Question> getAllQuestionByProfessionId(String professionId){
 		return new ArrayList<>();
 	}
 	

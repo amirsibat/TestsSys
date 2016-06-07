@@ -93,19 +93,19 @@ $(document).ready(function() {
 				    			// send user to dashboard after hiding the error message
 				    			$('.alertUserInvalid').hide();
 								//console.log("success");
-								window.location.pathname = "/TestsSys/teacher.html";
+								window.location.pathname = "/TestsSys/teacher_html_files/teacher.html";
 				    		}
 				    		if(data.result == "successMANAGER"){
 				    			// send user to dashboard after hiding the error message
 				    			$('.alertUserInvalid').hide();
 								//console.log("success");
-								window.location.pathname = "/TestsSys/manager.html";
+								window.location.pathname = "/TestsSys/manager_html_files/manager.html";
 				    		}
 				    		if(data.result == "successSTUDENT"){
 				    			// send user to dashboard after hiding the error message
 				    			$('.alertUserInvalid').hide();
 								//console.log("success");
-								window.location.pathname = "/TestsSys/student.html";
+								window.location.pathname = "/TestsSys/student_html_files/student.html";
 				    		}
 				    		//if result not success show error message
 					        	else{ $('.alertUserInvalid').show(1000); console.log("Invalid user or password"); }

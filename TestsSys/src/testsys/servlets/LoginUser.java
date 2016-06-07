@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,14 +17,12 @@ import org.json.JSONObject;
 
 import testsys.models.User;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 
 /**
  * Servlet implementation class LoginUser
  */
-@SuppressWarnings("deprecation")
+@WebServlet("/LoginUser")
 public class LoginUser extends HttpServlet{
 	private static final long serialVersionUID = 1L;
        
@@ -55,12 +54,7 @@ public class LoginUser extends HttpServlet{
 		while ((nextLine = br.readLine()) != null){
 			jsonFileContent.append(nextLine);
 		}
-
-		
-		/*Gson gson = new GsonBuilder().create();*/
-      /*  User u = gson.fromJson(jsonFileContent.toString(),User.class);*/
-		
-        
+  
         JSONObject u = null;
 		try {
 			u = new JSONObject(jsonFileContent.toString());

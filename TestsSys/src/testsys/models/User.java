@@ -70,6 +70,11 @@ public class User {
 			}
 		}
 	}
+	
+	public User() {
+		// TODO testing only!!!
+	}
+
 
 	/**
 	 * @param Username user name

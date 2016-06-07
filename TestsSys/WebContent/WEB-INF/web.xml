@@ -48,6 +48,16 @@
     <servlet-name>CreateQuestion</servlet-name>
     <url-pattern>/question/CreateQuestion</url-pattern>
   </servlet-mapping>
+   <servlet>
+    <description></description>
+    <display-name>GetAllProfessionQuestions</display-name>
+    <servlet-name>GetAllProfessionQuestions</servlet-name>
+    <servlet-class>testsys.servlets.GetAllProfessionQuestions</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GetAllProfessionQuestions</servlet-name>
+    <url-pattern>/question/GetAllProfessionQuestions</url-pattern>
+  </servlet-mapping>
   <servlet>
     <description></description>
     <display-name>SessionAuth</display-name>

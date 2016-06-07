@@ -55,11 +55,11 @@ var app = angular.module('TestsApp',[])
     	    Quest.QuestionText = $scope.txtQuest;
     	    Quest.CorrectAnswer = $scope.correctAnswer;
     	    /* Quest.TeacherID = ""; */
-    	    $scope.QuestionOptions1 = $scope.firstAnswer;
-    	    $scope.QuestionOptions2 = $scope.secondAnswer;
-    	    $scope.QuestionOptions3 = $scope.thirdAnswer;
-    	    $scope.QuestionOptions4 = $scope.fourthAnswer;
-    	    $scope.CoursesList = $scope.relatedCourses ; 
+    	    Quest.QuestionOptions1 = $scope.firstAnswer;
+    	    Quest.QuestionOptions2 = $scope.secondAnswer;
+    	    Quest.QuestionOptions3 = $scope.thirdAnswer;
+    	    Quest.QuestionOptions4 = $scope.fourthAnswer;
+    	    Quest.CoursesList = $scope.relatedCourses ; 
     	    
     	    
     	    //Make and http call to the server
@@ -74,12 +74,12 @@ var app = angular.module('TestsApp',[])
     	    req.success(function(response) {
     	    	$('.alertPostQuestSuc').show(1000).delay(3000).hide(1000); // show for 3 seconds and hide
     	    	//clear form
-    	    	Quest.QuestionText = "";
-    	    	Quest.CorrectAnswer = "";
-    	    	Quest.QuestionOptions1 = "";
-    	    	Quest.QuestionOptions2 = "";
-    	    	Quest.QuestionOptions3 = "";
-    	    	Quest.QuestionOptions4 = "";
+    	    	$scope.QuestionText = "";
+    	    	$scope.CorrectAnswer = "";
+    	    	$scope.QuestionOptions1 = "";
+    	    	$scope.QuestionOptions2 = "";
+    	    	$scope.QuestionOptions3 = "";
+    	    	$scope.QuestionOptions4 = "";
     		});	
         }
         else{
