@@ -71,7 +71,7 @@ public class User {
 		}
 	}
 	
-	public User() {
+	public  User() {
 		// TODO testing only!!!
 	}
 
@@ -105,7 +105,7 @@ public class User {
 	}
 
 	public static User getUserByUserId(String userId) {
-		// TODO DAVID
+		// TODO getAllTeachers
 		return null;
 	}
 	

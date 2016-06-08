@@ -59,7 +59,7 @@ public class LoginUser extends HttpServlet{
 		try {
 			u = new JSONObject(jsonFileContent.toString());
 		} catch (JSONException e2) {
-			// TODO Auto-generated catch block
+			
 			e2.printStackTrace();
 		}
         
@@ -67,7 +67,7 @@ public class LoginUser extends HttpServlet{
         try {
 			exist = User.isUserExist(u.getString("Username"), u.getString("Password") );
 		} catch (JSONException e1) {
-			// TODO Auto-generated catch block
+			
 			e1.printStackTrace();
 		}
        

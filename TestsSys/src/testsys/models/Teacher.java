@@ -26,7 +26,7 @@ public class Teacher extends User {
     }
     
     public static Teacher getAllTeachers(){
-    	//TODO david
+    	//TODO getAllTeachers
     	
     	return null;
     }

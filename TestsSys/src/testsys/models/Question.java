@@ -118,6 +118,13 @@ public class Question {
 		return false;
 	}
 	
+	public static boolean createQuestion(String text, Integer correctAnswer, Teacher author,
+			String options1, String options2, String options3, String options4, List<Course> courses) {
+			//TODO createQuestion
+		
+		return true;
+	}
+	
 	public static boolean createQuestion(String text, Integer correctAnswer, Teacher author, Profession profession,
 			String options1, String options2, String options3, String options4, List<Course> courses) {
 
@@ -160,6 +167,7 @@ public class Question {
 	}
 
 	public static List<Question> getAllQuestionByTeacherId(String teacherId){
+		//TODO getAllQuestionByTeacherId
 		return new ArrayList<>();
 	}
 	

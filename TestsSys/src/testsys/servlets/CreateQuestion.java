@@ -20,7 +20,7 @@ import com.google.gson.GsonBuilder;
 import testsys.models.Question;
 import testsys.models.Teacher;
 import testsys.models.User;
-import testsys.models.Profession;
+
 
 /**
  * Servlet implementation class CreateQuestion
@@ -70,7 +70,7 @@ public class CreateQuestion extends HttpServlet {
 			Question m = gson.fromJson(jsonFileContent.toString(),Question.class);
 		
 	        
-	        Question.createQuestion(m.mText, m.mCorrectAnswer, Teacher.getTeacherByTeacherId(user.mId) , Profession.getProfessionByProfessionId("123"), m.mOptions1, m.mOptions2, m.mOptions3, m.mOptions4, m.mCourses);
+	        Question.createQuestion(m.mText, m.mCorrectAnswer, Teacher.getTeacherByTeacherId(user.mId) , m.mOptions1, m.mOptions2, m.mOptions3, m.mOptions4, m.mCourses);
 			
 	      /*  ArrayList<Question> QuestsArray = new ArrayList<Question>();
 	        QuestsArray = Question.getAllQuestions(); //
@@ -84,7 +84,7 @@ public class CreateQuestion extends HttpServlet {
 			}catch (IOException e) {  
 		        e.printStackTrace();  
 		    } catch (Exception e) {
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			}
 			

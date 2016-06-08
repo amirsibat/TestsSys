@@ -4,9 +4,9 @@
 		function getUrlParameter(sParam)
 		{
 			var sPageURL = window.location.search.substring(1);
-			var sURLVariables = sPageURL.split('&'); // in case there's more thean 1 param split by &
+			var sURLVariables = sPageURL.split('&'); // in case there's more than 1 param split by &
 			
-			//loop over the splited url array and return sParam
+			//loop over the split url array and return sParam
 			for (var i = 0; i < sURLVariables.length; i++) {
 				
 				var sParameterName = sURLVariables[i].split('=');

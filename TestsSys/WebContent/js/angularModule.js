@@ -2,14 +2,14 @@ var app = angular.module('TestsApp',[])
 		.controller('TestsController', ['$scope','$sce','$http','$interval', function($scope,$sce,$http,$interval) {
 		
 			
-			var teachersArray,getURL;
+			/*var teachersArray,getURL;
 			$http.get("/TestsSys/user/GetAllTeachers")
 			
 			.success(function(response){
 				teachersArray = response;
 
 			});
-
+*/
 	$scope.hideLoading = function() {
 		
 		// will fade out LoadingDiv and show Messages in 3 seconds.
