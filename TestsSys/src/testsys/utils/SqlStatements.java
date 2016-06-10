@@ -127,12 +127,12 @@ public class SqlStatements {
     public static final String QUESTION_GET_QUESTIONS_BY_COURSE_ID = "SELECT * FROM " + QUESTION_TABLE + " WHERE "
             + SqlColumns.QUESTION_COURSES_LIST + " LIKE '%?%'";
     public static final String QUESTION_UPDATE = "UPDATE " + COURSE_TABLE + " SET "
-            + QUESTION_QUESTION_TEXT + "=? ,"
-            + QUESTION_CORRECT_ANSWER + "=? ,"
-            + QUESTION_QUESTION_OPTIONS1 + "=? ,"
-            + QUESTION_QUESTION_OPTIONS2 + "=? ,"
-            + QUESTION_QUESTION_OPTIONS3 + "=? ,"
-            + QUESTION_QUESTION_OPTIONS4 + "=? ,"
+            + SqlColumns.QUESTION_QUESTION_TEXT + "=? ,"
+            + SqlColumns.QUESTION_CORRECT_ANSWER + "=? ,"
+            + SqlColumns.QUESTION_QUESTION_OPTIONS1 + "=? ,"
+            + SqlColumns.QUESTION_QUESTION_OPTIONS2 + "=? ,"
+            + SqlColumns.QUESTION_QUESTION_OPTIONS3 + "=? ,"
+            + SqlColumns.QUESTION_QUESTION_OPTIONS4 + "=? ,"
             + " WHERE " + SqlColumns.QUESTION_ID + "=?";
 
     public static final String QUESTION_INSER_NEW_QUESTION = "INSERT INTO " + QUESTION_TABLE + " ("

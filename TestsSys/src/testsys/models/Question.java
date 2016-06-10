@@ -112,9 +112,6 @@ public class Question {
     public static boolean createQuestion(String text, Integer correctAnswer, Teacher author,
                                          String options1, String options2, String options3, String options4, List<Course> courses) {
         return createQuestion(text, correctAnswer, author, courses.get(0).mProfession, options1, options2, options3, options4, courses);
-
-
-        return true;
     }
 
     public static boolean createQuestion(String text, Integer correctAnswer, Teacher author, Profession profession,
@@ -212,17 +209,11 @@ public class Question {
      * @throws Exception failed to execute SQL query
      */
     public static Question getQuestionByQuestionId(String questionId) throws Exception {
-        return hashMapToObject(Database.getInstance().executeSingleQuery(SqlStatements.QUESTION_GET_QUESTION_BY_QUESTION_ID, SqlColumns.QUESTION_ALL_COLUMNS, questionId))
+        return hashMapToObject(Database.getInstance().executeSingleQuery(SqlStatements.QUESTION_GET_QUESTION_BY_QUESTION_ID, SqlColumns.QUESTION_ALL_COLUMNS, questionId));
     }
 
 
     public static Question hashMapToObject(HashMap<String, Object> objectHashMap) throws Exception {
-        String id = (String) objectHashMap.get(SqlColumns.RECORD_ID);
-        String student = (String) objectHashMap.get(SqlColumns.RECORD_STUDENT_ID);
-        String course = (String) objectHashMap.get(SqlColumns.RECORD_COURSE_ID);
-        String exam = (String) objectHashMap.get(SqlColumns.RECORD_EXAM_ID);
-        String extraData = (String) objectHashMap.get(SqlColumns.RECORD_EXTRA_DATA);
-
         String id = (String) objectHashMap.get(SqlColumns.QUESTION_ID);
         String text = (String) objectHashMap.get(SqlColumns.QUESTION_QUESTION_TEXT);
         Integer correctAnswer = (Integer) objectHashMap.get(SqlColumns.QUESTION_CORRECT_ANSWER);

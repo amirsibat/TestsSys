@@ -68,10 +68,10 @@ public class Record {
      * @throws Exception failed to execute SQL query
      */
     public void insert() throws Exception {
-        Database.getInstance().executeUpdate(SqlStatements.RECORD_INSER_NEW_RECORD, mId
-                mStudent,
-                mCourse,
-                mExam,
+        Database.getInstance().executeUpdate(SqlStatements.RECORD_INSER_NEW_RECORD, mId,
+                mStudent.mId,
+                mCourse.mId,
+                mExam.mId,
                 mExtraData);
     }
 
@@ -83,7 +83,7 @@ public class Record {
      * @throws Exception failed to execute SQL query
      */
     public static Record getRecordByRecordId(String recordId) throws Exception {
-        return hashMapToObject(Database.getInstance().executeSingleQuery(SqlStatements.RECORD_GET_RECORD_BY_RECORD_ID, SqlColumns.RECORD_ALL_COLUMNS, recordId))
+        return hashMapToObject(Database.getInstance().executeSingleQuery(SqlStatements.RECORD_GET_RECORD_BY_RECORD_ID, SqlColumns.RECORD_ALL_COLUMNS, recordId));
     }
 
     /**
