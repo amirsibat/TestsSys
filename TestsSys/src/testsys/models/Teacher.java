@@ -1,5 +1,11 @@
 package testsys.models;
 
+import testsys.utils.Database;
+import testsys.utils.SqlColumns;
+import testsys.utils.SqlStatements;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -22,12 +28,15 @@ public class Teacher extends User {
     }
 
     public static Teacher getTeacherByTeacherId(String teacherId) {
-        return null;
+        return (Teacher) User.getUserByUserId(teacherId);
     }
     
-    public static Teacher getAllTeachers(){
-    	//TODO getAllTeachers
-    	
-    	return null;
+    public static List<Teacher> getAllTeachers(){
+        List<Teacher> teacherList = new ArrayList<>();
+        List<HashMap<String, Object>> objectsList = Database.getInstance().executeListQuery(SqlStatements.USER_GET_ALL_TEACHERS, SqlColumns.USER_ALL_COLUMNS);
+        for (int i = 0; i < objectsList.size(); i++) {
+            teacherList.add((Teacher) hashMapToObject(objectsList.get(i)));
+        }
+        return teacherList;
     }
 }

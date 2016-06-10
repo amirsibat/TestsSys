@@ -17,11 +17,11 @@ import testsys.utils.SqlStatements;
  * Table Columns:   TEXT ID, TEXT StudentID,TEXT CourseID, TEXT ExamID, TEXT ExtraData
  */
 public class Record {
-    private String mId;
-    private Student mStudent;
-    private Course mCourse;
-    private Exam mExam;
-    private JSONObject mExtraData;
+    public String mId;
+    public Student mStudent;
+    public Course mCourse;
+    public Exam mExam;
+    public JSONObject mExtraData;
 
     /**
      * Default Constructor
@@ -62,53 +62,17 @@ public class Record {
         mExtraData = new JSONObject(extraData);
     }
 
-    public String getId() {
-        return mId;
-    }
-
-    public void setId(String id) {
-        mId = id;
-    }
-
-    public Student getStudent() {
-        return mStudent;
-    }
-
-    public void setStudent(Student student) {
-        mStudent = student;
-    }
-
-    public Course getCourse() {
-        return mCourse;
-    }
-
-    public void setCourse(Course course) {
-        mCourse = course;
-    }
-
-    public Exam getExam() {
-        return mExam;
-    }
-
-    public void setExam(Exam exam) {
-        mExam = exam;
-    }
-
-    public JSONObject getExtraData() {
-        return mExtraData;
-    }
-
-    public void setExtraData(JSONObject extraData) {
-        mExtraData = extraData;
-    }
-
     /**
      * Insert record instance as new record in the database
      *
      * @throws Exception failed to execute SQL query
      */
     public void insert() throws Exception {
-
+        Database.getInstance().executeUpdate(SqlStatements.RECORD_INSER_NEW_RECORD, mId
+                mStudent,
+                mCourse,
+                mExam,
+                mExtraData);
     }
 
     /**
@@ -119,7 +83,7 @@ public class Record {
      * @throws Exception failed to execute SQL query
      */
     public static Record getRecordByRecordId(String recordId) throws Exception {
-        return null;
+        return hashMapToObject(Database.getInstance().executeSingleQuery(SqlStatements.RECORD_GET_RECORD_BY_RECORD_ID, SqlColumns.RECORD_ALL_COLUMNS, recordId))
     }
 
     /**
@@ -130,7 +94,12 @@ public class Record {
      * @throws Exception failed to execute SQL query
      */
     public static List<Record> getRecordsByExamId(String examId) throws Exception {
-        return new ArrayList<>();
+        List<Record> recordList = new ArrayList<>();
+        List<HashMap<String, Object>> objectsList = Database.getInstance().executeListQuery(SqlStatements.RECORD_GET_RECORDS_BY_EXAM_ID, SqlColumns.RECORD_ALL_COLUMNS, examId);
+        for (int i = 0; i < objectsList.size(); i++) {
+            recordList.add(hashMapToObject(objectsList.get(i)));
+        }
+        return recordList;
     }
 
     /**
@@ -157,7 +126,12 @@ public class Record {
      * @throws Exception failed to execute SQL query
      */
     public static List<Record> getRecordsByCourseId(String courseId) throws Exception {
-        return new ArrayList<>();
+        List<Record> recordList = new ArrayList<>();
+        List<HashMap<String, Object>> objectsList = Database.getInstance().executeListQuery(SqlStatements.RECORD_GET_RECORDS_BY_COURSE_ID, SqlColumns.RECORD_ALL_COLUMNS, courseId);
+        for (int i = 0; i < objectsList.size(); i++) {
+            recordList.add(hashMapToObject(objectsList.get(i)));
+        }
+        return recordList;
     }
 
 
