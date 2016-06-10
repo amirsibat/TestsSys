@@ -172,7 +172,6 @@ public class Question {
 	}
 	
 	public static List<Question> getAllQuestionByProfessionId(String professionId){
-			//TODO getAllQuestionByProfessionId
 		return new ArrayList<>();
 	}
 	
