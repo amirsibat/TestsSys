@@ -2,6 +2,10 @@ var app = angular.module('TestsApp',[])
 		.controller('TestsController', ['$scope','$sce','$http','$interval', function($scope,$sce,$http,$interval) {
 		
 			
+
+			
+			
+			
 			/*var teachersArray,getURL;
 			$http.get("/TestsSys/user/GetAllTeachers")
 			
@@ -105,6 +109,64 @@ var app = angular.module('TestsApp',[])
 	};
 
 
+	// create new Exam func
+	$scope.btn_create_exam = function() {
+		
+		if(($('#duration').val().trim().length > 0 ) && ($('#examCode').val().trim().length > 0) 
+        		&& ($('#studentGuidelines').val().trim().length > 0) 
+        		&& ($('#teacherGuidelines').val().trim().length > 0)){
+        	
+        	//create js object
+    		var Exam = new Object();
+    		Exam.QuestionText = $scope.txtQuest;
+    		Exam.CorrectAnswer = $scope.correctAnswer;
+    	    /* Exam.TeacherID = ""; */
+    		Exam.QuestionOptions1 = $scope.firstAnswer;
+    		Exam.QuestionOptions2 = $scope.secondAnswer;
+    		Exam.QuestionOptions3 = $scope.thirdAnswer;
+    		Exam.QuestionOptions4 = $scope.fourthAnswer;
+    		Exam.CoursesList = $scope.relatedCourses ; 
+    	    
+    	    
+    	    //Make and http call to the server
+        	var req = $http({
+                method: "post",
+                url: "/TestsSys/question/CreateQuestion",
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+    	        data: JSON.stringify(Quest)
+            });
+            var data = JSON.stringify(Quest);
+    	    req.success(function(response) {
+    	    	$('.alertPostQuestSuc').show(1000).delay(3000).hide(1000); // show for 3 seconds and hide
+    	    	//clear form
+    	    	$scope.QuestionText = "";
+    	    	$scope.CorrectAnswer = "";
+    	    	$scope.QuestionOptions1 = "";
+    	    	$scope.QuestionOptions2 = "";
+    	    	$scope.QuestionOptions3 = "";
+    	    	$scope.QuestionOptions4 = "";
+    		});	
+        }
+        else{
+        	$('.alertPostQuestEmpty').show(1000).delay(3000).hide(1000); // show for 3 seconds and hide
+        }
+    };
+
+    
+    $scope.btn_config_exam = function() {
+    
+    	
+    }
+    
+    
+	// show New Question modal fun
+	$scope.NewQuestModalPop = function(){
+		//$scope.replyText = ; // 
+		
+		$('#NewQuestModal').modal('show'); // show reply modal 
+		};
+	
 
 	
 	}]);

@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Create New Exam</title>
+
+<!--  CORE  -->
+<!-- CSS -->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/css/bootstrap-select.min.css">
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
+<link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="../css/style.css">
+
+
+<!-- Javascript -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="../bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../js/session.js"></script>
+
+
+
+<!-- AngularJS library -->
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
+<script type="text/javascript" src="../js/angularModule.js"></script>
+
+<!-- END CORE  -->
+
+
+<script type="text/javascript" src="../js/Exams/questionsTable.js"></script>
+<script type="text/javascript" src="../js/myscripts.js"></script>
+
+
+</head>
+
+
+<body>
+	<div id="header"></div>
+	
+
+
+
+	<div class="page-header">
+		<h2 id="PageHeader">Configure Your Exam</h2>
+	</div>
+
+
+	<div class="tests-container" data-ng-app="TestsApp"
+		data-ng-controller="TestsController">
+		<div class="container">
+
+
+			<div class="alert alert-success alert-dismissible alertPostQuestSuc"
+				role="alert">Exam Created successfully!</div>
+			<div class="alert alert-danger alert-dismissible alertPostQuestEmpty"
+				role="alert">Please Create a Exam!</div>
+
+		</div>
+		
+		<!-- 	DISPLAY QUESTIONS FORM 	 -->
+
+	<div id="QuestionDiv" class="QuestionDiv">
+		<div class="container">
+		
+		<table id="selectedQuestions" class="display" >
+        <thead>
+            <tr>
+                <th></th>
+                <th>Name</th>
+                <th>Position</th>
+                <th>Office</th>
+                <th>Salary</th>
+                
+                
+            </tr>
+        </thead>
+        <tfoot>
+            <tr>
+                <th></th>
+                <th>Name</th>
+                <th>Position</th>
+                <th>Office</th>
+                <th>Salary</th>
+             
+              
+            </tr>
+        </tfoot>
+    </table>
+		
+		<div class="page-header"></div>
+		
+			<div class="jumbotron">
+				<div class="container">
+					
+						
+				<form class="form-horizontal">
+						
+						<div class="form-group">
+							<label for="duration" class="col-sm-2 control-label">Duration</label>
+							<div class="col-sm-10">
+							<input type="text" class="form-control"
+								placeholder="Duration (minutes)" id="duration"
+								data-ng-model="duration" maxlength="50">
+								</div>
+						</div>
+					
+						
+						<div class="form-group">
+							<label for="examCode" class="col-sm-2 control-label">Code</label>
+							<div class="col-sm-10">
+							<input type="text" class="form-control" aria-label=""
+								placeholder="four digits" id="examCode"
+								data-ng-model="examCode" maxlength="50">
+								</div>
+						</div>
+						
+					
+						<div class="form-group">
+							<label for="studentGuidelines" class="col-sm-2 control-label">Student's Guidelines</label>
+							<div class="col-sm-10">
+							<textarea class="form-control" id="studentGuidelines"
+								data-ng-model="studentGuidelines" maxlength="300"
+								placeholder="Your Guidelines" cols="8" rows="4"></textarea>
+								</div>
+						</div>
+					
+						
+						<div class="form-group">
+							<label for="teacherGuidelines" class="col-sm-2 control-label">Teacher's Guidelines</label>
+							<div class="col-sm-10">
+							<textarea class="form-control" id="teacherGuidelines"
+								data-ng-model="teacherGuidelines" maxlength="300"
+								placeholder="Your Guidelines" cols="8" rows="4"></textarea>
+								</div>
+						</div>
+						
+						
+						<div class="form-group">
+							<label for="courseExam" class="col-sm-2 control-label">Choose Course</label>
+							<div class="col-sm-10">
+							<select class="form-control" id="courseExam"data-ng-model="courseExam">
+								
+								<option value="course1">course1</option>
+								<option value="course2">course2</option>
+								<option value="course3">course3</option>
+						</select>
+						</div>
+						</div>
+						
+						<div class="form-group">
+							<label for="typeExam" class="col-sm-2 control-label">Choose Type</label>
+							<div class="col-sm-10">
+							<select class="form-control" id="typeExam"data-ng-model="typeExam">
+								
+								<option value="manual">Printed (manual)</option>
+								<option value="online">Online</option>
+								
+						</select>
+						</div>
+						</div>
+
+					<div class="form-group">
+    					<div class="col-sm-offset-2 col-sm-10">
+					<button type="button" class="btn btn-primary"
+						data-ng-click="btn_create_exam();" id="save_exam">Create</button>
+						
+
+					<button type="button" class="btn btn-primary" data-ng-click="AnswerQuestModalPop();" id="btn_new_question">add new question</button> 
+					</div>
+					</div>
+		</form>
+				</div>
+				<!-- 	END JUMBORTUN 	 -->
+
+
+
+			</div>
+			<!-- 	END CONTAINER 	 -->
+
+
+
+		</div>
+		<!-- 	END CONTAINER 	 -->
+
+
+	</div>
+	<!-- 	END QUESTION-DIV 	 -->
+	
+	
+	<!-- Answer Modal -->
+
+		<div class="modal fade" id="AnswerQuestModal" tabindex="-1" role="dialog" aria-hidden="true">
+  			<div class="modal-dialog">
+    			<div class="modal-content">
+     				 <div class="modal-header">
+        				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        				<h4 class="modal-title">Answer Question</h4>
+      					</div>
+      				<div class="modal-body">
+       					 <div class="form-group">
+							<textarea autofocus class="form-control" data-ng-model="answerText" id="answerText" maxlength="300" placeholder="Your Answer" cols="8" rows="4"></textarea>
+						</div>
+					<div class="form-group pull-right">
+						<button type="button" class="btn btn-primary" data-ng-click="AnswerQuest();" >Post Answer</button>
+					</div>
+        			<br><br>
+      				</div>
+    			</div>
+ 			 </div>
+		</div>
+
+	</div><!--  END TESTSAPP -->
+	
+	
+	<div id="LoadingViewDiv">
+		<img src="../img/loading_questions.gif" class="loading_questions"
+			alt="loading questions">
+	</div>
+
+
+
+ 	<!-- Modal Javascript -->
+    <script>
+	
+    $('#AnswerQuestModal').on('shown.bs.modal', function () {
+
+        $('#answerText').focus(); // as soon as the modal shown focus on textarea        
+    })
+    
+	</script>
+    <!-- Modal Javascript -->
+
+</body>
+
+
+</html>
