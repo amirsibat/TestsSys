@@ -1,5 +1,7 @@
 package testsys.utils;
 
+import testsys.models.User;
+
 public class SqlStatements {
 
     /**
@@ -58,6 +60,12 @@ public class SqlStatements {
      */
     public static final String USER_LOGIN = "SELECT * FROM " + USER_TABLE + " WHERE " + SqlColumns.USER_USERNAME
             + "=? AND " + SqlColumns.USER_PASSWORD + "=?";
+    public static final String USER_GET_USER_BY_USER_ID = "SELECT * FROM " + USER_TABLE + " WHERE " + SqlColumns.USER_ID
+            + "=?";
+    public static final String USER_GET_ALL_TEACHERS = "SELECT * FROM " + USER_TABLE + " WHERE " + SqlColumns.USER_TYPE
+            + "=" + User.Type.TEACHER.ordinal();
+    public static final String USER_GET_ALL_STUDENTS = "SELECT * FROM " + USER_TABLE + " WHERE " + SqlColumns.USER_TYPE
+            + "=" + User.Type.STUDENT.ordinal();
     public static final String USER_INSERT_NEW_USER = "INSERT INTO " + USER_TABLE + " ("
             + SqlColumns.USER_ID + ", "
             + SqlColumns.USER_USERNAME + ", "
@@ -112,6 +120,21 @@ public class SqlStatements {
      */
     public static final String QUESTION_GET_QUESTION_BY_QUESTION_ID = "SELECT * FROM " + QUESTION_TABLE + " WHERE "
             + SqlColumns.QUESTION_ID + " = ?";
+    public static final String QUESTION_GET_QUESTIONS_BY_TEACHER_ID = "SELECT * FROM " + QUESTION_TABLE + " WHERE "
+            + SqlColumns.QUESTION_TEACHER_ID + " = ?";
+    public static final String QUESTION_GET_QUESTIONS_BY_PROFESSION = "SELECT * FROM " + QUESTION_TABLE + " WHERE "
+            + SqlColumns.QUESTION_PROFESSION_ID + " = ?";
+    public static final String QUESTION_GET_QUESTIONS_BY_COURSE_ID = "SELECT * FROM " + QUESTION_TABLE + " WHERE "
+            + SqlColumns.QUESTION_COURSES_LIST + " LIKE '%?%'";
+    public static final String QUESTION_UPDATE = "UPDATE " + COURSE_TABLE + " SET "
+            + SqlColumns.QUESTION_QUESTION_TEXT + "=? ,"
+            + SqlColumns.QUESTION_CORRECT_ANSWER + "=? ,"
+            + SqlColumns.QUESTION_QUESTION_OPTIONS1 + "=? ,"
+            + SqlColumns.QUESTION_QUESTION_OPTIONS2 + "=? ,"
+            + SqlColumns.QUESTION_QUESTION_OPTIONS3 + "=? ,"
+            + SqlColumns.QUESTION_QUESTION_OPTIONS4 + "=? ,"
+            + " WHERE " + SqlColumns.QUESTION_ID + "=?";
+
     public static final String QUESTION_INSER_NEW_QUESTION = "INSERT INTO " + QUESTION_TABLE + " ("
             + SqlColumns.QUESTION_ID + ", " + SqlColumns.QUESTION_QUESTION_TEXT + ", "
             + SqlColumns.QUESTION_CORRECT_ANSWER + ", "
@@ -128,6 +151,37 @@ public class SqlStatements {
     /**
      * RecordTable Statements
      */
-    public static final String RECORD_GET_RECORDS_BY_STUDENT_ID = "SELECT * FROM " + RECORD_TABLE + " WHERE " + SqlColumns.RECORD_ID + "=?";
+    public static final String RECORD_GET_RECORD_BY_RECORD_ID = "SELECT * FROM " + RECORD_TABLE + " WHERE " + SqlColumns.RECORD_ID + "=?";
+    public static final String RECORD_GET_RECORDS_BY_STUDENT_ID = "SELECT * FROM " + RECORD_TABLE + " WHERE " + SqlColumns.RECORD_STUDENT_ID + "=?";
+    public static final String RECORD_GET_RECORDS_BY_EXAM_ID = "SELECT * FROM " + RECORD_TABLE + " WHERE " + SqlColumns.RECORD_EXAM_ID + "=?";
+    public static final String RECORD_GET_RECORDS_BY_COURSE_ID = "SELECT * FROM " + RECORD_TABLE + " WHERE " + SqlColumns.RECORD_COURSE_ID + "=?";
 
+    public static final String RECORD_INSER_NEW_RECORD = "INSERT INTO " + RECORD_TABLE + " ("
+            + SqlColumns.RECORD_ID + ", "
+            + SqlColumns.RECORD_STUDENT_ID + ", "
+            + SqlColumns.RECORD_COURSE_ID + ", "
+            + SqlColumns.RECORD_EXAM_ID + ", "
+            + SqlColumns.RECORD_EXTRA_DATA
+            + ") VALUES(?,?,?,?,?)";
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

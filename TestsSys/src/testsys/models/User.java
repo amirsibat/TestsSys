@@ -105,8 +105,12 @@ public class User {
 	}
 
 	public static User getUserByUserId(String userId) {
-		// TODO getAllTeachers
-		return null;
+		try{
+			return hashMapToObject(Database.getInstance().executeSingleQuery(SqlStatements.USER_GET_USER_BY_USER_ID, SqlColumns.USER_ALL_COLUMNS, userId));
+		}catch(Exception e){
+			L.err(e);
+			return null;
+		}
 	}
 	
 
