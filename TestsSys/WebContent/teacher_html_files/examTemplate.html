@@ -4,69 +4,96 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Welcome to TestsSys</title>
+<title>Create New Exam</title>
 
-
+<!--  CORE  -->
 <!-- CSS -->
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/css/bootstrap-select.min.css">
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
+<link rel="stylesheet" href="../font-awesome/css/font-awesome.min.css">
 <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet" href="../css/style.css">
-<link rel="stylesheet" href="../css/angular-datatables.css">
+
 
 
 <!-- Javascript -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="../bootstrap/js/bootstrap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js"></script>
 <script type="text/javascript" src="../js/session.js"></script>
-<!-- <script type="text/javascript" src="../js/Exams/questionsTable.js"></script> -->
+
 
 
 <!-- AngularJS library -->
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
+<script type="text/javascript" src="../js/angularModule.js"></script>
 
-	 <script src="../js/angular-datatables/angular-datatables.directive.js"></script>
-     <script src="../js/angular-datatables/angular-datatables.instances.js"></script>
-     <script src="../js/angular-datatables/angular-datatables.util.js"></script>
-     <script src="../js/angular-datatables/angular-datatables.renderer.js"></script>
-     <script src="../js/angular-datatables/angular-datatables.factory.js"></script>
-     <script src="../js/angular-datatables/angular-datatables.options.js"></script>
-     <script src="../js/angular-datatables/angular-datatables.js"></script>
-     
-     
-<script type="text/javascript" src="../js/angularDataTables.js"></script>
-<!-- <script type="text/javascript" src="../js/angularModule.js"></script> -->
+<!-- END CORE  -->
+
+
+<script type="text/javascript" src="../js/Exams/questionsTable.js"></script>
 <script type="text/javascript" src="../js/myscripts.js"></script>
 
 
-
- 
 </head>
 
 
 <body>
 	<div id="header"></div>
+	
+
 
 
 	<div class="page-header">
-		<h2 id="PageHeader">My Questions</h2>
+		<h2 id="PageHeader">Configure Your Exam</h2>
 	</div>
 
 
+	<div class="tests-container" data-ng-app="TestsApp"
+		data-ng-controller="TestsController">
+		<div class="container">
 
 
+			<div class="alert alert-success alert-dismissible alertPostQuestSuc"
+				role="alert">Exam Created successfully!</div>
+			<div class="alert alert-danger alert-dismissible alertPostQuestEmpty"
+				role="alert">Please Create an Exam!</div>
+
+		</div>
+		
+		<!-- 	DISPLAY QUESTIONS FORM 	 -->
+
+	<div id="QuestionDiv" class="QuestionDiv">
+		<div class="container">
+			<div class="jumbotrun">
+		
+		
+		
+
+				</div>
+				<!-- 	END JUMBORTUN 	 -->
+
+			</div>
+			<!-- 	END CONTAINER 	 -->
+
+
+
+	</div>
+	<!-- 	END QUESTION-DIV 	 -->
+
+
+	</div><!--  END TESTSAPP -->
+		
 	<div id="LoadingViewDiv">
 		<img src="../img/loading_questions.gif" class="loading_questions"
 			alt="loading questions">
-			
-			
 	</div>
 
 
-	
+
 
 </body>
+
+
 </html>
