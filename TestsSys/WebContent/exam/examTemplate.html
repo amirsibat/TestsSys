@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title></title>
+
+</head>
+
+
+<body>
+
+	<!-- <div class="page-header">
+		<h2 id="PageHeader">Exam </h2>
+	</div>
+ -->
+
+	<!-- <div class="tests-container" data-ng-app="TestsApp"
+		data-ng-controller="TestsController"> -->
+
+	<!-- 	DISPLAY QUESTIONS FORM 	 -->
+
+	<div id="QuestionDiv" class="QuestionDiv">
+		<div class="container">
+			<div class="jumbotrun">
+
+				<div class="quiz-area" data-ng-show="inProgress">
+					<div data-ng-show="!quizOver">
+						<div class="container">
+							<div class="jumbotron">
+
+								<form class="form-horizontal">
+
+									<div class="form-group">
+										<label id="question" for="question" class="control-label">{{id+1}}.
+											{{question}}</label>
+
+									</div>
+
+
+								<!-- 	<div class="form-group">
+										<label id="options" for="options" class="control-label"></label>
+
+									</div> -->
+
+									<div class="form-group">
+										<div class="col-md-4">
+											<div data-ng-repeat="option in options">
+												<input type="radio" name="answer"
+													value="{{option}}">  {{option}}
+											</div>
+										</div>
+									</div>
+
+
+
+									<!-- <ul id="options">
+									<li data-ng-repeat="option in options"><label> <input
+											type="radio" name="answer" value="{{option}}">
+											{{option}}
+									</label></li>
+								</ul> -->
+									<button data-ng-click="checkAnswer()" data-ng-show="answerMode">Submit</button>
+
+									<div data-ng-show="!answerMode">
+										<button data-ng-click="nextQuestion()" class="next-question">Next</button>
+										<!-- <span data-ng-show="correctAns">That is correct!</span> <span
+										data-ng-show="!correctAns">Sorry, that is an incorrect
+										answer.</span> -->
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+					<div data-ng-show="quizOver">
+						<h2>Quiz is over</h2>
+						<!-- <button data-ng-click="reset()">Play again</button> -->
+					</div>
+
+					<div id="score">Score: {{score}}</div>
+				</div>
+
+				<div class="intro" data-ng-show="!inProgress">
+					<p>Welcome to the QuizApp</p>
+					<button id="startQuiz" data-ng-click="start()">Start the
+						Quiz</button>
+				</div>
+
+
+			</div>
+			<!-- 	END JUMBORTUN 	 -->
+
+		</div>
+		<!-- 	END CONTAINER 	 -->
+
+
+
+	</div>
+	<!-- 	END QUESTION-DIV 	 -->
+
+
+	<!-- </div> END TESTSAPP -->
+
+	<div id="LoadingViewDiv">
+		<img src="../img/loading_questions.gif" class="loading_questions"
+			alt="loading questions">
+	</div>
+
+
+
+
+</body>
+
+
+</html>

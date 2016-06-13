@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Create New Exam</title>
+<title></title>
 
 <!--  CORE  -->
 <!-- CSS -->
@@ -27,12 +27,13 @@
 
 <!-- AngularJS library -->
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
+<script type="text/javascript" src="../js/Exams/examApp.js"></script>
 <script type="text/javascript" src="../js/angularModule.js"></script>
 
 <!-- END CORE  -->
 
 
-<script type="text/javascript" src="../js/Exams/questionsTable.js"></script>
+<!-- <script type="text/javascript" src="../js/Exams/questionsTable.js"></script> -->
 <script type="text/javascript" src="../js/myscripts.js"></script>
 
 
@@ -40,18 +41,17 @@
 
 
 <body>
-	<div id="header"></div>
+	<!-- <div id="header"></div> -->
 	
 
 
 
 	<div class="page-header">
-		<h2 id="PageHeader">Configure Your Exam</h2>
+		<h2 id="PageHeader">Good Luck</h2>
 	</div>
 
 
-	<div class="tests-container" data-ng-app="TestsApp"
-		data-ng-controller="TestsController">
+	<div class="tests-container" data-ng-app="quizApp">
 		<div class="container">
 
 
@@ -68,7 +68,7 @@
 		<div class="container">
 			<div class="jumbotrun">
 		
-		
+				<quiz/>
 		
 
 				</div>
@@ -83,7 +83,7 @@
 	<!-- 	END QUESTION-DIV 	 -->
 
 
-	</div><!--  END TESTSAPP -->
+	</div><!--  END quizApp -->
 		
 	<div id="LoadingViewDiv">
 		<img src="../img/loading_questions.gif" class="loading_questions"

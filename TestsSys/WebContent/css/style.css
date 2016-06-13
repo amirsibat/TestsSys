@@ -45,6 +45,17 @@ tr.shown td.details-control {
     background: url('../img/details_close.png') no-repeat center center;
 }
 
+#options {
+	margin: 10px 0;
+	list-style-type: none;
+	float:left;
+}
+
+
+.next-question {
+	margin-right: 10px;
+}
+
 
 .QuestionDiv{
 	padding-top:30px;
