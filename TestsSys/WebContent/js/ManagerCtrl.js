@@ -1,14 +1,73 @@
 (function (angular) {
     app.controller('ManagerCtrl', ["$scope", "$rootScope", "PageNames", function ($scope, $rootScope, PageNames) {
 
+
+        $scope.allExams = [];
+        $scope.allQuestions = [];
+        $scope.selectedExam = {};
+        $('#examDetails').modal({show: false});
+
+
+        $scope.loadAllExams = function () {
+            Http.get("/exam/getAllExams", null, function (result, error) {
+                $scope.$apply(function () {
+
+                    if (error != null) {
+                        console.log(error);
+                        $scope.allExams = [];
+                        return;
+                    }
+
+                    $scope.allExams = result.success;
+                });
+            })
+        };
+        $scope.loadAllQuestions = function () {
+            Http.get("/question/getAllQuestions", null, function (result, error) {
+                $scope.$apply(function () {
+
+                    if (error != null) {
+                        console.log(error);
+                        $scope.allQuestions = [];
+                        return;
+                    }
+
+                    $scope.allQuestions = result.success;
+                });
+            })
+        };
+
+
+        $scope.openModal = function (exam) {
+            $('#examDetails').modal('show');
+            setTimeout(function () {
+                $scope.$apply(function () {
+                    $scope.selectedExam = exam;
+                });
+            }, 100);
+
+        };
+
+
+        $scope.getCoursesNames = function (courses) {
+            var coursesString = "";
+            for (var i = 0; i < courses.length; i++) {
+                coursesString += courses[i].name + (i < courses.length - 1 ? ", " : "");
+            }
+            return coursesString;
+        };
+
+
         $scope.openExams = function () {
             $rootScope.currentPage = MANAGER_EXAMS;
             $rootScope.currentPageName = PageNames[$rootScope.currentPage];
+            $scope.loadAllExams();
             updateHash($rootScope.currentPageName);
         };
         $scope.openQuestions = function () {
             $rootScope.currentPage = MANAGER_QUESTION;
             $rootScope.currentPageName = PageNames[$rootScope.currentPage];
+            $scope.loadAllQuestions();
             updateHash($rootScope.currentPageName);
         };
         $scope.openGrades = function () {
@@ -29,7 +88,7 @@
 
 
         var currentHash = decodeURI(window.location.hash.substring(2));
-        switch (currentHash){
+        switch (currentHash) {
             case PageNames[MANAGER_EXAMS]:
                 $scope.openExams();
                 break;

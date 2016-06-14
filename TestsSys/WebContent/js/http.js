@@ -1,5 +1,5 @@
 var Http = {};
-Http.SERVER_URL = "/TestsSys";
+Http.SERVER_URL = "http://localhost:8080/TestsSys";
 
 Http.get = function (func, query, callback) {
     var queryString = "";

@@ -1,3 +1,28 @@
-<div class="" >
-    MANAGER_QUESTION
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box-container">
+            <div class="row exams-header">
+                <div class="col-xs-1">Id</div>
+                <div class="col-xs-3">Text</div>
+                <div class="col-xs-2">Author</div>
+                <div class="col-xs-2">Profession</div>
+                <div class="col-xs-2">Courses</div>
+                <div class="col-xs-2">Actions</div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="row exam-row" ng-repeat="question in allQuestions">
+                        <div class="col-xs-1">{{question.id}}</div>
+                        <div class="col-xs-3">{{question.text}}</div>
+                        <div class="col-xs-2">{{question.author.firstName + " " +question.author.lastNAme}}</div>
+                        <div class="col-xs-2">{{question.profession.name}}</div>
+                        <div class="col-xs-2">{{getCoursesNames(question.courses)}}</div>
+                        <div class="col-xs-2">
+                            <button class="btn btn-default">More info</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

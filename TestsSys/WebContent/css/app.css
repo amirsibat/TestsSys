@@ -440,16 +440,16 @@ body {
 
 .collapse-question-options {
     padding: 8px 40px 8px;
-    background: rgba(0,0,0,.1);
+    background: rgba(0, 0, 0, .1);
     margin-bottom: -12px;
     margin-top: 11px;
 }
 
-
-.question-modal-grade-container{
+.question-modal-grade-container {
     text-align: center;
 }
-input.question-modal-grade{
+
+input.question-modal-grade {
     width: 29px;
     margin: auto;
     position: relative;
@@ -459,16 +459,15 @@ input.question-modal-grade{
     margin-right: 16px;;
 }
 
-.correct{
-    color: rgb(0,180,0);
+.correct {
+    color: rgb(0, 180, 0);
     font-weight: 500;
 }
 
-
-.selected-questions-row{
+.selected-questions-row {
     padding-bottom: 6px;
     margin-bottom: 6px;
-    border-bottom: 1px solid rgba(0,0,0,.1);
+    border-bottom: 1px solid rgba(0, 0, 0, .1);
     padding-top: 6px;
     font-size: 12px;
     line-height: 14px;
@@ -478,13 +477,14 @@ input.question-modal-grade{
     text-align: center;
     left: 10px;
     font-size: 18px;
-    color: rgb(207,0,0);
+    color: rgb(207, 0, 0);
 }
 
-.action-col span{
+.action-col span {
     cursor: pointer;
 }
-.action-col span:hover{
+
+.action-col span:hover {
     opacity: 0.7;
 }
 
@@ -492,16 +492,43 @@ input.question-modal-grade{
     width: 133px;
     height: 33px;
     border-radius: 4px;
-    border: 1px solid rgba(0,0,0,.1);
+    border: 1px solid rgba(0, 0, 0, .1);
     padding: 6px 11px;
     text-align: left;
 }
 
-.answer-input{
-	width: 100%;
-	height: 33px;
-	border-radius: 4px;
-    border: 1px solid rgba(0,0,0,.1);
+.answer-input {
+    width: 100%;
+    height: 33px;
+    border-radius: 4px;
+    border: 1px solid rgba(0, 0, 0, .1);
     padding: 6px 11px;
     text-align: left;
+}
+
+.exams-header {
+    border-bottom: 1px solid rgba(0, 0, 0, .1);
+    padding-bottom: 10px;
+    text-align: center;
+    font-weight: 700;
+}
+
+.exam-row {
+    text-align: center;
+    padding: 10px 0;
+    line-height: 34px;
+    background: white;
+    cursor: pointer;
+    border-bottom: 1px solid rgba(0, 0, 0, .2);
+}
+
+.exam-row:hover {
+    background: rgb(250, 250, 250);
+}
+
+.exam-row > div {
+    border-left: 1px solid rgba(0, 0, 0, .1);
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
 }

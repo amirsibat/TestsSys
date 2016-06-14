@@ -123,6 +123,7 @@ public class SqlStatements {
      */
     public static final String QUESTION_GET_QUESTION_BY_QUESTION_ID = "SELECT * FROM " + QUESTION_TABLE + " WHERE "
             + SqlColumns.QUESTION_ID + " = ?";
+    public static final String QUESTION_GET_ALL_QUESTIONS = "SELECT * FROM " + QUESTION_TABLE;
     public static final String QUESTION_GET_QUESTIONS_BY_TEACHER_ID = "SELECT * FROM " + QUESTION_TABLE + " WHERE "
             + SqlColumns.QUESTION_TEACHER_ID + " = ?";
     public static final String QUESTION_GET_QUESTIONS_BY_PROFESSION = "SELECT * FROM " + QUESTION_TABLE + " WHERE "

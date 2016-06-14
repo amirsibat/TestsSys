@@ -10,6 +10,7 @@ import org.json.JSONObject;
 
 import testsys.constants.AppConstants;
 import testsys.utils.Database;
+import testsys.utils.L;
 import testsys.utils.SqlColumns;
 import testsys.utils.SqlStatements;
 
@@ -225,7 +226,7 @@ public class Exam {
         String[] columnsNames = new String[1];
         columnsNames[0] = "ID";
         String[] columnsTypes = new String[1];
-        columnsNames[0] = "TEXT";
+        columnsTypes[0] = "TEXT";
 
         try {
             int maxExamId = 0;
@@ -243,7 +244,7 @@ public class Exam {
             }
             return professionId + courseId + newExamId;
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+        	L.err(e);
         }
         return null;
     }

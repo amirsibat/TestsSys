@@ -194,6 +194,15 @@ public class Question {
         }
         return questionsList;
     }
+    
+    public static List<Question> getAllQuestions() throws Exception{
+    	List<Question> questionsList = new ArrayList<>();
+        List<HashMap<String, Object>> objectsList = Database.getInstance().executeListQuery(SqlStatements.QUESTION_GET_ALL_QUESTIONS, SqlColumns.QUESTION_ALL_COLUMNS);
+        for (int i = 0; i < objectsList.size(); i++) {
+            questionsList.add(hashMapToObject(objectsList.get(i)));
+        }
+        return questionsList;
+	}
 
 
     public static Question hashMapToObject(HashMap<String, Object> hashMapCourse) throws Exception {
@@ -262,4 +271,5 @@ public class Question {
         }
         return json;
     }
+
 }

@@ -18,8 +18,28 @@
   <listener>
     <listener-class>testsys.utils.ServletsListener</listener-class>
   </listener>
-  
-  
+
+
+<servlet>
+    <description></description>
+    <display-name>getAllQuestions</display-name>
+    <servlet-name>getAllQuestions</servlet-name>
+    <servlet-class>testsys.servlets.getAllQuestions</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>getAllQuestions</servlet-name>
+    <url-pattern>/question/getAllQuestions</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>getAllExams</display-name>
+    <servlet-name>getAllExams</servlet-name>
+    <servlet-class>testsys.servlets.getAllExams</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>getAllExams</servlet-name>
+    <url-pattern>/exam/getAllExams</url-pattern>
+  </servlet-mapping>
   <servlet>
     <description></description>
     <display-name>CreateNewExam</display-name>
@@ -30,7 +50,6 @@
     <servlet-name>CreateNewExam</servlet-name>
     <url-pattern>/exam/CreateNewExam</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <description></description>
     <display-name>GetQuestionsByCourse</display-name>
