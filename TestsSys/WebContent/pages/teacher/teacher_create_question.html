@@ -1,3 +1,154 @@
-<div class="" >
-    TEACHER_CREATE_QUESTION
+<div class="row">
+    <div class="col-xs-1">
+    </div>
+    <div class="col-xs-10">
+        <div class="box-container">
+            <div class="alert alert-danger" style="display: none;" id="alertView" role="alert"></div>
+            <div class="box-row row">
+                <div class="col-xs-3 title">
+                    Profession:
+                </div>
+                <div class="col-xs-9 box-content">
+                    <div class="dropdown">
+                        <button class="btn btn-default dropdown-toggle" type="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            {{(newQuestionHolder.profession == null ? "Choose Profession" : newQuestionHolder.profession.name)}}
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                            <li class="option-dropdown" ng-repeat="profession in allProfessions"
+                                data-ng-click="selectQProfession(profession)">
+                                {{profession.name}}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="box-row row">
+                <div class="col-xs-3 title">
+                    Courses:
+                </div>
+                <div class="col-xs-9 box-content">
+                    <div class="dropdown">	
+                        <button class="btn btn-default dropdown-toggle" type="button"
+                         ng-disabled="newQuestionHolder.profession == null"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            {{(newQuestionHolder.courses == null ? "Choose Courses" : newQuestionHolder.selectedCourses.length)}}
+                            <span class="caret"></span>
+                        </button>
+
+                       <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                            <li class="option-dropdown" ng-repeat="course in allCoursesBySelectedProfession"
+                                ng-click="selectQCourses()">{{course.name}}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>  
+            
+            <div class="box-row row">
+                <div class="col-xs-3 title">
+                    Question's Text:
+                </div>
+                <div class="col-xs-9 box-content">
+                    <textarea aria-multiline="true" ng-model="newQuestionHolder.questionText" class="text-area"
+                              maxlength="255" placeholder="Enter question's text"></textarea>
+                </div>
+            </div>
+            <div class="box-row row">
+                <div class="col-xs-3 title">
+                    First Option:
+                </div>
+                <div class="col-xs-9 box-content">
+                    <input ng-model="newQuestionHolder.firstAnswer" class="answer-input"
+                              maxlength="70" placeholder="Enter First Option">
+                </div>
+            </div>
+            <div class="box-row row">
+                <div class="col-xs-3 title">
+                    Second Option:
+                </div>
+                <div class="col-xs-9 box-content">
+                   <input ng-model="newQuestionHolder.secondAnswer" class="answer-input"
+                              maxlength="70" placeholder="Enter Second Option">
+                </div>
+            </div>
+            <div class="box-row row">
+                <div class="col-xs-3 title">
+                    Third Option:
+                </div>
+                <div class="col-xs-9 box-content">
+                   <input ng-model="newQuestionHolder.thirdAnswer" class="answer-input"
+                              maxlength="70" placeholder="Enter Third Option">
+                </div>
+            </div>
+          	<div class="box-row row">
+                <div class="col-xs-3 title">
+                    Fourth Option:
+                </div>
+                <div class="col-xs-9 box-content">
+                   <input  ng-model="newQuestionHolder.fourthAnswer" class="answer-input"
+                              maxlength="70" placeholder="Enter Fourth Option">
+                </div>
+            </div>
+          	<div class="box-row row">
+                <div class="col-xs-3 title">
+                    Correct Answer:
+                </div>
+                <div class="col-xs-9 box-content">
+                       <div class="dropdown">	
+                        <button class="btn btn-default dropdown-toggle" type="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            {{(newQuestionHolder.correctAnswer == null ? "Choose Answer" : newQuestionHolder.correctAnswer)}}
+                            <span class="caret"></span>
+                        </button> 
+                       <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                            <li class="option-dropdown" ng-repeat="opt in options"
+                                ng-click="selectQAnswer(opt.val)">{{opt.val}}
+                            </li>
+                        </ul>
+                    </div>
+                 
+                </div>
+            </div>
+          
+          
+            <div class="box-row row no-border">
+                <div class="col-xs-12 right-align">
+                    <div class="btn btn-danger" data-toggle="modal" data-target="#myModal">Clear</div>
+                    <button type="button" id="createQuestion" ng-click="createNewExam()" data-loading-text="Loading..." class="btn btn-primary" autocomplete="off">
+                        Create
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-1">
+    </div>
 </div>
+<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" id="myModal">
+    <div class="modal-dialog modal-sm" style="z-index: 1100;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Are you sure you want to clear exam data?</h4>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clearNewExamData()">Sure
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+
+
+
+
+
+
+
+

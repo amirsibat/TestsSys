@@ -28,7 +28,7 @@ public class ServletsListener implements ServletContextListener {
     public void contextInitialized(ServletContextEvent event) {
 
         try {
-            dropTables();
+           /* dropTables();*/
 
             createTable(SqlStatements.PROFESSION_CREATE_TABLE, SqlStatements.PROFESSION_TABLE);
             createTable(SqlStatements.COURSE_CREATE_TABLE, SqlStatements.COURSE_TABLE);

@@ -11,7 +11,26 @@ var teacherScope = null;
             studentsNote: "",
             questions: []
         };
-        $scope.newQuestionHolder = {};
+        $scope.newQuestionHolder = {
+        	profession: null,
+        	selectedCourses: [],
+            questionText: "",
+            firstAnswer: "",
+            secondAnswer: "",
+            thirdAnswer: "",
+            fourthAnswer: "",
+            correctAnswer: ""
+        };
+        $scope.options = [
+            { option: "firstAnswerd",
+        	  val: "1"},
+            { option: "secondAnswer",
+              val: "2"},
+            { option: "thirdAnswer",
+              val: "3"},
+            { option: "fourthAnswer",
+              val: "4"}
+        ];
         $scope.examsWaitingForCheck = [];
         $scope.statistics = {};
         $scope.allQuestionsByCourse = [];
@@ -70,6 +89,26 @@ var teacherScope = null;
             });
         };
 
+        $scope.selectQAnswer = function (answer){
+        	$scope.newQuestionHolder.correctAnswer = answer;
+        };
+        
+        $scope.selectQProfession = function (profession) {
+            $scope.newQuestionHolder.profession = profession;
+            $scope.newQuestionHolder.selectedCourses = [];
+            $scope.loadCourses(profession);
+        };
+        
+        $scope.selectQCourses = function () {
+            for(var i = 0; i > $scope.allCoursesBySelectedProfession.length; i++){
+            	if($scope.allCoursesBySelectedProfession[i].checked == true){
+            		$scope.newQuestionHolder.selectedCourses.push($scope.allCoursesBySelectedProfession[i]);
+            	}
+            }
+       
+        };
+        
+        
         $scope.selectProfession = function (profession) {
             $scope.newExamHolder.profession = profession;
             $scope.newExamHolder.course = null;
@@ -159,6 +198,7 @@ var teacherScope = null;
             $scope.newQuestionHolder = {};
             $rootScope.currentPage = TEACHER_CREATE_QUESTION;
             $rootScope.currentPageName = PageNames[$rootScope.currentPage];
+            $scope.loadTeacherProfessions();
             updateHash($rootScope.currentPageName);
         };
         $scope.openRequestPermission = function () {
