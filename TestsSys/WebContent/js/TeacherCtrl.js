@@ -150,7 +150,22 @@ var teacherScope = null;
             };
             $('#alertView').fadeOut();
         };
-
+        
+        
+        $scope.clearNewQuestionData = function () {
+            $scope.newQuestionHolder = {
+                profession: null,
+                selectedCourses: [],
+                questionText: "",
+                firstAnswer: "",
+                secondAnswer: "",
+                thirdAnswer: "",
+                fourthAnswer: "",
+                correctAnswer: ""
+            };
+            $('#alertView').fadeOut();
+        };
+        
         $scope.removeQuestionFromExam = function (question) {
             for(var i=0; i<$scope.newExamHolder.questions.length; i++){
                 if($scope.newExamHolder.questions[i].id == question.id){
@@ -176,6 +191,19 @@ var teacherScope = null;
             });
         };
 
+        
+        $scope.createNewQuestion = function () {
+            $('#alertView').fadeOut();
+            console.log($scope.newQuestionHolder);
+            Http.post("/question/CreateQuestion", null, $scope.newQuestionHolder, function (result, error) {
+                if(error != null){
+                    $('#alertView').html("Server error");
+                    $('#alertView').fadeIn();
+                    return;
+                }
+                /*$scope.openPublishExams();*/
+            });
+        };
 
         /**
          * Paging

@@ -5,21 +5,19 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import testsys.models.Question;
-import testsys.models.Teacher;
 import testsys.models.User;
+import testsys.utils.Helper;
+import testsys.utils.L;
 
 
 /**
@@ -47,47 +45,74 @@ public class CreateQuestion extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+		response.setContentType("application/json; charset=UTF-8");
+		PrintWriter out = response.getWriter();
+
+
+		User user = Helper.validateSession(request);
+		if (user == null) {
+			response.setStatus(403);
+			out.println("{\"error\":\"Not authorized\"}");
+			out.close();
+			return;
+		}
+
+		if(user.mType != User.Type.TEACHER){
+			response.setStatus(400);
+			out.println("{\"error\":\"Bad request\"}");
+			out.close();
+			return;
+		}
+
+
+		//loop over inputStream
+		BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream(),"UTF-8"));
+		StringBuilder jsonFileContent = new StringBuilder();
+
+		//read line by line from file
+		String nextLine = null;
+		while ((nextLine = br.readLine()) != null){
+			jsonFileContent.append(nextLine);
+		}
 		try{
-			//wrap input stream with a buffered reader to allow reading the file line by line
-			BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream(),"UTF-8"));
-			StringBuilder jsonFileContent = new StringBuilder();
-			//read line by line from file
-			String nextLine = null;
-			while ((nextLine = br.readLine()) != null){
-				jsonFileContent.append(nextLine);
-			}
+			JSONObject json = new JSONObject(jsonFileContent.toString());
 			
-			//Obtain the session object, create a new session if doesn't exist
-			HttpSession session = request.getSession(true);
-			//get session variable
-			User user = (User) session.getAttribute("user");
+			String professionId = json.getJSONObject("profession").getString("id");
 			
-			
-			response.setContentType("application/json; charset=UTF-8");
-			PrintWriter out = response.getWriter();
-			
-			Gson gson = new GsonBuilder().create();
-			Question m = gson.fromJson(jsonFileContent.toString(),Question.class);
-		
-	        
-	        Question.createQuestion(m.mText, m.mCorrectAnswer, Teacher.getTeacherByTeacherId(user.mId) , m.mOptions1, m.mOptions2, m.mOptions3, m.mOptions4, m.mCourses);
-			
-	      /*  ArrayList<Question> QuestsArray = new ArrayList<Question>();
-	        QuestsArray = Question.getAllQuestions(); //
-	        
-	        Gson tgson = new Gson();
-	    	//convert from Questions ArrayList to json
-	    	String userJsonResult = tgson.toJson(QuestsArray, new TypeToken<ArrayList<Question>>() {}.getType());
-	    	out.println(userJsonResult);
-	    	out.close();*/
-	    	
-			}catch (IOException e) {  
-		        e.printStackTrace();  
-		    } catch (Exception e) {
+			JSONArray clientCoursesList = json.getJSONArray("selectedCourses");
+			JSONArray coursesList = new JSONArray();
+			for(int i=0; i<clientCoursesList.length(); i++){
+				String courseId = clientCoursesList.getJSONObject(i).getString("id");
 				
-				e.printStackTrace();
+				coursesList.put(courseId);
 			}
 			
+			String id = Question.generateQuestionId(professionId);
+			String authorId = user.mId;
+			String questionText = json.getString("questionText");
+			String firstAnswer = json.getString("firstAnswer");
+			String secondAnswer = json.getString("secondAnswer");
+			String thirdAnswer = json.getString("thirdAnswer");
+			String fourthAnswer = json.getString("fourthAnswer");
+			Integer correctAnswer = json.getInt("correctAnswer");
+
+			
+			
+			 Question question = new Question(id, questionText, correctAnswer, authorId, professionId,
+					 firstAnswer, secondAnswer, thirdAnswer, fourthAnswer, coursesList.toString());
+			 question.insert();
+
+			
+			response.setStatus(200);
+			out.println("{\"success\":"+question.toJSON().toString()+"}");
+		}catch(Exception e){
+			L.err(e);
+			response.setStatus(500);
+			out.println("{\"error\":\""+e.getMessage()+"\"}");
+		}
+		out.close();
+		
 	}
+
 
 }
