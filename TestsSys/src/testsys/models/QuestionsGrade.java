@@ -1,11 +1,22 @@
 package testsys.models;
 
-public class QuestionsGrade {
-    public Question question;
-    public Integer grade;
+import org.json.JSONObject;
 
-    public QuestionsGrade(Question question, Integer grade) {
-        this.question = question;
-        this.grade = grade;
+import testsys.constants.AppConstants;
+
+public class QuestionsGrade {
+    public String mQuestionId;
+    public Integer mGrade;
+
+    public QuestionsGrade(String questionId, Integer grade) {
+        this.mQuestionId = questionId;
+        this.mGrade = grade;
+    }
+    
+    public JSONObject toJSON() throws Exception{
+    	JSONObject json = new JSONObject();
+    	json.put(AppConstants.GRADE_KEY, mGrade);
+    	json.put(AppConstants.QUESTION_ID_KEY, mQuestionId);
+    	return json;
     }
 }

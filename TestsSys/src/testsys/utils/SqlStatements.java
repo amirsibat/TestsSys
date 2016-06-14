@@ -20,8 +20,8 @@ public class SqlStatements {
      */
     public static final String PROFESSION_CREATE_TABLE = "CREATE TABLE " + PROFESSION_TABLE + " (ID VARCHAR(2), Name VARCHAR(30), PRIMARY KEY (ID))";
     public static final String COURSE_CREATE_TABLE = "CREATE TABLE " + COURSE_TABLE + " (ID VARCHAR(2), Name VARCHAR(30), ProfessionID VARCHAR(2), PRIMARY KEY (ID))";
-    public static final String USER_CREATE_TABLE = "CREATE TABLE " + USER_TABLE + " (ID VARCHAR(4), Username VARCHAR(30), Password VARCHAR(30), FirstName VARCHAR(30), LastName VARCHAR(30), Description VARCHAR(100), Courses VARCHAR(100), UserType INT, PRIMARY KEY (ID))";
-    public static final String EXAM_CREATE_TABLE = "CREATE TABLE " + EXAM_TABLE + " (ID VARCHAR(6), TeacherID VARCHAR(4), Description VARCHAR(200), DescriptionTeacher VARCHAR(200), DateAdded DATE, Duration INT, QuestionsList VARCHAR(2000), CourseID VARCHAR(2), ProfessionID VARCHAR(2), Status INT, PRIMARY KEY (ID))";
+    public static final String USER_CREATE_TABLE = "CREATE TABLE " + USER_TABLE + " (ID VARCHAR(4), Username VARCHAR(30), Password VARCHAR(30), FirstName VARCHAR(30), LastName VARCHAR(30), Description VARCHAR(100), Courses VARCHAR(100), UserType INT, UserStId VARCHAR(100), PRIMARY KEY (ID))";
+    public static final String EXAM_CREATE_TABLE = "CREATE TABLE " + EXAM_TABLE + " (ID VARCHAR(6), TeacherID VARCHAR(4), Description VARCHAR(200), DescriptionTeacher VARCHAR(200), DateAdded DATE, Duration INT, QuestionsList VARCHAR(2000), CourseID VARCHAR(2), ProfessionID VARCHAR(2), Status INT, ExamType INT, ExamCode VARCHAR(4), PRIMARY KEY (ID))";
     public static final String QUESTION_CREATE_TABLE = "CREATE TABLE " + QUESTION_TABLE + "  (ID VARCHAR(6), QuestionText VARCHAR(200), CorrectAnswer INT,  TeacherID VARCHAR(4), ProfessionID VARCHAR(2), QuestionOptions1 VARCHAR(200), QuestionOptions2  VARCHAR(200), QuestionOptions3 VARCHAR(200), QuestionOptions4 VARCHAR(200), CoursesList VARCHAR(100), PRIMARY KEY (ID))";
     public static final String RECORD_CREATE_TABLE = "CREATE TABLE " + RECORD_TABLE + "  (ID VARCHAR(10), StudentID VARCHAR(4), CourseID VARCHAR(2), ExamID VARCHAR(6), ExtraData VARCHAR(2000), PRIMARY KEY (ID))";
 
@@ -74,8 +74,9 @@ public class SqlStatements {
             + SqlColumns.USER_LAST_NAME + ", "
             + SqlColumns.USER_DESCRIPTION + ", "
             + SqlColumns.USER_COURSES + ", "
-            + SqlColumns.USER_TYPE
-            + ") VALUES(?,?,?,?,?,?,?,?)";
+            + SqlColumns.USER_TYPE + ", "
+            + SqlColumns.USER_ST_ID
+            + ") VALUES(?,?,?,?,?,?,?,?,?)";
     public static final String USER_DELETE = "DELETE FROM " + USER_TABLE + " WHERE " + SqlColumns.USER_ID + "=?";
 
     public static final String STUDENT_GET_STUDENTS_BY_COURSE_ID = "SELECT * FROM " + USER_TABLE + " WHERE "
@@ -99,7 +100,9 @@ public class SqlStatements {
             + SqlColumns.EXAM_QUESTIONS_LIST + ", "
             + SqlColumns.EXAM_COURSE_ID + ", "
             + SqlColumns.EXAM_PROFESSION_ID + ", "
-            + SqlColumns.EXAM_STATUS + ") VALUES(?,?,?,?,?,?,?,?,?,?) ";
+            + SqlColumns.EXAM_STATUS + ", "
+            + SqlColumns.EXAM_TYPE + ", "
+            + SqlColumns.EXAM_CODE + ") VALUES(?,?,?,?,?,?,?,?,?,?,?,?) ";
 
     public static final String EXAM_UPDATE_STATEMENT = "UPDATE " + EXAM_TABLE + " SET "
             + SqlColumns.EXAM_DESCRIPTION + "=? , "

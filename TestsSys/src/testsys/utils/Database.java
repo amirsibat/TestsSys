@@ -23,9 +23,10 @@ public class Database {
 
     private static Database INSTANCE;
     private BasicDataSource mBasicDataSource;
+
     /**
-     * @throws NamingException 
-     * @throws Exception failed to initial data source context
+     * @throws NamingException
+     * @throws Exception       failed to initial data source context
      */
     public Database() throws NamingException {
         Context context = new InitialContext();
@@ -44,7 +45,7 @@ public class Database {
         Connection connection = mBasicDataSource.getConnection();
         PreparedStatement statement = connection.prepareStatement(statementString);
         for (int i = 0; i < params.length; i++) {
-            statement.setObject(i+1, params[i]);
+            statement.setObject(i + 1, params[i]);
         }
         ResultSet resultSet = statement.executeQuery();
         while (resultSet.next()) {
@@ -58,32 +59,32 @@ public class Database {
         connection.close();
         return objectListToReturn;
     }
-    
+
     public JSONArray executeListQueryAsJSON(String statementString, String[] columnNames, String[] columnTypes, Object... params) throws Exception {
-    	JSONArray objectListToReturn = new JSONArray();
+        JSONArray objectListToReturn = new JSONArray();
         Connection connection = mBasicDataSource.getConnection();
         PreparedStatement statement = connection.prepareStatement(statementString);
         for (int i = 0; i < params.length; i++) {
-            statement.setObject(i+1, params[i]);
+            statement.setObject(i + 1, params[i]);
         }
         ResultSet resultSet = statement.executeQuery();
         while (resultSet.next()) {
             JSONObject tempObject = new JSONObject();
             for (int i = 0; i < columnNames.length; i++) {
-				switch (columnTypes[i]) {
-				case "TEXT":
-					tempObject.put(columnNames[i], (String) resultSet.getObject(columnNames[i]));
-					break;
-				case "INTEGER":
-					tempObject.put(columnNames[i], (Integer) resultSet.getObject(columnNames[i]));
-					break;
-				case "DATE":
-					tempObject.put(columnNames[i], (Date) resultSet.getObject(columnNames[i]));
-					break;
-				default:
-					break;
-				}
-                
+                switch (columnTypes[i]) {
+                    case "TEXT":
+                        tempObject.put(columnNames[i], (String) resultSet.getObject(columnNames[i]));
+                        break;
+                    case "INTEGER":
+                        tempObject.put(columnNames[i], (Integer) resultSet.getObject(columnNames[i]));
+                        break;
+                    case "DATE":
+                        tempObject.put(columnNames[i], (Date) resultSet.getObject(columnNames[i]));
+                        break;
+                    default:
+                        break;
+                }
+
             }
             objectListToReturn.put(tempObject);
         }
@@ -97,58 +98,63 @@ public class Database {
         Connection connection = mBasicDataSource.getConnection();
         PreparedStatement statement = connection.prepareStatement(statementString);
         for (int i = 0; i < params.length; i++) {
-            statement.setObject(i+1, params[i]);
+            statement.setObject(i + 1, params[i]);
         }
         ResultSet resultSet = statement.executeQuery();
         if (resultSet.next()) {
             objectToReturn = new HashMap<>();
             for (int i = 0; i < columnNames.length; i++) {
-                objectToReturn.put(columnNames[i], resultSet.getObject(columnNames[i]));
+                try {
+                    objectToReturn.put(columnNames[i], resultSet.getObject(columnNames[i]));
+                } catch (Exception e) {
+                    L.err(e);
+                    objectToReturn.put(columnNames[i], null);
+                }
             }
         }
         statement.close();
         connection.close();
         return objectToReturn;
     }
-    
-    public JSONObject executeSingleQueryAsJSON(String statementString, String[] columnNames,String[] columnTypes, Object... params) throws Exception {
+
+    public JSONObject executeSingleQueryAsJSON(String statementString, String[] columnNames, String[] columnTypes, Object... params) throws Exception {
         JSONObject objectToReturn = null;
         Connection connection = mBasicDataSource.getConnection();
         PreparedStatement statement = connection.prepareStatement(statementString);
         for (int i = 0; i < params.length; i++) {
-            statement.setObject(i+1, params[i]);
+            statement.setObject(i + 1, params[i]);
         }
         ResultSet resultSet = statement.executeQuery();
         if (resultSet.next()) {
             objectToReturn = new JSONObject();
             for (int i = 0; i < columnNames.length; i++) {
-            	switch (columnTypes[i]) {
-				case "TEXT":
-					objectToReturn.put(columnNames[i], (String) resultSet.getObject(columnNames[i]));
-					break;
-				case "INTEGER":
-					objectToReturn.put(columnNames[i], (Integer) resultSet.getObject(columnNames[i]));
-					break;
-				case "DATE":
-					objectToReturn.put(columnNames[i], (Date) resultSet.getObject(columnNames[i]));
-					break;
-				default:
-					break;
-				}
-                
+                switch (columnTypes[i]) {
+                    case "TEXT":
+                        objectToReturn.put(columnNames[i], (String) resultSet.getObject(columnNames[i]));
+                        break;
+                    case "INTEGER":
+                        objectToReturn.put(columnNames[i], (Integer) resultSet.getObject(columnNames[i]));
+                        break;
+                    case "DATE":
+                        objectToReturn.put(columnNames[i], (Date) resultSet.getObject(columnNames[i]));
+                        break;
+                    default:
+                        break;
+                }
+
             }
         }
         statement.close();
         connection.close();
         return objectToReturn;
     }
-    
+
 
     public Boolean executeUpdate(String statementString, Object... params) throws Exception {
         Connection connection = mBasicDataSource.getConnection();
         PreparedStatement statement = connection.prepareStatement(statementString);
         for (int i = 0; i < params.length; i++) {
-            statement.setObject(i+1, params[i]);
+            statement.setObject(i + 1, params[i]);
         }
         Boolean result = statement.execute();
         statement.close();

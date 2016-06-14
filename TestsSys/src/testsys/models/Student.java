@@ -1,6 +1,7 @@
 package testsys.models;
 
 import testsys.utils.Database;
+import testsys.utils.L;
 import testsys.utils.SqlColumns;
 import testsys.utils.SqlStatements;
 
@@ -23,8 +24,8 @@ public class Student extends User {
      * @param description personal details
      * @param courses     list of course ids separated by commas in the DB
      */
-    public Student(String id, String username, String firstName, String lastName, String description, List<String> courses) throws Exception {
-        super(id, username, firstName, lastName, description, courses, Type.STUDENT.ordinal());
+    public Student(String id, String username, String firstName, String lastName, String description, List<String> courses, String stId) throws Exception {
+        super(id, username, firstName, lastName, description, courses, Type.STUDENT.ordinal(), stId);
     }
 
     /**
@@ -38,7 +39,9 @@ public class Student extends User {
         List<Student> studentList = new ArrayList<>();
         List<HashMap<String, Object>> students = Database.getInstance().executeListQuery(SqlStatements.STUDENT_GET_STUDENTS_BY_COURSE_ID, SqlColumns.USER_ALL_COLUMNS, courseId);
         for (int i = 0; i < students.size(); i++) {
-            studentList.add((Student) hashMapToObject(students.get(i)));
+        	Student st = (Student) hashMapToObject(students.get(i));
+        	st.mStId = (String) students.get(i).get(SqlColumns.USER_ST_ID);
+            studentList.add(st);
         }
         return studentList;
     }
@@ -48,7 +51,15 @@ public class Student extends User {
     }
 
     public static Student getStudentByStudentId(String studentId) {
-        return (Student) User.getUserByUserId(studentId);
+    	try{
+    	HashMap<String, Object> data = Database.getInstance().executeSingleQuery(SqlStatements.USER_GET_USER_BY_USER_ID, SqlColumns.USER_ALL_COLUMNS, studentId);
+        Student st = (Student) User.hashMapToObject(data);
+        st.mStId = (String) data.get(SqlColumns.USER_ST_ID);
+    	return st;
+    	}catch(Exception e){
+    		L.err(e);
+    		return null;
+    	}
     }
 
 }

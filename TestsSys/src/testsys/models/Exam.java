@@ -1,7 +1,7 @@
 package testsys.models;
 
-import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -22,6 +22,8 @@ public class Exam {
 
     public enum ExamStatus {NEW, USED}
 
+    public enum ExamType {MANUAL, ONLINE}
+
     public String mId;
     public Teacher mAuthor;
     public String mDescription;
@@ -32,6 +34,8 @@ public class Exam {
     public Course mCourse;
     public Profession mProfession;
     public ExamStatus mStatus;
+    public ExamType mType;
+    public String mCode;
 
     /**
      * Default Constructor
@@ -50,7 +54,7 @@ public class Exam {
      * @param questionsList List of Pairs includes Question and Grade
      */
     public Exam(String id, Teacher author, String description, String descriptionTeacher, Date date, Integer duration,
-                List<QuestionsGrade> questionsList, Course course, Profession profession, ExamStatus status) {
+                List<QuestionsGrade> questionsList, Course course, Profession profession, ExamStatus status, ExamType type, String code) {
         mId = id;
         mAuthor = author;
         mDescription = description;
@@ -61,6 +65,8 @@ public class Exam {
         mCourse = course;
         mProfession = profession;
         mStatus = status;
+        mType = type;
+        mCode = code;
     }
 
     /**
@@ -75,7 +81,7 @@ public class Exam {
      *                      as String
      */
     public Exam(String id, String teacherId, String description, String descriptionTeacher, Date date, Integer duration,
-                String questionsList, String courseId, String professionId, int statusInt) throws Exception {
+                String questionsList, String courseId, String professionId, int statusInt, int typeInt, String code) throws Exception {
         mId = id;
         mAuthor = Teacher.getTeacherByTeacherId(teacherId);
         mDescription = description;
@@ -88,20 +94,22 @@ public class Exam {
             JSONObject tempQuestion = questionsJSON.getJSONObject(i);
             Question question = Question.getQuestionByQuestionId(tempQuestion.getString(AppConstants.QUESTION_ID_KEY));
             assert question != null;
-            Integer questionOrder = tempQuestion.getInt(AppConstants.GRADE_KEY);
-            mQuestionsList.add(new QuestionsGrade(question, questionOrder));
+            Integer questionGrade = tempQuestion.getInt(AppConstants.GRADE_KEY);
+            mQuestionsList.add(new QuestionsGrade(question.mId, questionGrade));
         }
         mCourse = Course.getCourseByCourseId(courseId);
         mProfession = Profession.getProfessionByProfessionId(professionId);
         mStatus = ExamStatus.values()[statusInt];
+        mType = ExamType.values()[typeInt];
+        mCode = code;
     }
 
 
     public static boolean createExam(String teacherId, String description, String descriptionTeacher, Date date, Integer duration,
-                                     String questionsList, String courseId, String professionId, int statusInt) {
+                                     String questionsList, String courseId, String professionId, int statusInt, int typeInt, String code) {
         try {
             Exam exam = new Exam(Exam.generateExamId(professionId, courseId), teacherId, description, descriptionTeacher,
-                    date, duration, questionsList, courseId, professionId, statusInt);
+                    date, duration, questionsList, courseId, professionId, statusInt, typeInt, code);
             exam.insert();
             return true;
         } catch (Exception e) {
@@ -110,7 +118,7 @@ public class Exam {
         }
     }
 
-    public static Exam getExamByExamId(String examId) throws Exception{
+    public static Exam getExamByExamId(String examId) throws Exception {
         return HashMapToObject(Database.getInstance().executeSingleQuery(SqlStatements.EXAM_GET_EXAM_BY_EXAM_ID, SqlColumns.EXAM_ALL_COLUMNS, examId));
     }
 
@@ -121,7 +129,7 @@ public class Exam {
      */
     public void insert() throws Exception {
         Database.getInstance().executeUpdate(SqlStatements.EXAM_INSERT_NEW, mId, mAuthor.mId, mDescription, mDescriptionTeacher,
-                mDate, mDuration, new JSONArray(mQuestionsList).toString(), mCourse.mId, mProfession.mId, mStatus.ordinal());
+                mDate, mDuration, getQuestionsJSONList().toString(), mCourse.mId, mProfession.mId, mStatus.ordinal(), mType.ordinal(), mCode);
     }
 
     /**
@@ -252,7 +260,38 @@ public class Exam {
         String courseId = (String) examHashMap.get(SqlColumns.EXAM_COURSE_ID);
         String professionId = (String) examHashMap.get(SqlColumns.EXAM_PROFESSION_ID);
         int statusInt = (int) examHashMap.get(SqlColumns.EXAM_STATUS);
-        return new Exam(id, teacherId, description, descriptionTeacher, date, duration, questionsList, courseId, professionId, statusInt);
+        int typeInt = (int) examHashMap.get(SqlColumns.EXAM_TYPE);
+        String code = (String) examHashMap.get(SqlColumns.EXAM_CODE);
+        return new Exam(id, teacherId, description, descriptionTeacher, date, duration, questionsList, courseId, professionId, statusInt, typeInt, code);
+    }
+
+    public static String createExamWordFile() {
+        return "";
+    }
+
+    public JSONObject toJSON() throws Exception {
+        JSONObject json = new JSONObject();
+        json.put("id", mId);
+        json.put("author", mAuthor.toJSON());
+        json.put("description", mDescription);
+        json.put("descriptionTeacher", mDescriptionTeacher);
+        json.put("date", mDate);
+        json.put("duration", mDuration);
+        json.put("questionsList", getQuestionsJSONList());
+        json.put("course", mCourse.toJSON());
+        json.put("profession", mProfession.toJSON());
+        json.put("status", mStatus.ordinal());
+        json.put("type", mType.ordinal());
+        json.put("code", mCode);
+        return json;
+    }
+
+    public JSONArray getQuestionsJSONList() throws Exception {
+        JSONArray json = new JSONArray();
+        for (int i = 0; i < mQuestionsList.size(); i++) {
+            json.put(mQuestionsList.get(i).toJSON());
+        }
+        return json;
     }
 
 }

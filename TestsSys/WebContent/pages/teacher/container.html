@@ -1,0 +1,25 @@
+<div class="" ng-controller="TeacherCtrl">
+    <div ng-switch="currentPage">
+        <div ng-switch-default="TEACHER_HOME">
+            <div ng-include="'pages/teacher/teacher_home.html'"></div>
+        </div>
+        <div ng-switch-when="TEACHER_CREATE_EXAM">
+            <div ng-include="'pages/teacher/teacher_create_exam.html'"></div>
+        </div>
+        <div ng-switch-when="TEACHER_CREATE_QUESTION">
+            <div ng-include="'pages/teacher/teacher_create_question.html'"></div>
+        </div>
+        <div ng-switch-when="TEACHER_SEND_REQUEST">
+            <div ng-include="'pages/teacher/teacher_send_request.html'"></div>
+        </div>
+        <div ng-switch-when="TEACHER_CHECK_EXAMS">
+            <div ng-include="'pages/teacher/teacher_check_exams.html'"></div>
+        </div>
+        <div ng-switch-when="TEACHER_MANAGE_EXAMS">
+            <div ng-include="'pages/teacher/teacher_manage_exams.html'"></div>
+        </div>
+        <div ng-switch-when="TEACHER_STATISTICS">
+            <div ng-include="'pages/teacher/teacher_statistics.html'"></div>
+        </div>
+    </div>
+</div>

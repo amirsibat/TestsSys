@@ -2,8 +2,11 @@ package testsys.models;
 
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
+
+import org.json.JSONObject;
 
 import testsys.utils.Database;
 import testsys.utils.SqlColumns;
@@ -136,4 +139,16 @@ public class Course {
         String professionId = (String) hashMapProfession.get(SqlColumns.COURSE_PROFESSION_ID);
         return new Course(id, name, professionId);
     }
+
+    public List<Question> getQuestionsList() throws Exception{
+        return Question.getAllQuestionByCourseId(mId);
+    }
+
+	public JSONObject toJSON() throws Exception{
+        JSONObject json = new JSONObject();
+        json.put("id", mId);
+        json.put("name", mName);
+        json.put("profession", mProfession.mId);
+		return json;
+	}
 }

@@ -144,5 +144,16 @@ public class Record {
 
         return new Record(id, student, course, exam, extraData);
     }
+    
+    
+    public static List<Record> getCurrentExamsByTeacher(String teacherId){
+    	return null;
+    }
+    
+    public static List<Record> getCurrentExamByStudent(String studentId){
+    	return null;
+    }
+    
+ 
 
 }

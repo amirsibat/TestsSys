@@ -2,6 +2,7 @@ package testsys.models;
 
 import java.util.HashMap;
 import java.util.List;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -62,9 +63,17 @@ public class Profession {
                 SqlColumns.PROFESSION_ALL_COLUMNS, SqlColumns.PROFESSION_ALL_COLUMNS_TYPES, this.mId);
     }
 
-    public static Profession hashMapToObject(HashMap<String, Object> hashMapProfession) throws Exception{
+    public static Profession hashMapToObject(HashMap<String, Object> hashMapProfession) throws Exception {
         String id = (String) hashMapProfession.get(SqlColumns.PROFESSION_ID);
         String name = (String) hashMapProfession.get(SqlColumns.PROFESSION_NAME);
         return new Profession(id, name);
+    }
+
+
+    public JSONObject toJSON() throws Exception{
+    	JSONObject json = new JSONObject();
+    	json.put("id", mId);
+    	json.put("name", mName);
+    	return json;
     }
 }

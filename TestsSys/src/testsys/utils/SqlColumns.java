@@ -49,6 +49,7 @@ public class SqlColumns {
 	public static final String USER_DESCRIPTION = "Description";
 	public static final String USER_COURSES = "Courses";
 	public static final String USER_TYPE = "UserType";
+	public static final String USER_ST_ID = "UserStId";
 	public static final String[] USER_ALL_COLUMNS = {
 			USER_ID,
 			USER_USERNAME,
@@ -57,7 +58,8 @@ public class SqlColumns {
 			USER_LAST_NAME,
 			USER_DESCRIPTION,
 			USER_COURSES,
-			USER_TYPE
+			USER_TYPE,
+			USER_ST_ID
     };
 	public static final String[] USER_ALL_COLUMNS_TYPES = {
             "TEXT",
@@ -67,7 +69,8 @@ public class SqlColumns {
             "TEXT",
             "TEXT",
             "TEXT",
-            "INTEGER"
+            "INTEGER",
+            "TEXT"
     };
 
     
@@ -84,7 +87,9 @@ public class SqlColumns {
     public static final String EXAM_QUESTIONS_LIST = "QuestionsList";
     public static final String EXAM_COURSE_ID = "CourseID";
     public static final String EXAM_PROFESSION_ID = "ProfessionID";
-    public static final String EXAM_STATUS = "Status";    
+    public static final String EXAM_STATUS = "Status";
+    public static final String EXAM_TYPE = "ExamType";
+    public static final String EXAM_CODE = "ExamCode";
     public static final String[] EXAM_ALL_COLUMNS = {
     		EXAM_ID,
     		EXAM_TEACHER_ID,
@@ -95,7 +100,9 @@ public class SqlColumns {
     		EXAM_QUESTIONS_LIST,
     		EXAM_COURSE_ID,
     		EXAM_PROFESSION_ID,
-    		EXAM_STATUS
+    		EXAM_STATUS,
+    		EXAM_TYPE,
+    		EXAM_CODE
     };
     public static final String[] EXAM_ALL_COLUMNS_TYPES = {
             "TEXT",
@@ -106,7 +113,9 @@ public class SqlColumns {
             "INTEGER",
             "TEXT",
             "TEXT",
-            "INTEGER"
+            "INTEGER",
+            "INTEGER",
+            "TEXT"
     };
 
 

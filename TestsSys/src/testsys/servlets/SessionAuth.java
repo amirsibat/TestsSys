@@ -14,13 +14,14 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import testsys.models.User;
+
 /**
  * Servlet implementation class SessionAuth
  */
 @SuppressWarnings("deprecation")
 public class SessionAuth extends HttpServlet implements SingleThreadModel {
-	private static final long serialVersionUID = 1L;
-       
+    private static final long serialVersionUID = 1L;
+
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -28,44 +29,46 @@ public class SessionAuth extends HttpServlet implements SingleThreadModel {
         super();
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		//Obtain the session object, create a new session if doesn't exist
-		HttpSession session = request.getSession(true);
-		
-		//get session variable
-		User user = (User) session.getAttribute("user");
-		
-		try{
-			response.setContentType("application/json; charset=UTF-8");
-				PrintWriter out = response.getWriter();
-				
-				// user logged in
-				if(user != null)
-				{
-					out.println("{ \"result\": \"success\",\"username\":\""+user.mUsername+"\"}");
-					out.close();
-				}
-				else
-				{
-					out.println("{ \"result\": \"fail\"}");	
-					out.close();
-				}
-		}catch (IOException e) {  
-            e.printStackTrace();  
-        }
-		
-		
-		
-	}
+    /**
+     * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+     */
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        PrintWriter out = response.getWriter();
+        response.setContentType("application/json; charset=UTF-8");
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	}
+        //Obtain the session object, create a new session if doesn't exist
+        HttpSession session = request.getSession(true);
+
+        //get session variable
+        String userId = (String) session.getAttribute("userId");
+
+
+        if (userId != null) {
+            String userJson = User.getUserByUserId(userId).toJSON().toString();
+            if(userJson != null) {
+                response.setStatus(200);
+                out.println("{\"success\":" + userJson + "}");
+            }else{
+                response.setStatus(403);
+                out.println("{\"error\":\"Not authorized\"}");
+            }
+        } else {
+            response.setStatus(403);
+            out.println("{\"error\":\"Not authorized\"}");
+        }
+        out.close();
+
+    }
+
+    /**
+     * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+     */
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        PrintWriter out = response.getWriter();
+        response.setContentType("application/json; charset=UTF-8");
+        response.setStatus(500);
+        out.println("{\"error\":\"Not supported method\"}");
+        out.close();
+    }
 
 }

@@ -18,6 +18,49 @@
   <listener>
     <listener-class>testsys.utils.ServletsListener</listener-class>
   </listener>
+  
+  
+  <servlet>
+    <description></description>
+    <display-name>CreateNewExam</display-name>
+    <servlet-name>CreateNewExam</servlet-name>
+    <servlet-class>testsys.servlets.CreateNewExam</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CreateNewExam</servlet-name>
+    <url-pattern>/exam/CreateNewExam</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <description></description>
+    <display-name>GetQuestionsByCourse</display-name>
+    <servlet-name>GetQuestionsByCourse</servlet-name>
+    <servlet-class>testsys.servlets.GetQuestionsByCourse</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GetQuestionsByCourse</servlet-name>
+    <url-pattern>/question/GetQuestionsByCourse</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>GetTeacherProfessions</display-name>
+    <servlet-name>GetTeacherProfessions</servlet-name>
+    <servlet-class>testsys.servlets.GetTeacherProfessions</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GetTeacherProfessions</servlet-name>
+    <url-pattern>/profession/GetTeacherProfessions</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>GetCoursesByProfession</display-name>
+    <servlet-name>GetCoursesByProfession</servlet-name>
+    <servlet-class>testsys.servlets.GetCoursesByProfession</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GetCoursesByProfession</servlet-name>
+    <url-pattern>/course/GetCoursesByProfession</url-pattern>
+  </servlet-mapping>
   <servlet>
     <description></description>
     <display-name>LogoutUser</display-name>
@@ -48,8 +91,6 @@
     <servlet-name>CreateQuestion</servlet-name>
     <url-pattern>/question/CreateQuestion</url-pattern>
   </servlet-mapping>
-  
-  
   <servlet>
     <description></description>
     <display-name>GetAllProfessionQuestions</display-name>
@@ -60,8 +101,6 @@
     <servlet-name>GetAllProfessionQuestions</servlet-name>
     <url-pattern>/question/GetAllProfessionQuestions</url-pattern>
   </servlet-mapping>
-  
-  
   <servlet>
     <description></description>
     <display-name>SessionAuth</display-name>

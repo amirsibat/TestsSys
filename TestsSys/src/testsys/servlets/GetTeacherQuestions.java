@@ -52,7 +52,7 @@ public class GetTeacherQuestions extends HttpServlet {
 				HttpSession session = request.getSession(true);
 				//get session variable
 				user = (User) session.getAttribute("user");
-				QuestsArray =  Question.getAllQuestionByTeacherId(user.mId);
+//				QuestsArray =  Question.getAllQuestionByTeacherId(user.mId);
 			
 			
 			Gson gson = new Gson();

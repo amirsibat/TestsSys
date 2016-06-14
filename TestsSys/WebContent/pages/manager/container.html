@@ -1,0 +1,22 @@
+<div class="" ng-controller="ManagerCtrl">
+    <div ng-switch="currentPage">
+        <div ng-switch-default="MANAGER_HOME">
+            <div ng-include="'pages/manager/manager_home.html'"></div>
+        </div>
+        <div ng-switch-when="MANAGER_STATISTICS">
+            <div ng-include="'pages/manager/manager_statistics.html'"></div>
+        </div>
+        <div ng-switch-when="MANAGER_EXAMS">
+            <div ng-include="'pages/manager/manager_exams.html'"></div>
+        </div>
+        <div ng-switch-when="MANAGER_PENDING_REQUESTS">
+            <div ng-include="'pages/manager/manager_pending_requests.html'"></div>
+        </div>
+        <div ng-switch-when="MANAGER_QUESTION">
+            <div ng-include="'pages/manager/manager_question.html'"></div>
+        </div>
+        <div ng-switch-when="MANAGER_GRADES">
+            <div ng-include="'pages/manager/manager_grades.html'"></div>
+        </div>
+    </div>
+</div>
