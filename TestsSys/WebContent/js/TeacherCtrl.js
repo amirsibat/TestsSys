@@ -60,6 +60,9 @@ var teacherScope = null;
                         $scope.allCoursesBySelectedProfession = [];
                         return;
                     }
+                    for(var i=0; i<result.success.length; i++){
+                    	result.success[i].isChecked = false;
+                    }
                     $scope.allCoursesBySelectedProfession = result.success;
                 });
             });
@@ -105,8 +108,31 @@ var teacherScope = null;
             		$scope.newQuestionHolder.selectedCourses.push($scope.allCoursesBySelectedProfession[i]);
             	}
             }
-       
         };
+        
+        $('body').on('click', '.multi li', function(event){
+            event.stopPropagation();
+        });
+        
+        $scope.getSelectedCourses = function(){
+        	var coursesString = "";
+        	var countChecked = 0;
+        	for(var i=0; i<$scope.allCoursesBySelectedProfession.length; i++){
+        		if($scope.allCoursesBySelectedProfession[i].isChecked){
+        			countChecked++;
+        		}
+        	}
+        	for(var i=0; i<$scope.allCoursesBySelectedProfession.length; i++){
+        		if($scope.allCoursesBySelectedProfession[i].isChecked){
+        			countChecked--;
+        			coursesString += $scope.allCoursesBySelectedProfession[i].name + (countChecked == 0 ? "":", ");
+        		}
+        	}
+        	if(coursesString == ""){
+        		coursesString = "Choose Courses";
+        	}
+        	return coursesString;
+        }
         
         
         $scope.selectProfession = function (profession) {
