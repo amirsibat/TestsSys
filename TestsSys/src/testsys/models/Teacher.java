@@ -57,7 +57,7 @@ public class Teacher extends User {
             JSONArray jsonArray = new JSONArray();
             for (int i = 0; i < mCourses.size(); i++) {
                 if(!preventDuplicate.contains(mCourses.get(i).mProfession.mId)) {
-                	preventDuplicate = mCourses.get(i).mProfession.mId + ",";
+                	preventDuplicate += mCourses.get(i).mProfession.mId + ",";
                     jsonArray.put(mCourses.get(i).mProfession.toJSON());
                 }
             }

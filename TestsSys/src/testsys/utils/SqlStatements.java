@@ -42,7 +42,7 @@ public class SqlStatements {
     public static final String COURSE_GET_COURSE_BY_ID = "SELECT * FROM " + COURSE_TABLE + " WHERE "
             + SqlColumns.COURSE_ID + " = ?";
     public static final String COURSE_GET_PROFESSION_COURSES = "SELECT * FROM " + COURSE_TABLE + " WHERE "
-            + SqlColumns.PROFESSION_ID + " = ?";
+            + SqlColumns.COURSE_PROFESSION_ID + " = ?";
     public static final String COURSE_INSERT_NEW_COURSE = "INSERT INTO " + COURSE_TABLE + " ( "
             + SqlColumns.COURSE_ID + ", "
             + SqlColumns.COURSE_NAME + ", "
