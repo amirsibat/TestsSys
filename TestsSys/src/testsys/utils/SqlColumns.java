@@ -185,4 +185,30 @@ public class SqlColumns {
             "TEXT"
     };
 
+    /**
+     * RequestTable column keys
+     */
+
+    public static final String REQUEST_ID = "ID";
+    public static final String REQUEST_PENDING = "Pending";
+    public static final String REQUEST_EXAM_ID = "ExamID";
+    public static final String REQUEST_REQUEST_TEXT = "RequestText";
+    public static final String REQUEST_TEACHER_ID = "TeacherID";
+
+    public static final String[] REQUEST_ALL_COLUMNS = {
+            REQUEST_ID,
+            REQUEST_PENDING,
+            REQUEST_EXAM_ID,
+            REQUEST_REQUEST_TEXT,
+            REQUEST_TEACHER_ID
+    };
+
+    public static final String[] REQUEST_ALL_COLUMNS_TYPES = {
+            "TEXT",
+            "INTEGER",
+            "TEXT",
+            "TEXT",
+            "TEXT"
+    };
+
 }

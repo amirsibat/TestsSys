@@ -13,6 +13,7 @@ public class SqlStatements {
     public static final String QUESTION_TABLE = "QuestionTable";
     public static final String EXAM_TABLE = "ExamTable";
     public static final String RECORD_TABLE = "RecordTable";
+    public static final String REQUEST_TABLE = "RequestTable";
 
 
     /**
@@ -24,6 +25,7 @@ public class SqlStatements {
     public static final String EXAM_CREATE_TABLE = "CREATE TABLE " + EXAM_TABLE + " (ID VARCHAR(6), TeacherID VARCHAR(4), Description VARCHAR(200), DescriptionTeacher VARCHAR(200), DateAdded DATE, Duration INT, QuestionsList VARCHAR(2000), CourseID VARCHAR(2), ProfessionID VARCHAR(2), Status INT, ExamType INT, ExamCode VARCHAR(4), PRIMARY KEY (ID))";
     public static final String QUESTION_CREATE_TABLE = "CREATE TABLE " + QUESTION_TABLE + "  (ID VARCHAR(6), QuestionText VARCHAR(200), CorrectAnswer INT,  TeacherID VARCHAR(4), ProfessionID VARCHAR(2), QuestionOptions1 VARCHAR(200), QuestionOptions2  VARCHAR(200), QuestionOptions3 VARCHAR(200), QuestionOptions4 VARCHAR(200), CoursesList VARCHAR(100), PRIMARY KEY (ID))";
     public static final String RECORD_CREATE_TABLE = "CREATE TABLE " + RECORD_TABLE + "  (ID VARCHAR(10), StudentID VARCHAR(4), CourseID VARCHAR(2), ExamID VARCHAR(6), ExtraData VARCHAR(2000), PRIMARY KEY (ID))";
+    public static final String REQUEST_CREATE_TABLE = "CREATE TABLE " + REQUEST_TABLE + "  (ID VARCHAR(10), Pending Integer, ExamID VARCHAR(6), RequestText VARCHAR(1000), TeacherID VARCHAR(4), PRIMARY KEY (ID))";
 
 
     /**
@@ -167,6 +169,24 @@ public class SqlStatements {
             + SqlColumns.RECORD_EXAM_ID + ", "
             + SqlColumns.RECORD_EXTRA_DATA
             + ") VALUES(?,?,?,?,?)";
+
+
+    /**
+     * RequestTable Statements
+     */
+    public static final String REQUEST_GET_REQUESTS_BY_TEACHER = "SELECT * FROM " + REQUEST_TABLE + " WHERE " + SqlColumns.REQUEST_TEACHER_ID + "=?";
+    public static final String REQUEST_GET_PINDEING_REQUESTS = "SELECT * FROM " + REQUEST_TABLE + " WHERE " + SqlColumns.REQUEST_PENDING + "=?";
+    public static final String REQUEST_INSERT_NEW_REQUEST = "INSERT INTO " + REQUEST_TABLE + " ("
+            + SqlColumns.REQUEST_ID + ", "
+            + SqlColumns.REQUEST_PENDING + ", "
+            + SqlColumns.REQUEST_EXAM_ID + ", "
+            + SqlColumns.REQUEST_REQUEST_TEXT + ", "
+            + SqlColumns.REQUEST_TEACHER_ID
+            + ") VALUES(?,?,?,?,?)";
+
+    public static final String REQUEST_UPDATE_REQUEST = "UPDATE INTO " + REQUEST_TABLE + " SET "
+            + SqlColumns.REQUEST_PENDING + "=? , "
+            + " WHERE " + SqlColumns.REQUEST_ID + "=?";
 }
 
 

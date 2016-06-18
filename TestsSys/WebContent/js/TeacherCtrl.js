@@ -220,14 +220,19 @@ var teacherScope = null;
         
         $scope.createNewQuestion = function () {
             $('#alertView').fadeOut();
-            console.log($scope.newQuestionHolder);
+            $scope.newQuestionHolder.selectedCourses = [];
+            for(var i=0; i<$scope.allCoursesBySelectedProfession.length; i++){
+                if($scope.allCoursesBySelectedProfession[i].isChecked){
+                    $scope.newQuestionHolder.selectedCourses.push($scope.allCoursesBySelectedProfession[i].id);
+                }
+            }
             Http.post("/question/CreateQuestion", null, $scope.newQuestionHolder, function (result, error) {
                 if(error != null){
                     $('#alertView').html("Server error");
                     $('#alertView').fadeIn();
                     return;
                 }
-                /*$scope.openPublishExams();*/
+                $scope.clearNewQuestionData();
             });
         };
 

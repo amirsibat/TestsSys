@@ -9,6 +9,7 @@ import org.json.JSONArray;
 
 import org.json.JSONObject;
 import testsys.utils.Database;
+import testsys.utils.L;
 import testsys.utils.SqlColumns;
 import testsys.utils.SqlStatements;
 
@@ -130,21 +131,16 @@ public class Question {
         return false;
     }
 
-    public boolean insert() {
-
-        try {
-            String coursesAsString = "";
-            for (int i = 0; i < mCourses.size(); i++) {
-                coursesAsString += mCourses.get(i).mId + (i < mCourses.size() - 1 ? "," : "");
-            }
-
-            Database.getInstance().executeUpdate(SqlStatements.QUESTION_INSER_NEW_QUESTION, mId, mText, mCorrectAnswer,
-                    mAuthor, mProfession, mOptions1, mOptions2, mOptions3, mOptions4, coursesAsString);
-            return true;
-        } catch (Exception e) {
-            System.err.println(e.getMessage());
+    public boolean insert() throws Exception {
+        String coursesAsString = "";
+        for (int i = 0; i < mCourses.size(); i++) {
+            coursesAsString += mCourses.get(i).mId + (i < mCourses.size() - 1 ? "," : "");
         }
-        return false;
+
+        Database.getInstance().executeUpdate(SqlStatements.QUESTION_INSER_NEW_QUESTION, mId, mText, mCorrectAnswer,
+                mAuthor.mId, mProfession.mId, mOptions1, mOptions2, mOptions3, mOptions4, coursesAsString);
+        return true;
+
     }
 
     public boolean update() {
@@ -186,7 +182,7 @@ public class Question {
         return hashMapToObject(Database.getInstance().executeSingleQuery(SqlStatements.QUESTION_GET_QUESTION_BY_QUESTION_ID, SqlColumns.QUESTION_ALL_COLUMNS, questionId));
     }
 
-    public static List<Question> getAllQuestionByCourseId(String courseId) throws Exception{
+    public static List<Question> getAllQuestionByCourseId(String courseId) throws Exception {
         List<Question> questionsList = new ArrayList<>();
         List<HashMap<String, Object>> objectsList = Database.getInstance().executeListQuery(SqlStatements.QUESTION_GET_QUESTIONS_BY_COURSE_ID.replace("?", courseId), SqlColumns.QUESTION_ALL_COLUMNS);
         for (int i = 0; i < objectsList.size(); i++) {
@@ -194,15 +190,15 @@ public class Question {
         }
         return questionsList;
     }
-    
-    public static List<Question> getAllQuestions() throws Exception{
-    	List<Question> questionsList = new ArrayList<>();
+
+    public static List<Question> getAllQuestions() throws Exception {
+        List<Question> questionsList = new ArrayList<>();
         List<HashMap<String, Object>> objectsList = Database.getInstance().executeListQuery(SqlStatements.QUESTION_GET_ALL_QUESTIONS, SqlColumns.QUESTION_ALL_COLUMNS);
         for (int i = 0; i < objectsList.size(); i++) {
             questionsList.add(hashMapToObject(objectsList.get(i)));
         }
         return questionsList;
-	}
+    }
 
 
     public static Question hashMapToObject(HashMap<String, Object> hashMapCourse) throws Exception {
@@ -223,11 +219,11 @@ public class Question {
         String[] columnsNames = new String[1];
         columnsNames[0] = "ID";
         String[] columnsTypes = new String[1];
-        columnsNames[0] = "TEXT";
+        columnsTypes[0] = "TEXT";
 
         try {
             int maxQuestionId = 0;
-            JSONArray jsonArray = Database.getInstance().executeListQueryAsJSON("SELECT ID FROM QUESTION_TABLE",
+            JSONArray jsonArray = Database.getInstance().executeListQueryAsJSON("SELECT ID FROM " + SqlStatements.QUESTION_TABLE,
                     columnsNames, columnsTypes);
             for (int i = 0; i < jsonArray.length(); i++) {
                 String QuestionId = jsonArray.getJSONObject(i).getString("ID").substring(2, 5);
@@ -241,7 +237,7 @@ public class Question {
             }
             return professionId + newQuestionId;
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            L.err(e);
         }
         return null;
     }

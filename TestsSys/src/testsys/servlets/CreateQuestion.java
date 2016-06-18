@@ -80,11 +80,10 @@ public class CreateQuestion extends HttpServlet {
 			String professionId = json.getJSONObject("profession").getString("id");
 			
 			JSONArray clientCoursesList = json.getJSONArray("selectedCourses");
-			JSONArray coursesList = new JSONArray();
+			String coursesList = "";
 			for(int i=0; i<clientCoursesList.length(); i++){
-				String courseId = clientCoursesList.getJSONObject(i).getString("id");
-				
-				coursesList.put(courseId);
+				String courseId = clientCoursesList.getString(i);
+				coursesList += courseId + (i < clientCoursesList.length() - 1 ? "," : "");
 			}
 			
 			String id = Question.generateQuestionId(professionId);
@@ -99,7 +98,7 @@ public class CreateQuestion extends HttpServlet {
 			
 			
 			 Question question = new Question(id, questionText, correctAnswer, authorId, professionId,
-					 firstAnswer, secondAnswer, thirdAnswer, fourthAnswer, coursesList.toString());
+					 firstAnswer, secondAnswer, thirdAnswer, fourthAnswer, coursesList);
 			 question.insert();
 
 			
