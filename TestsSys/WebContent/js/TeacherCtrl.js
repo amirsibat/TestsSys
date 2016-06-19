@@ -55,6 +55,7 @@ var teacherScope = null;
         $scope.allProfessions = [];
         $scope.allCoursesBySelectedProfession = [];
         $scope.examsToCheck = [];
+        $scope.oldTeacherRequest = [];
         $('#alertView').fadeOut(0);
 
 
@@ -299,11 +300,25 @@ var teacherScope = null;
                         return;
                     }
                     $scope.clearRequestData();
+                    $scope.loadExamsToCheck();
                 });
             });
         };
 
 
+        $scope.loadOldRequests = function(){
+            console.log("GetRequestsByTeacher");
+            Http.get("/request/GetRequestsByTeacher", null, function (result, error) {
+                $scope.$apply(function () {
+                    if (error != null) {
+                        console.error(error);
+                        $scope.oldTeacherRequest = [];
+                        return;
+                    }
+                    $scope.oldTeacherRequest = result.success;
+                });
+            });
+        };
 
         $scope.loadExamsToCheck = function(){
             Http.get("/record/GetExamsToCheck", null, function (result, error) {
@@ -316,6 +331,9 @@ var teacherScope = null;
                 });
             });
         };
+
+        $scope.loadOldRequests();
+        $scope.loadExamsToCheck();
 
         /**
          * Paging

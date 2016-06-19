@@ -534,6 +534,10 @@ input.question-modal-grade {
 }
 
 .check-exams-row {
+height: 44px;
+    text-align: center;
+    color: gray;
+    line-height: 35px;
 }
 
 .check-exams-header {

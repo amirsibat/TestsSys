@@ -14,7 +14,8 @@ import java.util.List;
 public class Request {
     public enum RequestStatus {
         PENDING,
-        ANSWERED
+        ACCEPTED,
+        REJECTED
     }
 
     public String mId;
@@ -85,7 +86,7 @@ public class Request {
         json.put("exam", mExam.toJSON());
         json.put("status", mPending.ordinal());
         json.put("requestText", mRequestText);
-        json.put("durationToAdd", mDurationToAdd);
+        json.put("duration", mDurationToAdd);
         return json;
     }
 
