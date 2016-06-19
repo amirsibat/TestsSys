@@ -3,7 +3,7 @@
     </div>
     <div class="col-xs-10">
         <div class="box-container">
-            <div class="box-row check-exams-header">
+            <div class="row exams-header">
                 <div class="col-xs-2">ID</div>
                 <div class="col-xs-2">Student</div>
                 <div class="col-xs-2">Profession</div>
@@ -14,7 +14,7 @@
 
             <div class="no-data-message" ng-show="examsToCheck.length == 0">No exams to check</div>
 
-            <div class="box-row check-exams-row" ng-repeat="exam in examsToCheck">
+            <div class="row exam-row" ng-repeat="exam in examsToCheck">
                 <div class="col-xs-2">{{exam.id}}</div>
                 <div class="col-xs-2">{{exam.student.firstName + " " + exam.student.firstName}}</div>
                 <div class="col-xs-2">{{exam.exam.profession.name}}</div>

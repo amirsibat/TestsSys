@@ -36,29 +36,36 @@ Http.get = function (func, query, callback) {
 };
 
 Http.post = function (func, query, data, callback) {
-    Http.get("/user/SessionAuth", null, function (result, error1) {
-        if (error1 != null) {
-            setTimeout(function () {
-                window.location = "login.html";
-            }, 200);
-        } else {
-            var queryString = "";
-            if (query != null) {
-                queryString = $.param(query);
+    if (func != "/user/LoginUser") {
+        Http.get("/user/SessionAuth", null, function (result, error1) {
+            if (error1 != null) {
+                setTimeout(function () {
+                    window.location = "login.html";
+                }, 200);
+            } else {
+                doPost();
             }
-            $.ajax({
-                method: "POST",
-                url: Http.SERVER_URL + func + ((queryString != "") ? "?" + queryString : ""),
-                data: JSON.stringify(data),
-                contentType: "application/x-www-form-urlencoded",
-                success: function (s) {
-                    callback(s);
-                },
-                error: function (e) {
-                    console.error(e);
-                    callback(null, e);
-                }
-            });
+        });
+    } else {
+        doPost();
+    }
+    function doPost() {
+        var queryString = "";
+        if (query != null) {
+            queryString = $.param(query);
         }
-    });
+        $.ajax({
+            method: "POST",
+            url: Http.SERVER_URL + func + ((queryString != "") ? "?" + queryString : ""),
+            data: JSON.stringify(data),
+            contentType: "application/x-www-form-urlencoded",
+            success: function (s) {
+                callback(s);
+            },
+            error: function (e) {
+                console.error(e);
+                callback(null, e);
+            }
+        });
+    }
 };
