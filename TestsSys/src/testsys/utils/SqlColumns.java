@@ -194,13 +194,15 @@ public class SqlColumns {
     public static final String REQUEST_EXAM_ID = "ExamID";
     public static final String REQUEST_REQUEST_TEXT = "RequestText";
     public static final String REQUEST_TEACHER_ID = "TeacherID";
+    public static final String REQUEST_DURATION_TO_ADD = "DurationToAdd";
 
     public static final String[] REQUEST_ALL_COLUMNS = {
             REQUEST_ID,
             REQUEST_PENDING,
             REQUEST_EXAM_ID,
             REQUEST_REQUEST_TEXT,
-            REQUEST_TEACHER_ID
+            REQUEST_TEACHER_ID,
+            REQUEST_DURATION_TO_ADD
     };
 
     public static final String[] REQUEST_ALL_COLUMNS_TYPES = {
@@ -208,7 +210,8 @@ public class SqlColumns {
             "INTEGER",
             "TEXT",
             "TEXT",
-            "TEXT"
+            "TEXT",
+            "INTEGER"
     };
 
 }

@@ -17,6 +17,13 @@ import testsys.utils.SqlStatements;
  * Table Columns:   TEXT ID, TEXT StudentID,TEXT CourseID, TEXT ExamID, TEXT ExtraData
  */
 public class Record {
+
+    public enum RecordExamStatus{
+        IN_PROGRESS,
+        PENDING_CHECK,
+        SUBMITTED
+    }
+
     public String mId;
     public Student mStudent;
     public Course mCourse;
@@ -56,7 +63,7 @@ public class Record {
 
     public Record(String id, String studentId, String courseId, String examId, String extraData) throws Exception {
         mId = id;
-        mStudent = (Student) User.getUserByUserId(studentId);
+        mStudent = Student.getStudentByStudentId(studentId);
         mCourse = Course.getCourseByCourseId(courseId);
         mExam = Exam.getExamByExamId(examId);
         mExtraData = new JSONObject(extraData);
@@ -68,7 +75,7 @@ public class Record {
      * @throws Exception failed to execute SQL query
      */
     public void insert() throws Exception {
-        Database.getInstance().executeUpdate(SqlStatements.RECORD_INSER_NEW_RECORD, mId,
+        Database.getInstance().executeUpdate(SqlStatements.RECORD_INSERT_NEW_RECORD, mId,
                 mStudent.mId,
                 mCourse.mId,
                 mExam.mId,
@@ -84,6 +91,15 @@ public class Record {
      */
     public static Record getRecordByRecordId(String recordId) throws Exception {
         return hashMapToObject(Database.getInstance().executeSingleQuery(SqlStatements.RECORD_GET_RECORD_BY_RECORD_ID, SqlColumns.RECORD_ALL_COLUMNS, recordId));
+    }
+
+    public static List<Record> getAllRecords() throws Exception{
+        List<Record> recordList = new ArrayList<>();
+        List<HashMap<String, Object>> objectsList = Database.getInstance().executeListQuery(SqlStatements.RECORD_GET_ALL_RECORDS, SqlColumns.RECORD_ALL_COLUMNS);
+        for (int i = 0; i < objectsList.size(); i++) {
+            recordList.add(hashMapToObject(objectsList.get(i)));
+        }
+        return recordList;
     }
 
     /**
@@ -146,14 +162,57 @@ public class Record {
     }
     
     
-    public static List<Record> getCurrentExamsByTeacher(String teacherId){
-    	return null;
+    public static List<Exam> getCurrentExamsByTeacher(String teacherId) throws Exception{
+        List<Record> recordList = getAllRecords();
+        List<Exam> exams = new ArrayList<>();
+        for(int i=0; i<recordList.size(); i++){
+            JSONObject jsonObject = recordList.get(i).mExtraData;
+            if(jsonObject.getString("teacherId").equals(teacherId)){
+                if(jsonObject.getInt("status") == RecordExamStatus.IN_PROGRESS.ordinal()){
+                    boolean alreadyExists = false;
+                    for(int j=0; j<exams.size(); j++){
+                        if(exams.get(j).mId == recordList.get(i).mExam.mId){
+                            alreadyExists = true;
+                            break;
+                        }
+                    }
+                    if(!alreadyExists){
+                        exams.add(recordList.get(i).mExam);
+                    }
+                }
+            }
+        }
+    	return exams;
     }
-    
     public static List<Record> getCurrentExamByStudent(String studentId){
     	return null;
     }
-    
+
+
+
+    public static List<Record> getExamsToCheckByTeacher(String teacherId) throws Exception{
+        List<Record> recordList = getAllRecords();
+        List<Record> returnRecords = new ArrayList<>();
+        for(int i=0; i<recordList.size(); i++){
+            JSONObject jsonObject = recordList.get(i).mExtraData;
+            if(jsonObject.getString("teacherId").equals(teacherId)){
+                if(jsonObject.getInt("status") == RecordExamStatus.PENDING_CHECK.ordinal()){
+                    returnRecords.add(recordList.get(i));
+                }
+            }
+        }
+        return returnRecords;
+    }
+
+    public JSONObject toJSON() throws Exception{
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("id", mId);
+        jsonObject.put("student", mStudent.toJSON());
+        jsonObject.put("course", mCourse.toJSON());
+        jsonObject.put("exam", mExam.toJSON());
+        jsonObject.put("extraData", mExtraData);
+        return jsonObject;
+    }
  
 
 }

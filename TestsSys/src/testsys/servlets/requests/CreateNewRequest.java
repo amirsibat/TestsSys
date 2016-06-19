@@ -80,12 +80,13 @@ public class CreateNewRequest extends HttpServlet {
             JSONObject json = new JSONObject(jsonFileContent.toString());
 
             String id = Request.generateRequestId();
-            String teacherId = json.getString("teacherId");
-            String examId = json.getString("examId");
-            Integer pending = json.getInt("pending");
+            String teacherId = user.mId;
+            String examId = json.getJSONObject("exam").getString("id");
+            Integer pending = Request.RequestStatus.PENDING.ordinal();
             String requestText = json.getString("requestText");
+            Integer durationToAdd = json.getInt("duration");
 
-            Request newRequest = new Request(id, teacherId, examId, pending, requestText);
+            Request newRequest = new Request(id, teacherId, examId, pending, requestText, durationToAdd);
             newRequest.insert();
 
             response.setStatus(200);

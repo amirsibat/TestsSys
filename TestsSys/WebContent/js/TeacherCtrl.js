@@ -12,8 +12,8 @@ var teacherScope = null;
             questions: []
         };
         $scope.newQuestionHolder = {
-        	profession: null,
-        	selectedCourses: [],
+            profession: null,
+            selectedCourses: [],
             questionText: "",
             firstAnswer: "",
             secondAnswer: "",
@@ -22,21 +22,39 @@ var teacherScope = null;
             correctAnswer: ""
         };
         $scope.options = [
-            { option: "firstAnswerd",
-        	  val: "1"},
-            { option: "secondAnswer",
-              val: "2"},
-            { option: "thirdAnswer",
-              val: "3"},
-            { option: "fourthAnswer",
-              val: "4"}
+            {
+                option: "firstAnswerd",
+                val: "1"
+            },
+            {
+                option: "secondAnswer",
+                val: "2"
+            },
+            {
+                option: "thirdAnswer",
+                val: "3"
+            },
+            {
+                option: "fourthAnswer",
+                val: "4"
+            }
         ];
+
+        $scope.newRequestHolder = {
+            exam: null,
+            requestText: "",
+            duration: ""
+        };
+
+        $scope.allOnlineExams = [];
+
         $scope.examsWaitingForCheck = [];
         $scope.statistics = {};
         $scope.allQuestionsByCourse = [];
         $scope.allExams = [];
         $scope.allProfessions = [];
         $scope.allCoursesBySelectedProfession = [];
+        $scope.examsToCheck = [];
         $('#alertView').fadeOut(0);
 
 
@@ -60,8 +78,8 @@ var teacherScope = null;
                         $scope.allCoursesBySelectedProfession = [];
                         return;
                     }
-                    for(var i=0; i<result.success.length; i++){
-                    	result.success[i].isChecked = false;
+                    for (var i = 0; i < result.success.length; i++) {
+                        result.success[i].isChecked = false;
                     }
                     $scope.allCoursesBySelectedProfession = result.success;
                 });
@@ -92,49 +110,49 @@ var teacherScope = null;
             });
         };
 
-        $scope.selectQAnswer = function (answer){
-        	$scope.newQuestionHolder.correctAnswer = answer;
+        $scope.selectQAnswer = function (answer) {
+            $scope.newQuestionHolder.correctAnswer = answer;
         };
-        
+
         $scope.selectQProfession = function (profession) {
             $scope.newQuestionHolder.profession = profession;
             $scope.newQuestionHolder.selectedCourses = [];
             $scope.loadCourses(profession);
         };
-        
+
         $scope.selectQCourses = function () {
-            for(var i = 0; i > $scope.allCoursesBySelectedProfession.length; i++){
-            	if($scope.allCoursesBySelectedProfession[i].checked == true){
-            		$scope.newQuestionHolder.selectedCourses.push($scope.allCoursesBySelectedProfession[i]);
-            	}
+            for (var i = 0; i > $scope.allCoursesBySelectedProfession.length; i++) {
+                if ($scope.allCoursesBySelectedProfession[i].checked == true) {
+                    $scope.newQuestionHolder.selectedCourses.push($scope.allCoursesBySelectedProfession[i]);
+                }
             }
         };
-        
-        $('body').on('click', '.multi li', function(event){
+
+        $('body').on('click', '.multi li', function (event) {
             event.stopPropagation();
         });
-        
-        $scope.getSelectedCourses = function(){
-        	var coursesString = "";
-        	var countChecked = 0;
-        	for(var i=0; i<$scope.allCoursesBySelectedProfession.length; i++){
-        		if($scope.allCoursesBySelectedProfession[i].isChecked){
-        			countChecked++;
-        		}
-        	}
-        	for(var i=0; i<$scope.allCoursesBySelectedProfession.length; i++){
-        		if($scope.allCoursesBySelectedProfession[i].isChecked){
-        			countChecked--;
-        			coursesString += $scope.allCoursesBySelectedProfession[i].name + (countChecked == 0 ? "":", ");
-        		}
-        	}
-        	if(coursesString == ""){
-        		coursesString = "Choose Courses";
-        	}
-        	return coursesString;
+
+        $scope.getSelectedCourses = function () {
+            var coursesString = "";
+            var countChecked = 0;
+            for (var i = 0; i < $scope.allCoursesBySelectedProfession.length; i++) {
+                if ($scope.allCoursesBySelectedProfession[i].isChecked) {
+                    countChecked++;
+                }
+            }
+            for (var i = 0; i < $scope.allCoursesBySelectedProfession.length; i++) {
+                if ($scope.allCoursesBySelectedProfession[i].isChecked) {
+                    countChecked--;
+                    coursesString += $scope.allCoursesBySelectedProfession[i].name + (countChecked == 0 ? "" : ", ");
+                }
+            }
+            if (coursesString == "") {
+                coursesString = "Choose Courses";
+            }
+            return coursesString;
         }
-        
-        
+
+
         $scope.selectProfession = function (profession) {
             $scope.newExamHolder.profession = profession;
             $scope.newExamHolder.course = null;
@@ -159,8 +177,8 @@ var teacherScope = null;
         };
 
         $scope.fixQuestionsGrades = function () {
-            var avg = parseInt((1.0/ parseFloat($scope.newExamHolder.questions.length))*100);
-            for(var i=0; i<$scope.newExamHolder.questions.length; i++){
+            var avg = parseInt((1.0 / parseFloat($scope.newExamHolder.questions.length)) * 100);
+            for (var i = 0; i < $scope.newExamHolder.questions.length; i++) {
                 $scope.newExamHolder.questions[i].grade = avg;
             }
         };
@@ -176,8 +194,8 @@ var teacherScope = null;
             };
             $('#alertView').fadeOut();
         };
-        
-        
+
+
         $scope.clearNewQuestionData = function () {
             $scope.newQuestionHolder = {
                 profession: null,
@@ -191,10 +209,10 @@ var teacherScope = null;
             };
             $('#alertView').fadeOut();
         };
-        
+
         $scope.removeQuestionFromExam = function (question) {
-            for(var i=0; i<$scope.newExamHolder.questions.length; i++){
-                if($scope.newExamHolder.questions[i].id == question.id){
+            for (var i = 0; i < $scope.newExamHolder.questions.length; i++) {
+                if ($scope.newExamHolder.questions[i].id == question.id) {
                     $scope.newExamHolder.questions.splice(i, 1);
                     break;
                 }
@@ -208,31 +226,94 @@ var teacherScope = null;
             $('#alertView').fadeOut();
             console.log($scope.newExamHolder);
             Http.post("/exam/CreateNewExam", null, $scope.newExamHolder, function (result, error) {
-                if(error != null){
-                    $('#alertView').html("Server error");
-                    $('#alertView').fadeIn();
-                    return;
-                }
-                $scope.openPublishExams();
+                $scope.$apply(function () {
+                    if (error != null) {
+                        $('#alertView').html("Server error");
+                        $('#alertView').fadeIn();
+                        return;
+                    }
+                    $scope.openPublishExams();
+                });
             });
         };
 
-        
+
+
+        $scope.loadOnlineExams = function(){
+            $('#alertView').fadeOut();
+            Http.get("/record/GetOnlineExams", null, function (result, error) {
+                $scope.$apply(function () {
+                    if (error != null) {
+                        $scope.allOnlineExams = [];
+                        return;
+                    }
+                    $scope.allOnlineExams = result.success;
+                });
+            });
+        };
+
         $scope.createNewQuestion = function () {
             $('#alertView').fadeOut();
             $scope.newQuestionHolder.selectedCourses = [];
-            for(var i=0; i<$scope.allCoursesBySelectedProfession.length; i++){
-                if($scope.allCoursesBySelectedProfession[i].isChecked){
+            for (var i = 0; i < $scope.allCoursesBySelectedProfession.length; i++) {
+                if ($scope.allCoursesBySelectedProfession[i].isChecked) {
                     $scope.newQuestionHolder.selectedCourses.push($scope.allCoursesBySelectedProfession[i].id);
                 }
             }
             Http.post("/question/CreateQuestion", null, $scope.newQuestionHolder, function (result, error) {
-                if(error != null){
-                    $('#alertView').html("Server error");
-                    $('#alertView').fadeIn();
-                    return;
-                }
-                $scope.clearNewQuestionData();
+                $scope.$apply(function () {
+                    if (error != null) {
+                        $('#alertView').html("Server error");
+                        $('#alertView').fadeIn();
+                        return;
+                    }
+                    $scope.clearNewQuestionData();
+                });
+            });
+        };
+
+
+        $scope.selectRequestExam = function (exam) {
+            $scope.newRequestHolder.exam = exam;
+        };
+        $scope.clearRequestData = function () {
+            $scope.newRequestHolder = {
+                exam: null,
+                requestText: "",
+                duration: ""
+            };
+        };
+
+        $scope.createNewRequest = function () {
+            $('#alertView').fadeOut();
+            try {
+                $scope.newRequestHolder.duration = parseInt($scope.newRequestHolder.duration);
+            }catch (e){
+                console.log(e);
+            }
+            Http.post("/request/CreateNewRequest", null, $scope.newRequestHolder, function (result, error) {
+                $scope.$apply(function () {
+                    if (error != null) {
+                        $('#alertView').html("Server error");
+                        $('#alertView').fadeIn();
+                        return;
+                    }
+                    $scope.clearRequestData();
+                });
+            });
+        };
+
+
+
+        $scope.loadExamsToCheck = function(){
+            Http.get("/record/GetExamsToCheck", null, function (result, error) {
+                $scope.$apply(function () {
+                    if (error != null) {
+                        $scope.examsToCheck = [];
+                        return;
+                    }
+                    $scope.examsToCheck = result.success;
+                });
             });
         };
 
@@ -263,6 +344,7 @@ var teacherScope = null;
         $scope.openRequestPermission = function () {
             $rootScope.currentPage = TEACHER_SEND_REQUEST;
             $rootScope.currentPageName = PageNames[$rootScope.currentPage];
+            $scope.loadOnlineExams();
             updateHash($rootScope.currentPageName);
         };
         $scope.openCheckExams = function () {
@@ -280,7 +362,6 @@ var teacherScope = null;
             $rootScope.currentPageName = PageNames[$rootScope.currentPage];
             updateHash($rootScope.currentPageName);
         };
-
 
 
         var currentHash = decodeURI(window.location.hash.substring(2));

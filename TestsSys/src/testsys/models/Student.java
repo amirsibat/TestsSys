@@ -28,6 +28,10 @@ public class Student extends User {
         super(id, username, firstName, lastName, description, courses, Type.STUDENT.ordinal(), stId);
     }
 
+    public Student(User user, String stId) {
+        super(user.mId, user.mUsername, user.mFirstName, user.mLastName, user.mDescription, user.mCourses, Type.STUDENT, stId);
+    }
+
     /**
      * Fetch all students from the database where CourseColumn contains courseId parameter
      *
@@ -39,8 +43,7 @@ public class Student extends User {
         List<Student> studentList = new ArrayList<>();
         List<HashMap<String, Object>> students = Database.getInstance().executeListQuery(SqlStatements.STUDENT_GET_STUDENTS_BY_COURSE_ID, SqlColumns.USER_ALL_COLUMNS, courseId);
         for (int i = 0; i < students.size(); i++) {
-        	Student st = (Student) hashMapToObject(students.get(i));
-        	st.mStId = (String) students.get(i).get(SqlColumns.USER_ST_ID);
+            Student st = new Student(hashMapToObject(students.get(i)), (String) students.get(i).get(SqlColumns.USER_ST_ID));
             studentList.add(st);
         }
         return studentList;
@@ -51,15 +54,14 @@ public class Student extends User {
     }
 
     public static Student getStudentByStudentId(String studentId) {
-    	try{
-    	HashMap<String, Object> data = Database.getInstance().executeSingleQuery(SqlStatements.USER_GET_USER_BY_USER_ID, SqlColumns.USER_ALL_COLUMNS, studentId);
-        Student st = (Student) User.hashMapToObject(data);
-        st.mStId = (String) data.get(SqlColumns.USER_ST_ID);
-    	return st;
-    	}catch(Exception e){
-    		L.err(e);
-    		return null;
-    	}
+        try {
+            HashMap<String, Object> data = Database.getInstance().executeSingleQuery(SqlStatements.USER_GET_USER_BY_USER_ID, SqlColumns.USER_ALL_COLUMNS, studentId);
+            Student st = new Student(User.hashMapToObject(data), (String) data.get(SqlColumns.USER_ST_ID));
+            return st;
+        } catch (Exception e) {
+            L.err(e);
+            return null;
+        }
     }
 
 }

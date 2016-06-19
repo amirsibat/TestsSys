@@ -2,13 +2,14 @@ package testsys.utils;
 
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.HashMap;
+import java.util.Date;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
 import testsys.constants.AppConstants;
+import testsys.models.Exam;
 import testsys.models.User;
 
 public class ServletsListener implements ServletContextListener {
@@ -28,7 +29,8 @@ public class ServletsListener implements ServletContextListener {
     public void contextInitialized(ServletContextEvent event) {
 
         try {
-           /* dropTables();*/
+
+           dropTables();
 
             createTable(SqlStatements.PROFESSION_CREATE_TABLE, SqlStatements.PROFESSION_TABLE);
             createTable(SqlStatements.COURSE_CREATE_TABLE, SqlStatements.COURSE_TABLE);
@@ -36,6 +38,7 @@ public class ServletsListener implements ServletContextListener {
             createTable(SqlStatements.EXAM_CREATE_TABLE, SqlStatements.QUESTION_TABLE);
             createTable(SqlStatements.QUESTION_CREATE_TABLE, SqlStatements.EXAM_TABLE);
             createTable(SqlStatements.RECORD_CREATE_TABLE, SqlStatements.RECORD_TABLE);
+            createTable(SqlStatements.REQUEST_CREATE_TABLE, SqlStatements.REQUEST_TABLE);
 
 
             createDummyData();
@@ -76,13 +79,15 @@ public class ServletsListener implements ServletContextListener {
     }
 
     public void dropTables() {
+
         dropTable("DROP TABLE " + SqlStatements.PROFESSION_TABLE, "PROFESSION_TABLE");
         dropTable("DROP TABLE " + SqlStatements.COURSE_TABLE, "COURSE_TABLE");
         dropTable("DROP TABLE " + SqlStatements.USER_TABLE, "USER_TABLE");
         dropTable("DROP TABLE " + SqlStatements.QUESTION_TABLE, "QUESTION_TABLE");
         dropTable("DROP TABLE " + SqlStatements.EXAM_TABLE, "EXAM_TABLE");
         dropTable("DROP TABLE " + SqlStatements.RECORD_TABLE, "RECORD_TABLE");
-
+        dropTable("DROP TABLE " + SqlStatements.REQUEST_TABLE, "RECORD_TABLE");
+//
     }
 
     public void dropTable(String tableStatement, String name) {
@@ -108,6 +113,10 @@ public class ServletsListener implements ServletContextListener {
         L.log("createStudents DONE");
         createQuestions();
         L.log("createQuestions DONE");
+        createExams();
+        L.log("createExams DONE");
+        createRecord();
+        L.log("createRecords DONE");
 
 
     }
@@ -219,6 +228,33 @@ public class ServletsListener implements ServletContextListener {
         } catch (Exception e) {
 //            L.err(e);
         }
+    }
+
+    private void createExams() {
+        try {
+            Database.getInstance().executeUpdate(SqlStatements.EXAM_INSERT_NEW,
+                    "010100", "0006", "Hello ,, student notes", "Hello all my note", new Date(),
+                    20, "[{\"question\":\"01001\",\"grade\":25},{\"question\":\"01002\",\"grade\":25},{\"question\":\"01004\",\"grade\":25},{\"question\":\"01007\",\"grade\":25}]",
+                    "01", "01", Exam.ExamStatus.USED.ordinal(), Exam.ExamType.ONLINE.ordinal(), "4DTG");
+
+            Database.getInstance().executeUpdate(SqlStatements.EXAM_INSERT_NEW,
+                    "010101", "0006", "Hello ,, student notes 222", "Hello all my note2222", new Date(),
+                    40, "[{\"question\":\"01001\",\"grade\":20},{\"question\":\"01002\",\"grade\":20},{\"question\":\"01003\",\"grade\":10},{\"question\":\"01004\",\"grade\":25},{\"question\":\"01007\",\"grade\":25}]",
+                    "01", "01", Exam.ExamStatus.NEW.ordinal(), Exam.ExamType.MANUAL.ordinal(), "4DTT");
+        } catch (Exception e) {
+            L.err(e);
+        }
+    }
+
+    private void createRecord() {
+        try {
+        	
+            Database.getInstance().executeUpdate(SqlStatements.RECORD_INSERT_NEW_RECORD, "1", "0007", "01", "010101", "{\"teacherId\":\"0006\",\"status\":1,\"answers\":[3,2,1,4,3],\"totalGrade\":30,\"startDate\":\"2016-06-18T01:03:36.920Z\", \"endDate\":\"2016-06-18T01:13:36.920Z\", \"duration\":40}");
+            Database.getInstance().executeUpdate(SqlStatements.RECORD_INSERT_NEW_RECORD, "2", "0007", "01", "010100", "{\"teacherId\":\"0006\",\"status\":0,\"answers\":[3,2,1,1],\"totalGrade\":null,\"startDate\":\"2016-06-19T01:03:36.920Z\",\"endDate\":null, \"duration\":20}");
+        } catch (Exception e) {
+            L.err(e);
+        }
+
     }
 
 }

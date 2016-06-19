@@ -1,4 +1,4 @@
-package testsys.servlets;
+package testsys.servlets.exams;
 
 import java.io.IOException;
 import java.io.PrintWriter;

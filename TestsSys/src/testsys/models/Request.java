@@ -22,31 +22,36 @@ public class Request {
     public Exam mExam;
     public RequestStatus mPending;
     public String mRequestText;
+    public Integer mDurationToAdd;
 
 
-    public Request(String id, Teacher teacher, Exam exam, RequestStatus pending, String requestText) {
+    public Request(String id, Teacher teacher, Exam exam, RequestStatus pending, String requestText, Integer durationToAdd) {
         this.mId = id;
         this.mTeacher = teacher;
         this.mExam = exam;
         this.mPending = pending;
         this.mRequestText = requestText;
+        this.mDurationToAdd = durationToAdd;
     }
 
-    public Request(String id, String teacherId, String examId, Integer pending, String requestText) throws Exception {
+    public Request(String id, String teacherId, String examId, Integer pending, String requestText, Integer durationToAdd) throws Exception {
         this.mId = id;
         this.mTeacher = Teacher.getTeacherByTeacherId(teacherId);
         this.mExam = Exam.getExamByExamId(examId);
         this.mPending = RequestStatus.values()[pending];
         this.mRequestText = requestText;
+        this.mDurationToAdd = durationToAdd;
     }
 
 
     public void insert() throws Exception {
-        Database.getInstance().executeUpdate(SqlStatements.REQUEST_INSERT_NEW_REQUEST, mId,
+        Database.getInstance().executeUpdate(SqlStatements.REQUEST_INSERT_NEW_REQUEST, 
+        		mId,
+        		mPending.ordinal(),
+        		mExam.mId,
+                mRequestText,
                 mTeacher.mId,
-                mExam.mId,
-                mPending.ordinal(),
-                mRequestText);
+                mDurationToAdd);
     }
 
     public void answerRequest(RequestStatus requestStatus) throws Exception {
@@ -80,6 +85,7 @@ public class Request {
         json.put("exam", mExam);
         json.put("status", mPending.ordinal());
         json.put("requestText", mRequestText);
+        json.put("durationToAdd", mDurationToAdd);
         return json;
     }
 
@@ -89,7 +95,8 @@ public class Request {
         String exam = (String) objectHashMap.get(SqlColumns.REQUEST_EXAM_ID);
         Integer pending = (Integer) objectHashMap.get(SqlColumns.REQUEST_PENDING);
         String requestText = (String) objectHashMap.get(SqlColumns.REQUEST_REQUEST_TEXT);
-        return new Request(id, teacher, exam, pending, requestText);
+        Integer durationToAdd = (Integer) objectHashMap.get(SqlColumns.REQUEST_DURATION_TO_ADD);
+        return new Request(id, teacher, exam, pending, requestText, durationToAdd);
     }
 
 

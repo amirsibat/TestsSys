@@ -25,7 +25,7 @@ public class SqlStatements {
     public static final String EXAM_CREATE_TABLE = "CREATE TABLE " + EXAM_TABLE + " (ID VARCHAR(6), TeacherID VARCHAR(4), Description VARCHAR(200), DescriptionTeacher VARCHAR(200), DateAdded DATE, Duration INT, QuestionsList VARCHAR(2000), CourseID VARCHAR(2), ProfessionID VARCHAR(2), Status INT, ExamType INT, ExamCode VARCHAR(4), PRIMARY KEY (ID))";
     public static final String QUESTION_CREATE_TABLE = "CREATE TABLE " + QUESTION_TABLE + "  (ID VARCHAR(6), QuestionText VARCHAR(200), CorrectAnswer INT,  TeacherID VARCHAR(4), ProfessionID VARCHAR(2), QuestionOptions1 VARCHAR(200), QuestionOptions2  VARCHAR(200), QuestionOptions3 VARCHAR(200), QuestionOptions4 VARCHAR(200), CoursesList VARCHAR(100), PRIMARY KEY (ID))";
     public static final String RECORD_CREATE_TABLE = "CREATE TABLE " + RECORD_TABLE + "  (ID VARCHAR(10), StudentID VARCHAR(4), CourseID VARCHAR(2), ExamID VARCHAR(6), ExtraData VARCHAR(2000), PRIMARY KEY (ID))";
-    public static final String REQUEST_CREATE_TABLE = "CREATE TABLE " + REQUEST_TABLE + "  (ID VARCHAR(10), Pending Integer, ExamID VARCHAR(6), RequestText VARCHAR(1000), TeacherID VARCHAR(4), PRIMARY KEY (ID))";
+    public static final String REQUEST_CREATE_TABLE = "CREATE TABLE " + REQUEST_TABLE + "  (ID VARCHAR(10), Pending Integer, ExamID VARCHAR(6), RequestText VARCHAR(1000), TeacherID VARCHAR(4), DurationToAdd Integer, PRIMARY KEY (ID))";
 
 
     /**
@@ -157,12 +157,13 @@ public class SqlStatements {
     /**
      * RecordTable Statements
      */
+    public static final String RECORD_GET_ALL_RECORDS = "SELECT * FROM " + RECORD_TABLE; 
     public static final String RECORD_GET_RECORD_BY_RECORD_ID = "SELECT * FROM " + RECORD_TABLE + " WHERE " + SqlColumns.RECORD_ID + "=?";
     public static final String RECORD_GET_RECORDS_BY_STUDENT_ID = "SELECT * FROM " + RECORD_TABLE + " WHERE " + SqlColumns.RECORD_STUDENT_ID + "=?";
     public static final String RECORD_GET_RECORDS_BY_EXAM_ID = "SELECT * FROM " + RECORD_TABLE + " WHERE " + SqlColumns.RECORD_EXAM_ID + "=?";
     public static final String RECORD_GET_RECORDS_BY_COURSE_ID = "SELECT * FROM " + RECORD_TABLE + " WHERE " + SqlColumns.RECORD_COURSE_ID + "=?";
 
-    public static final String RECORD_INSER_NEW_RECORD = "INSERT INTO " + RECORD_TABLE + " ("
+    public static final String RECORD_INSERT_NEW_RECORD = "INSERT INTO " + RECORD_TABLE + " ("
             + SqlColumns.RECORD_ID + ", "
             + SqlColumns.RECORD_STUDENT_ID + ", "
             + SqlColumns.RECORD_COURSE_ID + ", "
@@ -181,7 +182,8 @@ public class SqlStatements {
             + SqlColumns.REQUEST_PENDING + ", "
             + SqlColumns.REQUEST_EXAM_ID + ", "
             + SqlColumns.REQUEST_REQUEST_TEXT + ", "
-            + SqlColumns.REQUEST_TEACHER_ID
+            + SqlColumns.REQUEST_TEACHER_ID + ", "
+            + SqlColumns.REQUEST_DURATION_TO_ADD
             + ") VALUES(?,?,?,?,?)";
 
     public static final String REQUEST_UPDATE_REQUEST = "UPDATE INTO " + REQUEST_TABLE + " SET "
