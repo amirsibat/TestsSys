@@ -81,8 +81,8 @@ public class Request {
     public JSONObject toJSON() throws Exception {
         JSONObject json = new JSONObject();
         json.put("id", mId);
-        json.put("teacher", mTeacher);
-        json.put("exam", mExam);
+        json.put("teacher", mTeacher.toJSON());
+        json.put("exam", mExam.toJSON());
         json.put("status", mPending.ordinal());
         json.put("requestText", mRequestText);
         json.put("durationToAdd", mDurationToAdd);
@@ -111,7 +111,7 @@ public class Request {
             JSONArray jsonArray = Database.getInstance().executeListQueryAsJSON("SELECT ID FROM " + SqlStatements.REQUEST_TABLE,
                     columnsNames, columnsTypes);
             for (int i = 0; i < jsonArray.length(); i++) {
-                String QuestionId = jsonArray.getJSONObject(i).getString("ID").substring(2, 5);
+                String QuestionId = jsonArray.getJSONObject(i).getString("ID");
                 if (Integer.parseInt(QuestionId) > maxQuestionId) {
                     maxQuestionId = Integer.parseInt(QuestionId);
                 }

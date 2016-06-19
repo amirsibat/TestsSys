@@ -184,7 +184,7 @@ public class SqlStatements {
             + SqlColumns.REQUEST_REQUEST_TEXT + ", "
             + SqlColumns.REQUEST_TEACHER_ID + ", "
             + SqlColumns.REQUEST_DURATION_TO_ADD
-            + ") VALUES(?,?,?,?,?)";
+            + ") VALUES(?,?,?,?,?,?)";
 
     public static final String REQUEST_UPDATE_REQUEST = "UPDATE INTO " + REQUEST_TABLE + " SET "
             + SqlColumns.REQUEST_PENDING + "=? , "
