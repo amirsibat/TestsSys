@@ -157,7 +157,7 @@ public class SqlStatements {
     /**
      * RecordTable Statements
      */
-    public static final String RECORD_GET_ALL_RECORDS = "SELECT * FROM " + RECORD_TABLE; 
+    public static final String RECORD_GET_ALL_RECORDS = "SELECT * FROM " + RECORD_TABLE;
     public static final String RECORD_GET_RECORD_BY_RECORD_ID = "SELECT * FROM " + RECORD_TABLE + " WHERE " + SqlColumns.RECORD_ID + "=?";
     public static final String RECORD_GET_RECORDS_BY_STUDENT_ID = "SELECT * FROM " + RECORD_TABLE + " WHERE " + SqlColumns.RECORD_STUDENT_ID + "=?";
     public static final String RECORD_GET_RECORDS_BY_EXAM_ID = "SELECT * FROM " + RECORD_TABLE + " WHERE " + SqlColumns.RECORD_EXAM_ID + "=?";
@@ -171,6 +171,8 @@ public class SqlStatements {
             + SqlColumns.RECORD_EXTRA_DATA
             + ") VALUES(?,?,?,?,?)";
 
+    public static final String RECORD_UPDATE_RECORD = "UPDATE " + RECORD_TABLE + " SET "
+            + SqlColumns.RECORD_EXTRA_DATA + "=? WHERE " + SqlColumns.RECORD_ID + "=?";
 
     /**
      * RequestTable Statements
@@ -186,7 +188,7 @@ public class SqlStatements {
             + SqlColumns.REQUEST_DURATION_TO_ADD
             + ") VALUES(?,?,?,?,?,?)";
 
-    public static final String REQUEST_UPDATE_REQUEST = "UPDATE INTO " + REQUEST_TABLE + " SET "
+    public static final String REQUEST_UPDATE_REQUEST = "UPDATE " + REQUEST_TABLE + " SET "
             + SqlColumns.REQUEST_PENDING + "=? , "
             + " WHERE " + SqlColumns.REQUEST_ID + "=?";
 }

@@ -19,4 +19,10 @@ public class QuestionsGrade {
     	json.put(AppConstants.QUESTION_ID_KEY, mQuestionId);
     	return json;
     }
+    public JSONObject toJSONWithFetch() throws Exception{
+        JSONObject json = new JSONObject();
+        json.put(AppConstants.GRADE_KEY, mGrade);
+        json.put(AppConstants.QUESTION_ID_KEY, Question.getQuestionByQuestionId(mQuestionId).toJSON());
+        return json;
+    }
 }

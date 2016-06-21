@@ -18,7 +18,16 @@
   <listener>
     <listener-class>testsys.utils.ServletsListener</listener-class>
   </listener>
-  
+  <servlet>
+    <description></description>
+    <display-name>SubmitExamCheck</display-name>
+    <servlet-name>SubmitExamCheck</servlet-name>
+    <servlet-class>testsys.servlets.exams.SubmitExamCheck</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SubmitExamCheck</servlet-name>
+    <url-pattern>/exam/SubmitExamCheck</url-pattern>
+  </servlet-mapping>
   <servlet>
     <description></description>
     <display-name>GetExamsToCheck</display-name>

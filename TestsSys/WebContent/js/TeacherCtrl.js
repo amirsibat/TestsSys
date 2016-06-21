@@ -56,6 +56,7 @@ var teacherScope = null;
         $scope.allCoursesBySelectedProfession = [];
         $scope.examsToCheck = [];
         $scope.oldTeacherRequest = [];
+        $scope.checkingExamHolder = {};
         $('#alertView').fadeOut(0);
 
 
@@ -239,8 +240,7 @@ var teacherScope = null;
         };
 
 
-
-        $scope.loadOnlineExams = function(){
+        $scope.loadOnlineExams = function () {
             $('#alertView').fadeOut();
             Http.get("/record/GetOnlineExams", null, function (result, error) {
                 $scope.$apply(function () {
@@ -289,7 +289,7 @@ var teacherScope = null;
             $('#alertView').fadeOut();
             try {
                 $scope.newRequestHolder.duration = parseInt($scope.newRequestHolder.duration);
-            }catch (e){
+            } catch (e) {
                 console.log(e);
             }
             Http.post("/request/CreateNewRequest", null, $scope.newRequestHolder, function (result, error) {
@@ -301,12 +301,13 @@ var teacherScope = null;
                     }
                     $scope.clearRequestData();
                     $scope.loadExamsToCheck();
+                    $scope.loadOldRequests();
                 });
             });
         };
 
 
-        $scope.loadOldRequests = function(){
+        $scope.loadOldRequests = function () {
             console.log("GetRequestsByTeacher");
             Http.get("/request/GetRequestsByTeacher", null, function (result, error) {
                 $scope.$apply(function () {
@@ -320,7 +321,7 @@ var teacherScope = null;
             });
         };
 
-        $scope.loadExamsToCheck = function(){
+        $scope.loadExamsToCheck = function () {
             Http.get("/record/GetExamsToCheck", null, function (result, error) {
                 $scope.$apply(function () {
                     if (error != null) {
@@ -334,6 +335,77 @@ var teacherScope = null;
 
         $scope.loadOldRequests();
         $scope.loadExamsToCheck();
+
+
+        $scope.getCheckingExamName = function () {
+            if ($scope.checkingExamHolder.record == null)
+                return "";
+            return $scope.checkingExamHolder.record.exam.profession.name +
+                ", " + $scope.checkingExamHolder.record.course.name + ", " + $scope.checkingExamHolder.record.exam.id + " - " +
+                $scope.checkingExamHolder.record.exam.code;
+        };
+
+        $scope.getHashExtraTime = function () {
+            if ($scope.checkingExamHolder.record == null)
+                return "";
+            return (parseInt(parseInt($scope.checkingExamHolder.record.exam.duration) != parseInt($scope.checkingExamHolder.record.extraData.duration))) ?
+                (parseInt(parseInt($scope.checkingExamHolder.record.exam.duration) != parseInt($scope.checkingExamHolder.record.extraData.duration)) + " minutes") : "N/A";
+        };
+
+
+        $scope.openCheckExamModal = function (record) {
+            $scope.checkingExamHolder.record = record;
+            for (var i = 0; i < $scope.checkingExamHolder.record.exam.questionsList.length; i++) {
+                if ($scope.checkingExamHolder.record.exam.questionsList[i].question.correctAnswer == $scope.checkingExamHolder.record.extraData.answers[i]) {
+                    $scope.checkingExamHolder.record.exam.questionsList[i].teacherGrade = $scope.checkingExamHolder.record.exam.questionsList[i].grade;
+                } else {
+                    $scope.checkingExamHolder.record.exam.questionsList[i].teacherGrade = 0;
+                }
+            }
+            console.log($scope.checkingExamHolder);
+            $('#checkExamModal').modal("show");
+        };
+
+        $scope.submitCheckedExam = function () {
+            var objectToSend = {
+                recordId: $scope.checkingExamHolder.record.id,
+                teacherCheck: [],
+                teacherGrade: 0
+            };
+            for (var i = 0; i < $scope.checkingExamHolder.record.exam.questionsList.length; i++) {
+                var grade = $scope.checkingExamHolder.record.exam.questionsList[i].teacherGrade;
+                objectToSend.teacherCheck.push(grade);
+                objectToSend.teacherGrade += grade;
+            }
+            Http.post("/exam/SubmitExamCheck", null, objectToSend, function (result, error) {
+                $scope.$apply(function () {
+                    if (error) {
+                        console.log(error);
+                        alert("Server Error");
+                        return
+                    }
+                    $scope.checkingExamHolder = {};
+                    $scope.loadExamsToCheck();
+                    $('#checkExamModal').modal("hide");
+                });
+            });
+        };
+
+
+        $scope.getCheckingExamDuration = function () {
+            if ($scope.checkingExamHolder != null && $scope.checkingExamHolder.record != null) {
+                return $scope.checkingExamHolder.record.exam.duration + " minutes";
+            }
+            return "-";
+        };
+        $scope.getCheckingExamFinishedIn = function () {
+            if ($scope.checkingExamHolder != null && $scope.checkingExamHolder.record != null) {
+                return ((new Date($scope.checkingExamHolder.record.extraData.endDate).getTime() -
+                    new Date($scope.checkingExamHolder.record.extraData.startDate).getTime())
+                    / 1000 / 60) + " minutes";
+            }
+            return "-";
+        };
 
         /**
          * Paging
@@ -368,6 +440,7 @@ var teacherScope = null;
         $scope.openCheckExams = function () {
             $rootScope.currentPage = TEACHER_CHECK_EXAMS;
             $rootScope.currentPageName = PageNames[$rootScope.currentPage];
+            $('#checkExamModal').modal({show: false});
             updateHash($rootScope.currentPageName);
         };
         $scope.openPublishExams = function () {

@@ -278,7 +278,7 @@ public class Exam {
         json.put("descriptionTeacher", mDescriptionTeacher);
         json.put("date", mDate);
         json.put("duration", mDuration);
-        json.put("questionsList", getQuestionsJSONList());
+        json.put("questionsList", getQuestionsJSONListWithFetch());
         json.put("course", mCourse.toJSON());
         json.put("profession", mProfession.toJSON());
         json.put("status", mStatus.ordinal());
@@ -291,6 +291,13 @@ public class Exam {
         JSONArray json = new JSONArray();
         for (int i = 0; i < mQuestionsList.size(); i++) {
             json.put(mQuestionsList.get(i).toJSON());
+        }
+        return json;
+    }
+    public JSONArray getQuestionsJSONListWithFetch() throws Exception {
+        JSONArray json = new JSONArray();
+        for (int i = 0; i < mQuestionsList.size(); i++) {
+            json.put(mQuestionsList.get(i).toJSONWithFetch());
         }
         return json;
     }

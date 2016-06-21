@@ -79,7 +79,11 @@ public class Record {
                 mStudent.mId,
                 mCourse.mId,
                 mExam.mId,
-                mExtraData);
+                mExtraData.toString());
+    }
+
+    public void update() throws Exception{
+        Database.getInstance().executeUpdate(SqlStatements.RECORD_UPDATE_RECORD, mExtraData.toString(), mId);
     }
 
     /**

@@ -28,3 +28,98 @@
         </div>
     </div>
 </div>
+<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" id="checkExamModal"
+     aria-labelledby="myLargeModalLabel">
+    <div class="modal-dialog questions-list-modal-container modal-lg" style="z-index: 1100;">
+        <div class="modal-content questions-list-modal">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Exam: {{getCheckingExamName()}}</h4>
+            </div>
+            <div class="modal-body questions-list-modal-body">
+                <div class="box-row row check-exam-row">
+                    <div class="col-xs-3 title">
+                        Student:
+                    </div>
+                    <div class="col-xs-9 box-content check-exam-content">
+                        {{checkingExamHolder.record.student.firstName + " " +
+                        checkingExamHolder.record.student.lastName}}
+                    </div>
+                </div>
+                <div class="box-row row check-exam-row">
+                    <div class="col-xs-3 title">
+                        Finished in:
+                    </div>
+                    <div class="col-xs-9 box-content check-exam-content">
+                        {{getCheckingExamFinishedIn()}}
+                    </div>
+                </div>
+                <div class="box-row row check-exam-row">
+                    <div class="col-xs-3 title">
+                        Exam duration:
+                    </div>
+                    <div class="col-xs-9 box-content check-exam-content">
+                        {{getCheckingExamDuration()}}
+                    </div>
+                </div>
+                <div class="box-row row check-exam-row">
+                    <div class="col-xs-3 title">
+                        Has extra time:
+                    </div>
+                    <div class="col-xs-9 box-content check-exam-content">
+                        {{getHashExtraTime()}}
+                    </div>
+                </div>
+
+                <div class="box-row row check-exam-row">
+                    <div class="col-xs-12">
+                        <div class="row questions-header">
+                            <div class="col-xs-1">
+                                #
+                            </div>
+                            <div class="col-xs-7">
+                                The question text
+                            </div>
+                            <div class="col-xs-2">
+                                Auto Checker
+                            </div>
+                            <div class="col-xs-2">
+                                Teacher Grade
+                            </div>
+                        </div>
+                        <div class="row questions-row" ng-repeat="question in checkingExamHolder.record.exam.questionsList">
+                            <div class="col-lg-12">
+                                <div class="row">
+                                    <div class="col-xs-8">
+                                        <b>{{$index + 1}}) </b>
+                                        {{question.question.text}}
+                                    </div>
+                                    <div class="col-xs-2">
+                                        {{(question.question.correctAnswer == checkingExamHolder.record.extraData.answers[$index] ? "True" : "False")}}
+                                    </div>
+                                    <div class="col-xs-2">
+                                        <input type="number" aria-valuemin="0" aria-valuemax="{{question.grade}}" class="question-grade-input" ng-model="question.teacherGrade" width="40px"> / {{question.grade}}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <b>Student Answer:</b>
+                                        {{question.question.options[checkingExamHolder.record.extraData.answers[$index]]}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-success" data-dismiss="modal" ng-click="submitCheckedExam();">
+                    Submit
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
