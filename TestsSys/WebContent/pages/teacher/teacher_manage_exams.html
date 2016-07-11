@@ -1,3 +1,34 @@
-<div class="">
-    TEACHER_MANAGE_EXAMS
+<div class="row">
+    <div class="col-xs-1">
+    </div>
+    <div class="col-xs-10">
+        <div class="box-container">
+            <div class="row exams-header">
+                <div class="col-xs-1">ID</div>
+                <div class="col-xs-2">Student</div>
+                <div class="col-xs-2">Profession</div>
+                <div class="col-xs-2">Course</div>
+                <div class="col-xs-1">Exam Code</div>
+                <div class="col-xs-1">Status</div>
+                <div class="col-xs-1">Type</div>
+                <div class="col-xs-2">Action</div>
+            </div>
+
+            <div class="no-data-message" ng-show="examsToPublish.length == 0">No exams to Publish</div>
+
+            <div class="row exam-row" ng-repeat="exam in examsToPublish">
+                <div class="col-xs-1">{{exam.id}}</div>
+                <div class="col-xs-2">{{exam.author.firstName+ " " + exam.author.lastName}}</div>
+                <div class="col-xs-2">{{exam.profession.name}}</div>
+                <div class="col-xs-2">{{exam.course.name}}</div>                
+                <div class="col-xs-1">{{exam.code}}</div>
+                <div class="col-xs-1">{{exam.status == 0 ? "New" : "Used"}}</div>
+                <div class="col-xs-1">{{exam.type == 0 ? "Word" : "Online"}}</div>
+                <div class="col-xs-2">
+                    <button class="btn btn-default" ng-click="">Publish Exam</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
 </div>

@@ -55,6 +55,7 @@ var teacherScope = null;
         $scope.allProfessions = [];
         $scope.allCoursesBySelectedProfession = [];
         $scope.examsToCheck = [];
+        $scope.examsToPublish = [];
         $scope.oldTeacherRequest = [];
         $scope.checkingExamHolder = {};
         $('#alertView').fadeOut(0);
@@ -321,14 +322,35 @@ var teacherScope = null;
             });
         };
 
-        $scope.loadExamsToCheck = function () {
-            Http.get("/record/GetExamsToCheck", null, function (result, error) {
+        $scope.loadExamsToPublish = function() {
+        	
+        	Http.get("/exam/getAllExams", null, function (result, error) {
                 $scope.$apply(function () {
+
                     if (error != null) {
-                        $scope.examsToCheck = [];
+                        console.log(error);
+                        $scope.examsToPublish = [];
                         return;
                     }
-                    $scope.examsToCheck = result.success;
+
+                    $scope.examsToPublish = result.success;
+                });
+            })
+        };
+        
+        $scope.publishExam = function() {
+        	
+        	
+        };
+        
+        $scope.loadExamsToCheck = function () {
+            Http.get("/record/GetExamsToPublis", null, function (result, error) {
+                $scope.$apply(function () {
+                    if (error != null) {
+                        $scope.examsToPublish = [];
+                        return;
+                    }
+                    $scope.examsToPublish = result.success;
                 });
             });
         };
@@ -406,6 +428,12 @@ var teacherScope = null;
             }
             return "-";
         };
+        
+        
+        
+        
+        
+        
 
         /**
          * Paging
@@ -446,6 +474,7 @@ var teacherScope = null;
         $scope.openPublishExams = function () {
             $rootScope.currentPage = TEACHER_MANAGE_EXAMS;
             $rootScope.currentPageName = PageNames[$rootScope.currentPage];
+            $scope.loadExamsToPublish();
             updateHash($rootScope.currentPageName);
         };
         $scope.openStatistics = function () {

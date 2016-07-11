@@ -62,7 +62,7 @@ public class Request {
 
     public static List<Request> getPendingRequest() throws Exception {
         List<Request> requestList = new ArrayList<>();
-        List<HashMap<String, Object>> objectsList = Database.getInstance().executeListQuery(SqlStatements.REQUEST_GET_PINDEING_REQUESTS, SqlColumns.REQUEST_ALL_COLUMNS);
+        List<HashMap<String, Object>> objectsList = Database.getInstance().executeListQuery(SqlStatements.REQUEST_GET_PINDEING_REQUESTS, SqlColumns.REQUEST_ALL_COLUMNS,0);
         for (int i = 0; i < objectsList.size(); i++) {
             requestList.add(hashMapToObject(objectsList.get(i)));
         }

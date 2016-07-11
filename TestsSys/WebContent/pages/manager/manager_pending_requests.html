@@ -1,3 +1,33 @@
-<div class="" >
-    MANAGER_PENDING_REQUESTS
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box-container">
+            <div class="row exams-header">
+                <div class="col-xs-1">Id</div>
+                <div class="col-xs-2">Author</div>
+                <div class="col-xs-2">Text</div>
+                <div class="col-xs-2">Exam Id</div>
+                <div class="col-xs-1">Exam Duration</div>
+                <div class="col-xs-1">Duration to add</div>
+                <div class="col-xs-1">Type</div>
+                <div class="col-xs-2">Actions</div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="row exam-row" ng-repeat="request in pendingRequests">
+                        <div class="col-xs-1">{{request.id}}</div>
+                        <div class="col-xs-2">{{request.exam.author.firstName+ " " + request.exam.author.lastName}}</div>
+                        <div class="col-xs-2">{{request.requestText}}</div>
+                        <div class="col-xs-2">{{request.exam.id}}</div>
+                        <div class="col-xs-1">{{request.exam.duration + " mins"}}</div>
+                        <div class="col-xs-1">{{request.durationToAdd + " mins"}}</div>
+                        <div class="col-xs-1">{{request.exam.type == 0 ? "Word" : "Online"}}</div>
+                        <div class="col-xs-2">
+                            <button class="btn btn-success" ng-click="">Accept</button>
+                            <button class="btn btn-danger" ng-click="">Deny</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

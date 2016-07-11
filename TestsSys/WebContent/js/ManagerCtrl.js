@@ -5,6 +5,7 @@
         $scope.allExams = [];
         $scope.allQuestions = [];
         $scope.selectedExam = {};
+        $scope.pendingRequests =[];
         $('#examDetails').modal({show: false});
 
 
@@ -37,7 +38,22 @@
             })
         };
 
+        $scope.loadPendingRequests = function(){
+        	Http.get("/request/GetPendingRequest", null, function (result, error) {
+                $scope.$apply(function () {
 
+                    if (error != null) {
+                        console.log(error);
+                        $scope.pendingRequests = [];
+                        return;
+                    }
+
+                    $scope.pendingRequests = result.success;
+                });
+            })
+        	
+        };
+        
         $scope.openModal = function (exam) {
             $('#examDetails').modal('show');
             setTimeout(function () {
@@ -83,6 +99,7 @@
         $scope.openRequests = function () {
             $rootScope.currentPage = MANAGER_PENDING_REQUESTS;
             $rootScope.currentPageName = PageNames[$rootScope.currentPage];
+            $scope.loadPendingRequests();
             updateHash($rootScope.currentPageName);
         };
 
