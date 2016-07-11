@@ -104,9 +104,9 @@
                 <div class="box-row check-exams-header">
                     <div class="col-xs-1">ID</div>
                     <div class="col-xs-4">Exam</div>
-                    <div class="col-xs-2">Status</div>
+                    <div class="col-xs-1">Status</div>
                     <div class="col-xs-4">Text</div>
-                    <div class="col-xs-1">Duration</div>
+                    <div class="col-xs-2">Duration</div>
                 </div>
 
                 <div class="no-data-message" ng-show="oldTeacherRequest.length == 0">No old request</div>
@@ -116,11 +116,11 @@
                     <div class="col-xs-4">{{request.exam.profession.name + ", " + request.exam.course.name + ", " +
                         request.exam.id + " - " + request.exam.code}}
                     </div>
-                    <div class="col-xs-2">{{request.status == 0 ? "Pending" : (requst.status == 1? "Accepted":
+                    <div class="col-xs-1">{{request.status == 0 ? "Pending" : (requst.status == 1? "Accepted":
                         "Rejected")}}
                     </div>
                     <div class="col-xs-4">{{request.requestText}}</div>
-                    <div class="col-xs-1">{{request.duration}} min</div>
+                    <div class="col-xs-2">{{request.duration}} min</div>
                 </div>
             </div>
             <div class="modal-footer">

@@ -46,10 +46,10 @@ public class Request {
 
 
     public void insert() throws Exception {
-        Database.getInstance().executeUpdate(SqlStatements.REQUEST_INSERT_NEW_REQUEST, 
-        		mId,
-        		mPending.ordinal(),
-        		mExam.mId,
+        Database.getInstance().executeUpdate(SqlStatements.REQUEST_INSERT_NEW_REQUEST,
+                mId,
+                mPending.ordinal(),
+                mExam.mId,
                 mRequestText,
                 mTeacher.mId,
                 mDurationToAdd);
@@ -62,7 +62,7 @@ public class Request {
 
     public static List<Request> getPendingRequest() throws Exception {
         List<Request> requestList = new ArrayList<>();
-        List<HashMap<String, Object>> objectsList = Database.getInstance().executeListQuery(SqlStatements.REQUEST_GET_PINDEING_REQUESTS, SqlColumns.REQUEST_ALL_COLUMNS,0);
+        List<HashMap<String, Object>> objectsList = Database.getInstance().executeListQuery(SqlStatements.REQUEST_GET_PINDEING_REQUESTS, SqlColumns.REQUEST_ALL_COLUMNS, RequestStatus.PENDING.ordinal());
         for (int i = 0; i < objectsList.size(); i++) {
             requestList.add(hashMapToObject(objectsList.get(i)));
         }
@@ -117,7 +117,7 @@ public class Request {
                     maxQuestionId = Integer.parseInt(QuestionId);
                 }
             }
-            return  "" + (maxQuestionId + 1);
+            return "" + (maxQuestionId + 1);
         } catch (Exception e) {
             L.err(e);
         }

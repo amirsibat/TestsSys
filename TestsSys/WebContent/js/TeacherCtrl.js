@@ -344,13 +344,13 @@ var teacherScope = null;
         };
         
         $scope.loadExamsToCheck = function () {
-            Http.get("/record/GetExamsToPublis", null, function (result, error) {
+            Http.get("/record/GetExamsToCheck", null, function (result, error) {
                 $scope.$apply(function () {
                     if (error != null) {
-                        $scope.examsToPublish = [];
+                        $scope.examsToCheck = [];
                         return;
                     }
-                    $scope.examsToPublish = result.success;
+                    $scope.examsToCheck = result.success;
                 });
             });
         };
