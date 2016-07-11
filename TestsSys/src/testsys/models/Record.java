@@ -21,7 +21,8 @@ public class Record {
     public enum RecordExamStatus{
         IN_PROGRESS,
         PENDING_CHECK,
-        SUBMITTED
+        SUBMITTED,
+        PUBLISHED
     }
 
     public String mId;
