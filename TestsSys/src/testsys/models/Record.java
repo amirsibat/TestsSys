@@ -218,6 +218,10 @@ public class Record {
         jsonObject.put("extraData", mExtraData);
         return jsonObject;
     }
+
+	public static void checkInProgressExams() {
+		
+	}
  
 
 }

@@ -10,6 +10,7 @@ import javax.servlet.ServletContextListener;
 
 import testsys.constants.AppConstants;
 import testsys.models.Exam;
+import testsys.models.Record;
 import testsys.models.User;
 
 public class ServletsListener implements ServletContextListener {
@@ -46,6 +47,26 @@ public class ServletsListener implements ServletContextListener {
             System.err.println("Error during database initialization");
             e.printStackTrace();
         }
+        
+        startBackgroundService();
+    }
+    
+    
+    private void startBackgroundService(){
+    	new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				while(true){
+					Record.checkInProgressExams();
+					try{
+						Thread.sleep(1000);
+					}catch(Exception e){
+						L.err(e);
+					}
+				}
+			}
+		}).start();
     }
 
     //utility that checks whether the customer tables already exists
