@@ -13,20 +13,20 @@ var DOCXjs = function () {
     var documentGen = function () {
 
         // Headers
-        var output = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:document mc:ignorable="w14" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main" xmlns:w10="urn:schemas-microsoft-com:office:word" xmlns:w14="http://schemas.microsoft.com/office/word/2010/wordml" xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing" xmlns:wpg="http://schemas.microsoft.com/office/word/2010/wordprocessingGroup" xmlns:wps="http://schemas.microsoft.com/office/word/2010/wordprocessingShape"><w:body>';
+        //var output = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:document mc:ignorable="w14" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main" xmlns:w10="urn:schemas-microsoft-com:office:word" xmlns:w14="http://schemas.microsoft.com/office/word/2010/wordml" xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing" xmlns:wpg="http://schemas.microsoft.com/office/word/2010/wordprocessingGroup" xmlns:wps="http://schemas.microsoft.com/office/word/2010/wordprocessingShape"><w:body>';
+        //
+        //// Paragraphs
+        //for (var textElement in textElements) {
+        //    output += textElements[textElement];
+        //}
+        //
+        //// Bottom section
+        //output += '<w:sectpr><w:headerreference r:id="rId4" w:type="default"></w:headerreference><w:footerreference r:id="rId5" w:type="default"></w:footerreference><w:pgsz w:h="15840" w:orient="portrait" w:w="12240"></w:pgsz><w:pgmar w:bottom="1440" w:footer="720" w:header="720" w:left="1800" w:right="1800" w:top="1440"></w:pgmar><w:bidi w:val="0"></w:bidi></w:sectpr>';
+        //
+        //// Close
+        //output += '</w:body></w:document>';
 
-        // Paragraphs
-        for (var textElement in textElements) {
-            output += textElements[textElement];
-        }
-
-        // Bottom section
-        output += '<w:sectpr><w:headerreference r:id="rId4" w:type="default"></w:headerreference><w:footerreference r:id="rId5" w:type="default"></w:footerreference><w:pgsz w:h="15840" w:orient="portrait" w:w="12240"></w:pgsz><w:pgmar w:bottom="1440" w:footer="720" w:header="720" w:left="1800" w:right="1800" w:top="1440"></w:pgmar><w:bidi w:val="0"></w:bidi></w:sectpr>';
-
-        // Close
-        output += '</w:body></w:document>';
-
-        return output;
+        return textElements[0];
     }
 
 
