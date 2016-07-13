@@ -82,7 +82,7 @@ public class SqlStatements {
     public static final String USER_DELETE = "DELETE FROM " + USER_TABLE + " WHERE " + SqlColumns.USER_ID + "=?";
 
     public static final String STUDENT_GET_STUDENTS_BY_COURSE_ID = "SELECT * FROM " + USER_TABLE + " WHERE "
-            + SqlColumns.USER_TYPE + "=? and " + SqlColumns.USER_COURSES + " LIKE '%?%'";
+            + SqlColumns.USER_TYPE + "=" + User.Type.STUDENT.ordinal() +  " AND " + SqlColumns.USER_COURSES + " LIKE '%?%'";
 
 
     /**

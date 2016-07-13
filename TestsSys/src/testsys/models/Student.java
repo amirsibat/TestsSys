@@ -40,6 +40,7 @@ public class Student extends User {
      * @throws Exception failed to execute SQL query
      */
     public static List<Student> getStudentsByCourseId(String courseId) throws Exception {
+  
         List<Student> studentList = new ArrayList<>();
         List<HashMap<String, Object>> students = Database.getInstance().executeListQuery(SqlStatements.STUDENT_GET_STUDENTS_BY_COURSE_ID, SqlColumns.USER_ALL_COLUMNS, courseId);
         for (int i = 0; i < students.size(); i++) {

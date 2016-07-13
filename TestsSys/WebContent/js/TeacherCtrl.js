@@ -58,6 +58,7 @@ var teacherScope = null;
         $scope.examsToPublish = [];
         $scope.oldTeacherRequest = [];
         $scope.checkingExamHolder = {};
+        $scope.publishExamHolder = {};
         $('#alertView').fadeOut(0);
 
 
@@ -322,9 +323,16 @@ var teacherScope = null;
             });
         };
 
+<<<<<<< Updated upstream
         $scope.loadExamsToPublish = function () {
 
             Http.get("/exam/getAllExams", null, function (result, error) {
+=======
+        //get unpublished exams 
+        $scope.loadExamsToPublish = function() {
+        	
+        	Http.get("/exam/getAllExams", null, function (result, error) {
+>>>>>>> Stashed changes
                 $scope.$apply(function () {
 
                     if (error != null) {
@@ -337,10 +345,31 @@ var teacherScope = null;
                 });
             })
         };
+<<<<<<< Updated upstream
 
         $scope.publishExam = function () {
 
 
+=======
+        
+        $scope.publishExam = function(exam) {
+        	
+        	 var objectToSend = {
+                     courseId: exam.course.id,
+                     examId:  exam.id
+                 };
+        	
+        	Http.post("/exam/PublishExam", null, objectToSend, function (result, error) {
+        		 $scope.$apply(function () {
+                     if (error != null) {
+                    	 console.log(error);
+                         alert("Server Error");
+                         return;
+                     }
+                     $scope.loadExamsToPublish();
+                 });
+            })        	
+>>>>>>> Stashed changes
         };
 
         $scope.loadExamsToCheck = function () {

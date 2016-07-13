@@ -5,8 +5,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
+
 import testsys.utils.Database;
+import testsys.utils.L;
 import testsys.utils.SqlColumns;
 import testsys.utils.SqlStatements;
 
@@ -208,6 +211,7 @@ public class Record {
         }
         return returnRecords;
     }
+    
 
     public JSONObject toJSON() throws Exception{
         JSONObject jsonObject = new JSONObject();
@@ -223,5 +227,27 @@ public class Record {
 		
 	}
  
+    public static String generateRecordId() {
+        String[] columnsNames = new String[1];
+        columnsNames[0] = "ID";
+        String[] columnsTypes = new String[1];
+        columnsTypes[0] = "TEXT";
+
+        try {
+            int maxRecordId = 0;
+            JSONArray jsonArray = Database.getInstance().executeListQueryAsJSON("SELECT ID FROM " + SqlStatements.RECORD_TABLE,
+                    columnsNames, columnsTypes);
+            for (int i = 0; i < jsonArray.length(); i++) {
+                String RecordId = jsonArray.getJSONObject(i).getString("ID");
+                if (Integer.parseInt(RecordId) > maxRecordId) {
+                	maxRecordId = Integer.parseInt(RecordId);
+                }
+            }
+            return "" + (maxRecordId + 1);
+        } catch (Exception e) {
+            L.err(e);
+        }
+        return null;
+    }
 
 }
