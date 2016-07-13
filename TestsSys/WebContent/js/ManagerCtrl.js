@@ -5,7 +5,7 @@
         $scope.allExams = [];
         $scope.allQuestions = [];
         $scope.selectedExam = {};
-        $scope.pendingRequests =[];
+        $scope.pendingRequests = [];
         $('#examDetails').modal({show: false});
 
 
@@ -38,8 +38,8 @@
             })
         };
 
-        $scope.loadPendingRequests = function(){
-        	Http.get("/request/GetPendingRequest", null, function (result, error) {
+        $scope.loadPendingRequests = function () {
+            Http.get("/request/GetPendingRequest", null, function (result, error) {
                 $scope.$apply(function () {
 
                     if (error != null) {
@@ -51,9 +51,9 @@
                     $scope.pendingRequests = result.success;
                 });
             })
-        	
+
         };
-        
+
         $scope.openModal = function (exam) {
             $('#examDetails').modal('show');
             setTimeout(function () {
@@ -74,57 +74,90 @@
         };
 
 
-        $scope.openExams = function () {
+        $scope.openExams = function (updatH) {
             $rootScope.currentPage = MANAGER_EXAMS;
             $rootScope.currentPageName = PageNames[$rootScope.currentPage];
             $scope.loadAllExams();
-            updateHash($rootScope.currentPageName);
+            if (updatH == null || updatH == true)
+                updateHash($rootScope.currentPageName);
         };
-        $scope.openQuestions = function () {
+        $scope.openQuestions = function (updatH) {
             $rootScope.currentPage = MANAGER_QUESTION;
             $rootScope.currentPageName = PageNames[$rootScope.currentPage];
             $scope.loadAllQuestions();
-            updateHash($rootScope.currentPageName);
+            if (updatH == null || updatH == true)
+                updateHash($rootScope.currentPageName);
         };
-        $scope.openGrades = function () {
+        $scope.openGrades = function (updatH) {
             $rootScope.currentPage = MANAGER_GRADES;
             $rootScope.currentPageName = PageNames[$rootScope.currentPage];
-            updateHash($rootScope.currentPageName);
+            if (updatH == null || updatH == true)
+                updateHash($rootScope.currentPageName);
         };
-        $scope.openStatistics = function () {
+        $scope.openStatistics = function (updatH) {
             $rootScope.currentPage = MANAGER_STATISTICS;
             $rootScope.currentPageName = PageNames[$rootScope.currentPage];
-            updateHash($rootScope.currentPageName);
+            if (updatH == null || updatH == true)
+                updateHash($rootScope.currentPageName);
         };
-        $scope.openRequests = function () {
+        $scope.openRequests = function (updatH) {
             $rootScope.currentPage = MANAGER_PENDING_REQUESTS;
             $rootScope.currentPageName = PageNames[$rootScope.currentPage];
             $scope.loadPendingRequests();
-            updateHash($rootScope.currentPageName);
+            if (updatH == null || updatH == true)
+                updateHash($rootScope.currentPageName);
         };
 
 
         var currentHash = decodeURI(window.location.hash.substring(2));
         switch (currentHash) {
             case PageNames[MANAGER_EXAMS]:
-                $scope.openExams();
+                $scope.openExams(false);
                 break;
             case PageNames[MANAGER_QUESTION]:
-                $scope.openQuestions();
+                $scope.openQuestions(false);
                 break;
             case PageNames[MANAGER_GRADES]:
-                $scope.openGrades();
+                $scope.openGrades(false);
                 break;
             case PageNames[MANAGER_STATISTICS]:
-                $scope.openStatistics();
+                $scope.openStatistics(false);
                 break;
             case PageNames[MANAGER_PENDING_REQUESTS]:
-                $scope.openRequests();
+                $scope.openRequests(false);
                 break;
             default:
                 $rootScope.currentPage = MANAGER_HOME;
                 $rootScope.currentPageName = PageNames[$rootScope.currentPage];
                 break;
         }
+
+        window.addEventListener('popstate', function (event) {
+            var currentHash = decodeURI(window.location.hash.substring(2));
+            $scope.$apply(function () {
+                switch (currentHash) {
+                    case PageNames[MANAGER_EXAMS]:
+                        $scope.openExams(false);
+                        break;
+                    case PageNames[MANAGER_QUESTION]:
+                        $scope.openQuestions(false);
+                        break;
+                    case PageNames[MANAGER_GRADES]:
+                        $scope.openGrades(false);
+                        break;
+                    case PageNames[MANAGER_STATISTICS]:
+                        $scope.openStatistics(false);
+                        break;
+                    case PageNames[MANAGER_PENDING_REQUESTS]:
+                        $scope.openRequests(false);
+                        break;
+                    default:
+                        $rootScope.currentPage = MANAGER_HOME;
+                        $rootScope.currentPageName = PageNames[$rootScope.currentPage];
+                        break;
+                }
+            });
+            event.preventDefault();
+        });
     }]);
 })();

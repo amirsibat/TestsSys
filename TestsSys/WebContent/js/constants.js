@@ -56,5 +56,5 @@ app.value("UserType", {
 
 function updateHash(hash) {
     event.preventDefault();
-    window.location.hash = "/"+ hash;
+    window.location.hash = "/"+ hash.replace(/ /g, "%20");
 }

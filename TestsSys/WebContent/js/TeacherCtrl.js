@@ -322,9 +322,9 @@ var teacherScope = null;
             });
         };
 
-        $scope.loadExamsToPublish = function() {
-        	
-        	Http.get("/exam/getAllExams", null, function (result, error) {
+        $scope.loadExamsToPublish = function () {
+
+            Http.get("/exam/getAllExams", null, function (result, error) {
                 $scope.$apply(function () {
 
                     if (error != null) {
@@ -337,12 +337,12 @@ var teacherScope = null;
                 });
             })
         };
-        
-        $scope.publishExam = function() {
-        	
-        	
+
+        $scope.publishExam = function () {
+
+
         };
-        
+
         $scope.loadExamsToCheck = function () {
             Http.get("/record/GetExamsToCheck", null, function (result, error) {
                 $scope.$apply(function () {
@@ -428,17 +428,12 @@ var teacherScope = null;
             }
             return "-";
         };
-        
-        
-        
-        
-        
-        
+
 
         /**
          * Paging
          */
-        $scope.openCreateNewExam = function () {
+        $scope.openCreateNewExam = function (updateH) {
             $scope.newExamHolder = {
                 profession: null,
                 course: null,
@@ -450,59 +445,65 @@ var teacherScope = null;
             $rootScope.currentPage = TEACHER_CREATE_EXAM;
             $rootScope.currentPageName = PageNames[$rootScope.currentPage];
             $scope.loadTeacherProfessions();
-            updateHash($rootScope.currentPageName);
+            if (updateH == null || updateH == true)
+                updateHash($rootScope.currentPageName);
         };
-        $scope.openCreateNewQuestion = function () {
+        $scope.openCreateNewQuestion = function (updateH) {
             $scope.newQuestionHolder = {};
             $rootScope.currentPage = TEACHER_CREATE_QUESTION;
             $rootScope.currentPageName = PageNames[$rootScope.currentPage];
             $scope.loadTeacherProfessions();
-            updateHash($rootScope.currentPageName);
+            if (updateH == null || updateH == true)
+                updateHash($rootScope.currentPageName);
         };
-        $scope.openRequestPermission = function () {
+        $scope.openRequestPermission = function (updateH) {
             $rootScope.currentPage = TEACHER_SEND_REQUEST;
             $rootScope.currentPageName = PageNames[$rootScope.currentPage];
             $scope.loadOnlineExams();
-            updateHash($rootScope.currentPageName);
+            if (updateH == null || updateH == true)
+                updateHash($rootScope.currentPageName);
         };
-        $scope.openCheckExams = function () {
+        $scope.openCheckExams = function (updateH) {
             $rootScope.currentPage = TEACHER_CHECK_EXAMS;
             $rootScope.currentPageName = PageNames[$rootScope.currentPage];
             $('#checkExamModal').modal({show: false});
-            updateHash($rootScope.currentPageName);
+            if (updateH == null || updateH == true)
+                updateHash($rootScope.currentPageName);
         };
-        $scope.openPublishExams = function () {
+        $scope.openPublishExams = function (updateH) {
             $rootScope.currentPage = TEACHER_MANAGE_EXAMS;
             $rootScope.currentPageName = PageNames[$rootScope.currentPage];
             $scope.loadExamsToPublish();
-            updateHash($rootScope.currentPageName);
+            if (updateH == null || updateH == true)
+                updateHash($rootScope.currentPageName);
         };
-        $scope.openStatistics = function () {
+        $scope.openStatistics = function (updateH) {
             $rootScope.currentPage = TEACHER_STATISTICS;
             $rootScope.currentPageName = PageNames[$rootScope.currentPage];
-            updateHash($rootScope.currentPageName);
+            if (updateH == null || updateH == true)
+                updateHash($rootScope.currentPageName);
         };
 
 
         var currentHash = decodeURI(window.location.hash.substring(2));
         switch (currentHash) {
             case PageNames[TEACHER_CREATE_EXAM]:
-                $scope.openCreateNewExam();
+                $scope.openCreateNewExam(false);
                 break;
             case PageNames[TEACHER_CREATE_QUESTION]:
-                $scope.openCreateNewQuestion();
+                $scope.openCreateNewQuestion(false);
                 break;
             case PageNames[TEACHER_SEND_REQUEST]:
-                $scope.openRequestPermission();
+                $scope.openRequestPermission(false);
                 break;
             case PageNames[TEACHER_CHECK_EXAMS]:
-                $scope.openCheckExams();
+                $scope.openCheckExams(false);
                 break;
             case PageNames[TEACHER_MANAGE_EXAMS]:
-                $scope.openPublishExams();
+                $scope.openPublishExams(false);
                 break;
             case PageNames[TEACHER_STATISTICS]:
-                $scope.openStatistics();
+                $scope.openStatistics(false);
                 break;
             default:
                 $rootScope.currentPage = TEACHER_HOME;
@@ -510,5 +511,35 @@ var teacherScope = null;
                 break;
         }
 
+        window.addEventListener('popstate', function (event) {
+            var currentHash = decodeURI(window.location.hash.substring(2));
+            $scope.$apply(function () {
+                switch (currentHash) {
+                    case PageNames[TEACHER_CREATE_EXAM]:
+                        $scope.openCreateNewExam(false);
+                        break;
+                    case PageNames[TEACHER_CREATE_QUESTION]:
+                        $scope.openCreateNewQuestion(false);
+                        break;
+                    case PageNames[TEACHER_SEND_REQUEST]:
+                        $scope.openRequestPermission(false);
+                        break;
+                    case PageNames[TEACHER_CHECK_EXAMS]:
+                        $scope.openCheckExams(false);
+                        break;
+                    case PageNames[TEACHER_MANAGE_EXAMS]:
+                        $scope.openPublishExams(false);
+                        break;
+                    case PageNames[TEACHER_STATISTICS]:
+                        $scope.openStatistics(false);
+                        break;
+                    default:
+                        $rootScope.currentPage = TEACHER_HOME;
+                        $rootScope.currentPageName = PageNames[$rootScope.currentPage];
+                        break;
+                }
+            });
+            event.preventDefault();
+        });
     }]);
 })();
