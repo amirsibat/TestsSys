@@ -85,8 +85,6 @@ public class PublishExam extends HttpServlet {
 	        try {
 	            JSONObject json = new JSONObject(jsonFileContent.toString());
 	            
-	            
-	            String id = Record.generateRecordId();	        
 	            Course course = Course.getCourseByCourseId(json.getString("courseId"));
 	            List<Student> students = new ArrayList<>();      
 	            students = Student.getStudentsByCourseId(json.getString("courseId"));
@@ -96,6 +94,7 @@ public class PublishExam extends HttpServlet {
 	            extraData.put("status", Record.RecordExamStatus.PUBLISHED.ordinal());
 	            
 	            for(int i=0; i<students.size(); i++){
+	            	String id = Record.generateRecordId();
 	            	Student studentToAdd = students.get(i);
 	            	Record record = new Record(id, studentToAdd, course, exam, extraData);
 	            	record.insert();

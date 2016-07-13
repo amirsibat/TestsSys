@@ -1,0 +1,26 @@
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box-container">
+            <div class="row exams-header">
+                <div class="col-xs-1">Course</div>
+                <div class="col-xs-2">Author</div>
+                <div class="col-xs-1">Duration</div>
+                <div class="col-xs-1">Actions</div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="row exam-row" ng-repeat="exam in studentExams">
+
+                        <div class="col-xs-1">{{exam.course.name}}</div>
+                        <div class="col-xs-2">{{exam.author.firstName+ " " + exam.author.lastName}}</div>
+                        <div class="col-xs-1">{{exam.duration + " mins"}}</div>
+
+                       <div class="col-xs-1">
+                            <button class="btn btn-default" ng-click="openModal(exam);">More info</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

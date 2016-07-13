@@ -323,16 +323,9 @@ var teacherScope = null;
             });
         };
 
-<<<<<<< Updated upstream
         $scope.loadExamsToPublish = function () {
 
             Http.get("/exam/getAllExams", null, function (result, error) {
-=======
-        //get unpublished exams 
-        $scope.loadExamsToPublish = function() {
-        	
-        	Http.get("/exam/getAllExams", null, function (result, error) {
->>>>>>> Stashed changes
                 $scope.$apply(function () {
 
                     if (error != null) {
@@ -345,13 +338,7 @@ var teacherScope = null;
                 });
             })
         };
-<<<<<<< Updated upstream
 
-        $scope.publishExam = function () {
-
-
-=======
-        
         $scope.publishExam = function(exam) {
         	
         	 var objectToSend = {
@@ -368,8 +355,7 @@ var teacherScope = null;
                      }
                      $scope.loadExamsToPublish();
                  });
-            })        	
->>>>>>> Stashed changes
+            })     
         };
 
         $scope.loadExamsToCheck = function () {

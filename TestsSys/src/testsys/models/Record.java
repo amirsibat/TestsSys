@@ -212,6 +212,22 @@ public class Record {
         return returnRecords;
     }
     
+    public static List<Exam> getPublishedExams(String courseId) throws Exception{
+    	
+    	List<Record> recordList = getRecordsByCourseId(courseId);
+    	List<Exam> exams = new ArrayList<>();
+         
+         
+         for(int i=0; i<recordList.size(); i++){
+             JSONObject jsonObject = recordList.get(i).mExtraData;
+                 if(jsonObject.getInt("status") == RecordExamStatus.PUBLISHED.ordinal()){
+                     exams.add(recordList.get(i).mExam);
+                 }  
+         }
+         return exams;
+    	
+    }
+    
 
     public JSONObject toJSON() throws Exception{
         JSONObject jsonObject = new JSONObject();

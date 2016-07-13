@@ -28,8 +28,7 @@
     <servlet-name>SubmitExamCheck</servlet-name>
     <url-pattern>/exam/SubmitExamCheck</url-pattern>
   </servlet-mapping>
-  
-   <servlet>
+  <servlet>
     <description></description>
     <display-name>PublishExam</display-name>
     <servlet-name>PublishExam</servlet-name>
@@ -39,7 +38,16 @@
     <servlet-name>PublishExam</servlet-name>
     <url-pattern>/exam/PublishExam</url-pattern>
   </servlet-mapping>
-  
+   <servlet>
+    <description></description>
+    <display-name>GetPublishedExamsByCourse</display-name>
+    <servlet-name>GetPublishedExamsByCourse</servlet-name>
+    <servlet-class>testsys.servlets.exams.GetPublishedExamsByCourse</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GetPublishedExamsByCourse</servlet-name>
+    <url-pattern>/record/GetPublishedExamsByCourse</url-pattern>
+  </servlet-mapping>
   <servlet>
     <description></description>
     <display-name>GetExamsToCheck</display-name>
