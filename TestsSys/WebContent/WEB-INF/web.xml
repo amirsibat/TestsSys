@@ -42,7 +42,7 @@
     <description></description>
     <display-name>GetPublishedExamsByCourse</display-name>
     <servlet-name>GetPublishedExamsByCourse</servlet-name>
-    <servlet-class>testsys.servlets.exams.GetPublishedExamsByCourse</servlet-class>
+    <servlet-class>testsys.servlets.records.GetPublishedExamsByCourse</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>GetPublishedExamsByCourse</servlet-name>
