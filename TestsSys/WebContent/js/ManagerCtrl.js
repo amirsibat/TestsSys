@@ -1,7 +1,8 @@
+var managerScope;
 (function (angular) {
     app.controller('ManagerCtrl', ["$scope", "$rootScope", "PageNames", function ($scope, $rootScope, PageNames) {
 
-
+        managerScope = $scope;
         $scope.allExams = [];
         $scope.allQuestions = [];
         $scope.selectedExam = {};
@@ -55,13 +56,16 @@
         };
 
         $scope.openModal = function (exam) {
-            $('#examDetails').modal('show');
-            setTimeout(function () {
-                $scope.$apply(function () {
-                    $scope.selectedExam = exam;
-                });
-            }, 100);
-
+            if (exam.type == 0) {
+                DOCXjs.fromExam(exam)
+            } else {
+                $('#examDetails').modal('show');
+                setTimeout(function () {
+                    $scope.$apply(function () {
+                        $scope.selectedExam = exam;
+                    });
+                }, 100);
+            }
         };
 
 
