@@ -31,7 +31,7 @@ public class ServletsListener implements ServletContextListener {
 
         try {
 
-          // dropTables();
+           dropTables();
 
             createTable(SqlStatements.PROFESSION_CREATE_TABLE, SqlStatements.PROFESSION_TABLE);
             createTable(SqlStatements.COURSE_CREATE_TABLE, SqlStatements.COURSE_TABLE);
@@ -60,7 +60,7 @@ public class ServletsListener implements ServletContextListener {
 				while(true){
 					Record.checkInProgressExams();
 					try{
-						Thread.sleep(1000);
+						Thread.sleep(4000);
 					}catch(Exception e){
 						L.err(e);
 					}
@@ -270,8 +270,8 @@ public class ServletsListener implements ServletContextListener {
     private void createRecord() {
         try {
         	
-            Database.getInstance().executeUpdate(SqlStatements.RECORD_INSERT_NEW_RECORD, "1", "0007", "01", "010101", "{\"teacherId\":\"0006\",\"status\":1,\"answers\":[3,2,1,4,3],\"totalGrade\":30,\"startDate\":\"2016-06-18T01:03:36.920Z\", \"endDate\":\"2016-06-18T01:13:36.920Z\", \"duration\":40}");
-            Database.getInstance().executeUpdate(SqlStatements.RECORD_INSERT_NEW_RECORD, "2", "0007", "01", "010100", "{\"teacherId\":\"0006\",\"status\":0,\"answers\":[3,2,1,1],\"totalGrade\":null,\"startDate\":\"2016-06-19T01:03:36.920Z\",\"endDate\":null, \"duration\":20}");
+            Database.getInstance().executeUpdate(SqlStatements.RECORD_INSERT_NEW_RECORD, "1", "0007", "01", "010101", "{\"teacherId\":\"0006\",\"status\":1,\"answers\":[3,2,1,4,3],\"totalGrade\":30,\"startDate\":1466211816920, \"endDate\":1466213016920, \"duration\":40}");
+            Database.getInstance().executeUpdate(SqlStatements.RECORD_INSERT_NEW_RECORD, "2", "0007", "01", "010100", "{\"teacherId\":\"0006\",\"status\":0,\"answers\":[3,2,1,1],\"totalGrade\":null,\"startDate\":1466298216920,\"endDate\":null, \"duration\":20}");
         } catch (Exception e) {
             L.err(e);
         }

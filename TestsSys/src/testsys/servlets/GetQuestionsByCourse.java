@@ -60,6 +60,7 @@ public class GetQuestionsByCourse extends HttpServlet {
 
         try {
             Course course = Course.getCourseByCourseId(courseId);
+            course.getCourseStudents();
             List<Question> questions = course.getQuestionsList();
             JSONArray json = new JSONArray();
             for(int i=0; i<questions.size(); i++){

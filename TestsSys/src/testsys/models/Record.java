@@ -1,9 +1,16 @@
 package testsys.models;
 
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -21,7 +28,7 @@ import testsys.utils.SqlStatements;
  */
 public class Record {
 
-    public enum RecordExamStatus{
+    public enum RecordExamStatus {
         IN_PROGRESS,
         PENDING_CHECK,
         SUBMITTED,
@@ -86,7 +93,7 @@ public class Record {
                 mExtraData.toString());
     }
 
-    public void update() throws Exception{
+    public void update() throws Exception {
         Database.getInstance().executeUpdate(SqlStatements.RECORD_UPDATE_RECORD, mExtraData.toString(), mId);
     }
 
@@ -101,7 +108,7 @@ public class Record {
         return hashMapToObject(Database.getInstance().executeSingleQuery(SqlStatements.RECORD_GET_RECORD_BY_RECORD_ID, SqlColumns.RECORD_ALL_COLUMNS, recordId));
     }
 
-    public static List<Record> getAllRecords() throws Exception{
+    public static List<Record> getAllRecords() throws Exception {
         List<Record> recordList = new ArrayList<>();
         List<HashMap<String, Object>> objectsList = Database.getInstance().executeListQuery(SqlStatements.RECORD_GET_ALL_RECORDS, SqlColumns.RECORD_ALL_COLUMNS);
         for (int i = 0; i < objectsList.size(); i++) {
@@ -168,43 +175,64 @@ public class Record {
 
         return new Record(id, student, course, exam, extraData);
     }
-    
-    
-    public static List<Exam> getCurrentExamsByTeacher(String teacherId) throws Exception{
+
+
+    public static List<Exam> getCurrentExamsByTeacher(String teacherId) throws Exception {
         List<Record> recordList = getAllRecords();
         List<Exam> exams = new ArrayList<>();
-        for(int i=0; i<recordList.size(); i++){
+        for (int i = 0; i < recordList.size(); i++) {
             JSONObject jsonObject = recordList.get(i).mExtraData;
-            if(jsonObject.getString("teacherId").equals(teacherId)){
-                if(jsonObject.getInt("status") == RecordExamStatus.IN_PROGRESS.ordinal()){
+            if (jsonObject.getString("teacherId").equals(teacherId)) {
+                if (jsonObject.getInt("status") == RecordExamStatus.IN_PROGRESS.ordinal()) {
                     boolean alreadyExists = false;
-                    for(int j=0; j<exams.size(); j++){
-                        if(exams.get(j).mId == recordList.get(i).mExam.mId){
+                    for (int j = 0; j < exams.size(); j++) {
+                        if (exams.get(j).mId == recordList.get(i).mExam.mId) {
                             alreadyExists = true;
                             break;
                         }
                     }
-                    if(!alreadyExists){
+                    if (!alreadyExists) {
                         exams.add(recordList.get(i).mExam);
                     }
                 }
             }
         }
-    	return exams;
-    }
-    public static List<Record> getCurrentExamByStudent(String studentId){
-    	return null;
+        return exams;
     }
 
 
+    public static List<Record> getCurrentExamByStudent(String studentId) throws Exception{
+        List<Record> recordList = getRecordsByStudentId(studentId);
+        List<Record> returnRecords = new ArrayList<>();
+        for (int i = 0; i < recordList.size(); i++) {
+            JSONObject jsonObject = recordList.get(i).mExtraData;
+            if (jsonObject.getInt("status") == RecordExamStatus.IN_PROGRESS.ordinal()) {
+                returnRecords.add(recordList.get(i));
+            }
+        }
+        return returnRecords;
+    }
 
-    public static List<Record> getExamsToCheckByTeacher(String teacherId) throws Exception{
+    public static List<Record> getPendingExamsByStudent(String studentId) throws Exception{
+        List<Record> recordList = getRecordsByStudentId(studentId);
+        List<Record> returnRecords = new ArrayList<>();
+        for (int i = 0; i < recordList.size(); i++) {
+            JSONObject jsonObject = recordList.get(i).mExtraData;
+            if (jsonObject.getInt("status") == RecordExamStatus.PUBLISHED.ordinal()) {
+                returnRecords.add(recordList.get(i));
+            }
+        }
+        return returnRecords;
+    }
+
+
+    public static List<Record> getExamsToCheckByTeacher(String teacherId) throws Exception {
         List<Record> recordList = getAllRecords();
         List<Record> returnRecords = new ArrayList<>();
-        for(int i=0; i<recordList.size(); i++){
+        for (int i = 0; i < recordList.size(); i++) {
             JSONObject jsonObject = recordList.get(i).mExtraData;
-            if(jsonObject.getString("teacherId").equals(teacherId)){
-                if(jsonObject.getInt("status") == RecordExamStatus.PENDING_CHECK.ordinal()){
+            if (jsonObject.getString("teacherId").equals(teacherId)) {
+                if (jsonObject.getInt("status") == RecordExamStatus.PENDING_CHECK.ordinal()) {
                     returnRecords.add(recordList.get(i));
                 }
             }
@@ -227,9 +255,9 @@ public class Record {
          return exams;
     	
     }
-    
+  
 
-    public JSONObject toJSON() throws Exception{
+    public JSONObject toJSON() throws Exception {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("id", mId);
         jsonObject.put("student", mStudent.toJSON());
@@ -239,10 +267,37 @@ public class Record {
         return jsonObject;
     }
 
-	public static void checkInProgressExams() {
-		
-	}
- 
+    public static void checkInProgressExams() {
+        try {
+            List<Record> recordList = getAllRecords();
+            for (int i = 0; i < recordList.size(); i++) {
+                JSONObject jsonObject = recordList.get(i).mExtraData;
+                if (jsonObject.getInt("status") == RecordExamStatus.IN_PROGRESS.ordinal()) {
+                    long fromDate = jsonObject.getLong("startDate");
+                    long toDate = fromDate + (jsonObject.getInt("duration") * 60 * 1000);
+                    if (!jsonObject.isNull("addExtraMinutes")) {
+                        toDate += (jsonObject.getInt("addExtraMinutes") * 60 * 1000);
+                    }
+                    if (toDate < new Date().getTime()) {
+                        L.log("Force closing progress Exam (" + recordList.get(i).mId + ")");
+                        recordList.get(i).closeInPorgressExam();
+                    }
+                }
+            }
+        } catch (Exception e) {
+            L.err(e);
+        }
+    }
+
+    private void closeInPorgressExam() throws Exception {
+        mExtraData.put("status", RecordExamStatus.PENDING_CHECK.ordinal());
+        mExtraData.put("endDate", new Date().getTime());
+        mExtraData.put("answers", new JSONArray());
+        mExtraData.remove("totalGrade");
+        update();
+        L.log("Progress Exam (" + mId + ") closed");
+    }
+
     public static String generateRecordId() {
         String[] columnsNames = new String[1];
         columnsNames[0] = "ID";
@@ -256,7 +311,7 @@ public class Record {
             for (int i = 0; i < jsonArray.length(); i++) {
                 String RecordId = jsonArray.getJSONObject(i).getString("ID");
                 if (Integer.parseInt(RecordId) > maxRecordId) {
-                	maxRecordId = Integer.parseInt(RecordId);
+                    maxRecordId = Integer.parseInt(RecordId);
                 }
             }
             return "" + (maxRecordId + 1);
