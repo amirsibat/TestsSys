@@ -3,7 +3,7 @@
 
     	$scope.studentExams = [];
     	$scope.studentCourses = [];
-    		
+    	$scope.ExamHolder = [];	
     	
         var exam = {
             "date": "2016-07-11",
@@ -114,7 +114,7 @@
                          return;
                      }
                      $scope.studentExams = result.success;
-                     /*console.log($scope.studentExams);*/
+                     console.log($scope.studentExams);
                  });
              });
         	
@@ -128,11 +128,26 @@
                          return;
                      }
                      $scope.studentCourses = result.success;
-                     console.log($scope.studentCourses);
+                     /*console.log($scope.studentCourses);*/
 
                  });
              });
         	
+        };
+        
+        $scope.openExamModal = function (exam) {
+            $scope.ExamHolder.exam = exam;
+            
+            
+            console.log($scope.ExamHolder);
+            $('#startExamModal').modal("show");
+        };
+
+        $scope.getExamName = function () {
+            if ($scope.ExamHolder.exam == null)
+                return "";
+            return $scope.ExamHolder.exam.profession.name +
+                ", " + $scope.ExamHolder.exam.course.name + ", " + $scope.ExamHolder.exam.id;
         };
         
        $scope.loadStudentExams();
