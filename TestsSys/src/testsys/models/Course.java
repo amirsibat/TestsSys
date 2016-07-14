@@ -149,6 +149,7 @@ public class Course {
         json.put("id", mId);
         json.put("name", mName);
         json.put("profession", mProfession.mId);
+        json.put("profession", mProfession.mName);
 		return json;
 	}
 }

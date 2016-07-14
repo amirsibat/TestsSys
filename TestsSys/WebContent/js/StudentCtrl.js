@@ -1,14 +1,9 @@
 (function (angular) {
     app.controller('StudentCtrl', ["$scope", function ($scope) {
 
-
-
-
-
     	$scope.studentExams = [];
     	$scope.studentCourses = [];
-    	
-    	
+    		
     	
         var exam = {
             "date": "2016-07-11",
@@ -119,25 +114,29 @@
                          return;
                      }
                      $scope.studentExams = result.success;
+                     /*console.log($scope.studentExams);*/
                  });
              });
         	
         };
         
         $scope.loadStudentCourses = function(){
-        	 Http.get("/record/GetStudentCourses", null, function (result, error) {
+        	 Http.get("/student/GetStudentCourses", null, function (result, error) {
                  $scope.$apply(function () {
                      if (error != null) {
                          $scope.studentCourses = [];
                          return;
                      }
                      $scope.studentCourses = result.success;
+                     console.log($scope.studentCourses);
+
                  });
              });
         	
         };
         
        $scope.loadStudentExams();
+       $scope.loadStudentCourses();
 
     }]);
 })();

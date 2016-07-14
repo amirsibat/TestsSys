@@ -4,30 +4,23 @@
             <div class="panel-student-title">
                 My courses
             </div>
-            <div class="row">
+         	 <div class="row">
                 <div class="col-xs-12">
                     <div class="box-container">
                         <div class="row exams-header">
-                            <div class="col-xs-1">Id</div>
-                            <div class="col-xs-2">Profession</div>
-                            <div class="col-xs-2">Course</div>
-                            <div class="col-xs-2">Author</div>
-                            <div class="col-xs-1">Duration</div>
-                            <div class="col-xs-1">Status</div>
-                            <div class="col-xs-1">Type</div>
-                            <div class="col-xs-2">Actions</div>
+                            <div class="col-xs-4">Name</div>
+                            <div class="col-xs-4">Profession</div>
+                            <div class="col-xs-3">Actions</div>
                         </div>
+                        
+                       <div class="no-data-message" ng-show="studentExams.length == 0">No exams to Show</div>
+                       
                         <div class="row">
                             <div class="col-xs-12">
-                                <div class="row exam-row" ng-repeat="exam in allExams">
-                                    <div class="col-xs-1">{{exam.id}}</div>
-                                    <div class="col-xs-2">{{exam.profession.name}}</div>
-                                    <div class="col-xs-2">{{exam.course.name}}</div>
-                                    <div class="col-xs-2">{{exam.author.firstName+ " " + exam.author.lastName}}</div>
-                                    <div class="col-xs-1">{{exam.duration + " mins"}}</div>
-                                    <div class="col-xs-1">{{exam.status == 0 ? "New" : "Used"}}</div>
-                                    <div class="col-xs-1">{{exam.type == 0 ? "Word" : "Online"}}</div>
-                                    <div class="col-xs-2">
+                                <div class="row exam-row" ng-repeat="course in studentCourses">
+                                    <div class="col-xs-4">{{course.name}}</div>
+                                    <div class="col-xs-4">{{course.profession}}</div>
+                                    <div class="col-xs-3">
                                         <button class="btn btn-default" ng-click="openModal(exam);">More info</button>
                                     </div>
                                 </div>
@@ -36,31 +29,32 @@
                     </div>
                 </div>
             </div>
-        </div>
+    </div>
     </div>
     <div class="col-xs-6 col-full right">
         <div class="large-panel">
             <div class="panel-student-title">
                 My exams
             </div>
-            <div class="row">
+             <div class="row">
                 <div class="col-xs-12">
                     <div class="box-container">
                         <div class="row exams-header">
-                            <div class="col-xs-1">Course</div>
-                            <div class="col-xs-2">Author</div>
-                            <div class="col-xs-1">Duration</div>
-                            <div class="col-xs-1">Actions</div>
+                            <div class="col-xs-2">Course</div>
+                            <div class="col-xs-3">Author</div>
+                            <div class="col-xs-2">Duration</div>
+                            <div class="col-xs-3">Actions</div>
                         </div>
+                        
+                       <div class="no-data-message" ng-show="studentExams.length == 0">No exams to Show</div>
+                       
                         <div class="row">
                             <div class="col-xs-12">
                                 <div class="row exam-row" ng-repeat="exam in studentExams">
-
-                                    <div class="col-xs-1">{{exam.course.name}}</div>
-                                    <div class="col-xs-2">{{exam.author.firstName+ " " + exam.author.lastName}}</div>
-                                    <div class="col-xs-1">{{exam.duration + " mins"}}</div>
-
-                                    <div class="col-xs-1">
+                                    <div class="col-xs-2">{{exam.course.name}}</div>
+                                    <div class="col-xs-3">{{exam.author.firstName+ " " + exam.author.lastName}}</div>
+                                    <div class="col-xs-2">{{exam.duration + " mins"}}</div>
+                                    <div class="col-xs-3">
                                         <button class="btn btn-default" ng-click="openModal(exam);">More info</button>
                                     </div>
                                 </div>
@@ -68,7 +62,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> 
         </div>
     </div>
 </div>

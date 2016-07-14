@@ -100,6 +100,7 @@ public class PublishExam extends HttpServlet {
                 Student studentToAdd = students.get(i);
                 Record record = new Record(id, studentToAdd, course, exam, extraData);
                 record.insert();
+                
             }
 
 

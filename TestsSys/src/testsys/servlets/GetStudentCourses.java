@@ -1,4 +1,4 @@
-package testsys.servlets.records;
+package testsys.servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -6,13 +6,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebInitParam;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONArray;
-import org.json.JSONObject;
 
 import testsys.models.Course;
 import testsys.models.Exam;
@@ -22,16 +22,16 @@ import testsys.utils.Helper;
 import testsys.utils.L;
 
 /**
- * Servlet implementation class GetPublishedExamsByCourse
+ * Servlet implementation class GetStudentCourses
  */
-@WebServlet("/GetPublishedExamsByCourse")
-public class GetPublishedExamsByCourse extends HttpServlet {
+@WebServlet("/GetStudentCourses")
+public class GetStudentCourses extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public GetPublishedExamsByCourse() {
+    public GetStudentCourses() {
         super();
        
     }
@@ -64,15 +64,10 @@ public class GetPublishedExamsByCourse extends HttpServlet {
 			courses = user.mCourses;
 			JSONArray json = new JSONArray();
 			
+			
 			for(int i=0; i<courses.size(); i++){
-				List<Exam> exams = Record.getPublishedExams(courses.get(i).mId.toString(), user.mId);
-				if(exams.size() > 0){
-					for(int j=0; j<exams.size(); j++){
-
-						json.put(exams.get(j).toJSON());
-					}
-				}
 				
+				json.put(courses.get(i).toJSON());
 			}
 				
 			response.setStatus(200);
@@ -83,6 +78,12 @@ public class GetPublishedExamsByCourse extends HttpServlet {
 			out.println("{\"error\":\"" + e.getMessage() + "\"}");
 		}
 		out.close();
+		
+		
+		
+		
+		
+		
 	}
 
 	/**

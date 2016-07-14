@@ -240,19 +240,23 @@ public class Record {
         return returnRecords;
     }
     
-    public static List<Exam> getPublishedExams(String courseId) throws Exception{
+    public static List<Exam> getPublishedExams(String courseId, String studentId) throws Exception{
     	
     	List<Record> recordList = getRecordsByCourseId(courseId);
     	List<Exam> exams = new ArrayList<>();
-         
+    	List<Exam> returnedExams = new ArrayList<>();
+    	
+    	
          
          for(int i=0; i<recordList.size(); i++){
-             JSONObject jsonObject = recordList.get(i).mExtraData;
-                 if(jsonObject.getInt("status") == RecordExamStatus.PUBLISHED.ordinal()){
-                     exams.add(recordList.get(i).mExam);
+             JSONObject extraData = recordList.get(i).mExtraData;
+             String student = recordList.get(i).mStudent.mId;
+             
+                 if(extraData.getInt("status") == RecordExamStatus.PUBLISHED.ordinal() && student.equals(studentId) ){
+                	 returnedExams.add(recordList.get(i).mExam);
                  }  
          }
-         return exams;
+         return returnedExams;
     	
     }
   

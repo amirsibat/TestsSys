@@ -38,7 +38,7 @@
     <servlet-name>PublishExam</servlet-name>
     <url-pattern>/exam/PublishExam</url-pattern>
   </servlet-mapping>
-   <servlet>
+  <servlet>
     <description></description>
     <display-name>GetPublishedExamsByCourse</display-name>
     <servlet-name>GetPublishedExamsByCourse</servlet-name>
@@ -117,6 +117,16 @@
   <servlet-mapping>
     <servlet-name>getAllExams</servlet-name>
     <url-pattern>/exam/getAllExams</url-pattern>
+  </servlet-mapping>
+    <servlet>
+    <description></description>
+    <display-name>GetStudentCourses</display-name>
+    <servlet-name>GetStudentCourses</servlet-name>
+    <servlet-class>testsys.servlets.GetStudentCourses</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GetStudentCourses</servlet-name>
+    <url-pattern>/student/GetStudentCourses</url-pattern>
   </servlet-mapping>
   <servlet>
     <description></description>
