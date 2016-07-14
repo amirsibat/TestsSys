@@ -50,6 +50,16 @@
   </servlet-mapping>
   <servlet>
     <description></description>
+    <display-name>GetCourseDetails</display-name>
+    <servlet-name>GetCourseDetails</servlet-name>
+    <servlet-class>testsys.servlets.records.GetCourseDetails</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GetCourseDetails</servlet-name>
+    <url-pattern>/record/GetCourseDetails</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
     <display-name>GetExamsToCheck</display-name>
     <servlet-name>GetExamsToCheck</servlet-name>
     <servlet-class>testsys.servlets.records.GetExamsToCheck</servlet-class>
@@ -118,7 +128,7 @@
     <servlet-name>getAllExams</servlet-name>
     <url-pattern>/exam/getAllExams</url-pattern>
   </servlet-mapping>
-    <servlet>
+  <servlet>
     <description></description>
     <display-name>GetStudentCourses</display-name>
     <servlet-name>GetStudentCourses</servlet-name>

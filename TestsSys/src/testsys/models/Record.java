@@ -260,6 +260,25 @@ public class Record {
     	
     }
   
+ public static List<Exam> getSubmittedExams(String courseId, String studentId) throws Exception{
+    	
+    	List<Record> recordList = getRecordsByCourseId(courseId);
+    	List<Exam> exams = new ArrayList<>();
+    	List<Exam> returnedExams = new ArrayList<>();
+    	
+    	
+         
+         for(int i=0; i<recordList.size(); i++){
+             JSONObject extraData = recordList.get(i).mExtraData;
+             String student = recordList.get(i).mStudent.mId;
+             
+                 if(extraData.getInt("status") == RecordExamStatus.SUBMITTED.ordinal() && student.equals(studentId) ){
+                	 returnedExams.add(recordList.get(i).mExam);
+                 }  
+         }
+         return returnedExams;
+    	
+    }
 
     public JSONObject toJSON() throws Exception {
         JSONObject jsonObject = new JSONObject();

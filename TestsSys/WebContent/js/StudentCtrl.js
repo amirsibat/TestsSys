@@ -1,9 +1,11 @@
 (function (angular) {
-    app.controller('StudentCtrl', ["$scope", function ($scope) {
+    app.controller('StudentCtrl', ["$scope", "$rootScope", "PageNames", function ($scope, $rootScope, PageNames) {
 
     	$scope.studentExams = [];
     	$scope.studentCourses = [];
     	$scope.ExamHolder = [];	
+    	$scope.studentSubmittedExams = [];
+    	$scope.CourseHolder = [];
     	
         var exam = {
             "date": "2016-07-11",
@@ -101,12 +103,9 @@
 
         $scope.generateDocxFile = function (exam) {
             DOCXjs.fromExam(exam);
-        };
+        };      
         
-       
-        
-        $scope.loadStudentExams = function(){
-        	
+        $scope.loadStudentExams = function(){       	
         	 Http.get("/record/GetPublishedExamsByCourse", null, function (result, error) {
                  $scope.$apply(function () {
                      if (error != null) {
@@ -114,7 +113,7 @@
                          return;
                      }
                      $scope.studentExams = result.success;
-                     console.log($scope.studentExams);
+                    /* console.log($scope.studentExams);*/
                  });
              });
         	
@@ -128,11 +127,29 @@
                          return;
                      }
                      $scope.studentCourses = result.success;
-                     /*console.log($scope.studentCourses);*/
+                     console.log($scope.studentCourses);
 
                  });
              });
         	
+        };
+        
+        $scope.openCourseDetails = function (course) {
+        	var objectToSend = {
+                    courseId: course.id,
+                    name:  course.name,
+                    profession: course.profession
+                };
+        	
+            Http.get("/record/GetCourseDetails", null, objectToSend, function (result, error) {
+                $scope.$apply(function () {
+                    if (error != null) {
+                        $scope.studentSubmittedExams = [];
+                        return;
+                    }
+                    $scope.studentSubmittedExams = result.success;
+                });
+            });
         };
         
         $scope.openExamModal = function (exam) {
@@ -152,6 +169,48 @@
         
        $scope.loadStudentExams();
        $scope.loadStudentCourses();
+       
+       $scope.openCourseDetails = function(updateH){
+    	   $rootScope.currentPage = STUDENT_COURSE_DETAILS;
+           $rootScope.currentPageName = PageNames[$rootScope.currentPage];
+           $scope.loadCourseDetails();
+           if (updateH == null || updateH == true)
+               updateHash($rootScope.currentPageName);
+       };
+       
+       
+       var currentHash = decodeURI(window.location.hash.substring(2));
+       switch (currentHash) {
+           case PageNames[STUDENT_COURSE_DETAILS]:
+        	   $scope.openCourseDetails(false);
+               break;
+           case PageNames[STUDENT_EXAM]:
+               $scope.openExam(false);
+               break;
+           default:
+               $rootScope.currentPage = STUDENT_HOME;
+               $rootScope.currentPageName = PageNames[$rootScope.currentPage];
+               break;
+       }
+
+       window.addEventListener('popstate', function (event) {
+           var currentHash = decodeURI(window.location.hash.substring(2));
+           $scope.$apply(function () {
+               switch (currentHash) {
+                   case PageNames[STUDENT_COURSE_DETAILS]:
+                       $scope.openCourseDetails(false);
+                       break;
+                   case PageNames[STUDENT_EXAM]:
+                       $scope.openExam(false);
+                       break;
+                   default:
+                       $rootScope.currentPage = STUDENT_HOME;
+                       $rootScope.currentPageName = PageNames[$rootScope.currentPage];
+                       break;
+               }
+           });
+           event.preventDefault();
+       });
 
     }]);
 })();
