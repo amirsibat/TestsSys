@@ -41,6 +41,7 @@ public class SqlStatements {
     /**
      * CourseTable Statements
      */
+    public static final String COURSE_GET_ALL_COURSES = "SELECT * FROM " + COURSE_TABLE;
     public static final String COURSE_GET_COURSE_BY_ID = "SELECT * FROM " + COURSE_TABLE + " WHERE "
             + SqlColumns.COURSE_ID + " = ?";
     public static final String COURSE_GET_PROFESSION_COURSES = "SELECT * FROM " + COURSE_TABLE + " WHERE "
@@ -82,7 +83,7 @@ public class SqlStatements {
     public static final String USER_DELETE = "DELETE FROM " + USER_TABLE + " WHERE " + SqlColumns.USER_ID + "=?";
 
     public static final String STUDENT_GET_STUDENTS_BY_COURSE_ID = "SELECT * FROM " + USER_TABLE + " WHERE "
-            + SqlColumns.USER_TYPE + "=" + User.Type.STUDENT.ordinal() +  " AND " + SqlColumns.USER_COURSES + " LIKE ?";
+            + SqlColumns.USER_TYPE + "=" + User.Type.STUDENT.ordinal() + " AND " + SqlColumns.USER_COURSES + " LIKE ?";
 
 
     /**

@@ -18,6 +18,17 @@
   <listener>
     <listener-class>testsys.utils.ServletsListener</listener-class>
   </listener>
+  
+  <servlet>
+    <description></description>
+    <display-name>GetAdminStatistics</display-name>
+    <servlet-name>GetAdminStatistics</servlet-name>
+    <servlet-class>testsys.servlets.records.GetAdminStatistics</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GetAdminStatistics</servlet-name>
+    <url-pattern>/record/GetAdminStatistics</url-pattern>
+  </servlet-mapping>
   <servlet>
     <description></description>
     <display-name>SubmitExamCheck</display-name>

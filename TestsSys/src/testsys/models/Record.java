@@ -356,6 +356,218 @@ public class Record {
         return null;
     }
 
-  
 
+    public static JSONObject getStatisticsAdmin() throws Exception {
+        JSONObject jsonObject = new JSONObject();
+        List<Record> records = getAllRecords();
+        jsonObject.put("teacherExamAverage", getTeachersExamAverage(records));
+        jsonObject.put("courseExamAverage", getCoursesExamsAverage(records));
+        jsonObject.put("studentExamAverage", getStudentsExamAverage(records));
+        return jsonObject;
+    }
+
+
+    public static JSONArray getTeachersExamAverage(List<Record> records) throws Exception {
+        JSONArray jsonArray = new JSONArray();
+        List<Teacher> teacherList = Teacher.getAllTeachers();
+        for (int j = 0; j < teacherList.size(); j++) {
+            JSONObject teacherDetails = new JSONObject();
+            teacherDetails.put("teacher", teacherList.get(j).toJSON());
+            teacherDetails.put("statistics", getTeacherExamsAverage(records, teacherList.get(j)));
+            jsonArray.put(teacherDetails);
+        }
+        return jsonArray;
+    }
+
+    public static JSONObject getTeacherExamsAverage(List<Record> records, Teacher teacher) throws Exception {
+        List<String> uniqueExams = new ArrayList<>();
+        JSONArray jsonArray = new JSONArray();
+        for (int i = 0; i < records.size(); i++) {
+            if (records.get(i).mExtraData.getInt("status") == RecordExamStatus.SUBMITTED.ordinal()) {
+                if (records.get(i).mExam.mAuthor.mId.equals(teacher.mId)) {
+                    if (!uniqueExams.contains(records.get(i).mExam.mId)) {
+                        uniqueExams.add(records.get(i).mExam.mId);
+                        JSONObject jsonObject = new JSONObject();
+                        jsonObject.put("exam", records.get(i).mExam.toJSON());
+                        jsonObject.put("average", 0);
+                        jsonObject.put("totalExams", 0);
+                        jsonArray.put(jsonObject);
+                    }
+                }
+            }
+        }
+        for (int i = 0; i < jsonArray.length(); i++) {
+            for (int j = 0; j < records.size(); j++) {
+                if (records.get(j).mExtraData.getInt("status") == RecordExamStatus.SUBMITTED.ordinal()) {
+                    if (records.get(j).mExam.mAuthor.mId.equals(teacher.mId)) {
+
+                        if (records.get(j).mExam.mId.equals(jsonArray.getJSONObject(i).getJSONObject("exam").getString("id"))) {
+                            jsonArray.getJSONObject(i).put("average", jsonArray.getJSONObject(i).getInt("average") + records.get(j).mExtraData.getInt("teacherGrade"));
+                            jsonArray.getJSONObject(i).put("totalExams", jsonArray.getJSONObject(i).getInt("totalExams") + 1);
+                        }
+                    }
+                }
+            }
+            jsonArray.getJSONObject(i).put("average", jsonArray.getJSONObject(i).getInt("average") / jsonArray.getJSONObject(i).getInt("totalExams"));
+        }
+        int teacherExamAverage = 0;
+        JSONObject teacherExamStatistics = new JSONObject();
+        teacherExamStatistics.put("average", 0);
+        teacherExamStatistics.put("middle", 0);
+        teacherExamStatistics.put("probability", 0);
+
+        for (int i = 0; i < jsonArray.length(); i++) {
+            teacherExamAverage += jsonArray.getJSONObject(i).getInt("average");
+        }
+        if (jsonArray.length() != 0) {
+            teacherExamStatistics.put("average", teacherExamAverage / jsonArray.length());
+            if (jsonArray.length() % 2 == 1) {
+                teacherExamStatistics.put("middle", jsonArray.getJSONObject((jsonArray.length() / 2) + 1).getInt("average"));
+            } else {
+                if (jsonArray.length() == 2) {
+                    teacherExamStatistics.put("middle", ((jsonArray.getJSONObject(0).getInt("average") + jsonArray.getJSONObject(1).getInt("average")) / 2));
+                } else {
+                    teacherExamStatistics.put("middle", ((jsonArray.getJSONObject(jsonArray.length() / 2).getInt("average") + jsonArray.getJSONObject(jsonArray.length() / 2 - 1).getInt("average")) / 2));
+                }
+            }
+        }
+        return teacherExamStatistics;
+    }
+
+
+    public static JSONArray getCoursesExamsAverage(List<Record> records)  throws Exception {
+        JSONArray jsonArray = new JSONArray();
+        List<Course> courseList = Course.getAllCourses();
+        for (int j = 0; j < courseList.size(); j++) {
+            JSONObject courseDetails = new JSONObject();
+            courseDetails.put("course", courseList.get(j).toJSON());
+            courseDetails.put("statistics", getCourseExamAverage(records, courseList.get(j)));
+            jsonArray.put(courseDetails);
+        }
+        return jsonArray;
+    }
+
+    public static JSONObject getCourseExamAverage(List<Record> records, Course course)  throws Exception {
+        List<String> uniqueExams = new ArrayList<>();
+        JSONArray jsonArray = new JSONArray();
+        for (int i = 0; i < records.size(); i++) {
+            if (records.get(i).mExtraData.getInt("status") == RecordExamStatus.SUBMITTED.ordinal()) {
+                if (records.get(i).mExam.mCourse.mId.equals(course.mId)) {
+                    if (!uniqueExams.contains(records.get(i).mExam.mId)) {
+                        uniqueExams.add(records.get(i).mExam.mId);
+                        JSONObject jsonObject = new JSONObject();
+                        jsonObject.put("exam", records.get(i).mExam.toJSON());
+                        jsonObject.put("average", 0);
+                        jsonObject.put("totalExams", 0);
+                        jsonArray.put(jsonObject);
+                    }
+                }
+            }
+        }
+        for (int i = 0; i < jsonArray.length(); i++) {
+            for (int j = 0; j < records.size(); j++) {
+                if (records.get(j).mExtraData.getInt("status") == RecordExamStatus.SUBMITTED.ordinal()) {
+                    if (records.get(j).mExam.mCourse.mId.equals(course.mId)) {
+                        if (records.get(j).mExam.mId.equals(jsonArray.getJSONObject(i).getJSONObject("exam").getString("id"))) {
+                            jsonArray.getJSONObject(i).put("average", jsonArray.getJSONObject(i).getInt("average") + records.get(j).mExtraData.getInt("teacherGrade"));
+                            jsonArray.getJSONObject(i).put("totalExams", jsonArray.getJSONObject(i).getInt("totalExams") + 1);
+                        }
+                    }
+                }
+            }
+            jsonArray.getJSONObject(i).put("average", jsonArray.getJSONObject(i).getInt("average") / jsonArray.getJSONObject(i).getInt("totalExams"));
+        }
+        int courseExamAverage = 0;
+        JSONObject courseExamStatistics = new JSONObject();
+        courseExamStatistics.put("average", 0);
+        courseExamStatistics.put("middle", 0);
+        courseExamStatistics.put("probability", 0);
+
+        for (int i = 0; i < jsonArray.length(); i++) {
+            courseExamAverage += jsonArray.getJSONObject(i).getInt("average");
+        }
+        if (jsonArray.length() != 0) {
+            courseExamStatistics.put("average", courseExamAverage / jsonArray.length());
+            if (jsonArray.length() % 2 == 1) {
+                courseExamStatistics.put("middle", jsonArray.getJSONObject((jsonArray.length() / 2) + 1).getInt("average"));
+            } else {
+                if (jsonArray.length() == 2) {
+                    courseExamStatistics.put("middle", ((jsonArray.getJSONObject(0).getInt("average") + jsonArray.getJSONObject(1).getInt("average")) / 2));
+                } else {
+                    courseExamStatistics.put("middle", ((jsonArray.getJSONObject(jsonArray.length() / 2).getInt("average") + jsonArray.getJSONObject(jsonArray.length() / 2 - 1).getInt("average")) / 2));
+                }
+            }
+        }
+        return courseExamStatistics;
+    }
+
+    public static JSONArray getStudentsExamAverage(List<Record> records) throws Exception {
+        JSONArray jsonArray = new JSONArray();
+        List<Student> studentList = Student.getAllStudents();
+        for (int j = 0; j < studentList.size(); j++) {
+            JSONObject studentDetails = new JSONObject();
+            studentDetails.put("student", studentList.get(j).toJSON());
+            studentDetails.put("statistics", getStudentExamAverage(records, studentList.get(j)));
+            jsonArray.put(studentDetails);
+        }
+        return jsonArray;
+    }
+    public static JSONObject getStudentExamAverage(List<Record> records, Student student) throws Exception {
+        List<String> uniqueExams = new ArrayList<>();
+        JSONArray jsonArray = new JSONArray();
+        for (int i = 0; i < records.size(); i++) {
+            if (records.get(i).mExtraData.getInt("status") == RecordExamStatus.SUBMITTED.ordinal()) {
+                if (records.get(i).mStudent.mId.equals(student.mId)) {
+                    if (!uniqueExams.contains(records.get(i).mExam.mId)) {
+                        uniqueExams.add(records.get(i).mExam.mId);
+                        JSONObject jsonObject = new JSONObject();
+                        jsonObject.put("exam", records.get(i).mExam.toJSON());
+                        jsonObject.put("average", 0);
+                        jsonObject.put("totalExams", 0);
+                        jsonArray.put(jsonObject);
+                    }
+                }
+            }
+        }
+        for (int i = 0; i < jsonArray.length(); i++) {
+            for (int j = 0; j < records.size(); j++) {
+                if (records.get(j).mExtraData.getInt("status") == RecordExamStatus.SUBMITTED.ordinal()) {
+                    if (records.get(j).mStudent.mId.equals(student.mId)) {
+                    	
+                        if (records.get(j).mExam.mId.equals(jsonArray.getJSONObject(i).getJSONObject("exam").getString("id"))) {
+                            jsonArray.getJSONObject(i).put("average", jsonArray.getJSONObject(i).getInt("average") + records.get(j).mExtraData.getInt("teacherGrade"));
+                            jsonArray.getJSONObject(i).put("totalExams", jsonArray.getJSONObject(i).getInt("totalExams") + 1);
+                        }
+                    }
+                }
+            }
+            jsonArray.getJSONObject(i).put("average", jsonArray.getJSONObject(i).getInt("average") / jsonArray.getJSONObject(i).getInt("totalExams"));
+        }
+        int studentExamAverage = 0;
+        JSONObject studentExamStatistics = new JSONObject();
+        studentExamStatistics.put("average", 0);
+        studentExamStatistics.put("middle", 0);
+        studentExamStatistics.put("probability", 0);
+
+        for (int i = 0; i < jsonArray.length(); i++) {
+            studentExamAverage += jsonArray.getJSONObject(i).getInt("average");
+        }
+        if (jsonArray.length() != 0) {
+            studentExamStatistics.put("average", studentExamAverage / jsonArray.length());
+            if (jsonArray.length() % 2 == 1) {
+            	if (jsonArray.length() == 1) {
+            		studentExamStatistics.put("middle", jsonArray.getJSONObject(0).getInt("average"));
+            	}else{
+            		studentExamStatistics.put("middle", jsonArray.getJSONObject((jsonArray.length() / 2) + 1).getInt("average"));	
+            	}
+            } else {
+                if (jsonArray.length() == 2) {
+                    studentExamStatistics.put("middle", ((jsonArray.getJSONObject(0).getInt("average") + jsonArray.getJSONObject(1).getInt("average")) / 2));
+                } else {
+                    studentExamStatistics.put("middle", ((jsonArray.getJSONObject(jsonArray.length() / 2).getInt("average") + jsonArray.getJSONObject(jsonArray.length() / 2 - 1).getInt("average")) / 2));
+                }
+            }
+        }
+        return studentExamStatistics;
+    }
 }

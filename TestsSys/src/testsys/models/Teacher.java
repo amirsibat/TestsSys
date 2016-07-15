@@ -42,7 +42,7 @@ public class Teacher extends User {
         try {
             List<HashMap<String, Object>> objectsList = Database.getInstance().executeListQuery(SqlStatements.USER_GET_ALL_TEACHERS, SqlColumns.USER_ALL_COLUMNS);
             for (int i = 0; i < objectsList.size(); i++) {
-                teacherList.add((Teacher) hashMapToObject(objectsList.get(i)));
+                teacherList.add(new Teacher(hashMapToObject(objectsList.get(i))));
             }
         } catch (Exception e) {
             L.err(e);

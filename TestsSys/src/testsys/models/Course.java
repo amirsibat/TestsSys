@@ -122,6 +122,15 @@ public class Course {
         return Record.getRecordsByCourseId(this.mId);
     }
 
+    public static List<Course> getAllCourses() throws Exception {
+        List<HashMap<String, Object>> results = Database.getInstance().executeListQuery(SqlStatements.COURSE_GET_ALL_COURSES, SqlColumns.COURSE_ALL_COLUMNS);
+        List<Course> courseList = new ArrayList<>();
+        for (int i = 0; i < results.size(); i++) {
+            courseList.add(hashMapToObject(results.get(i)));
+        }
+        return courseList;
+    }
+
 
     public static List<Course> getCoursesByProfessionId(String professionId) throws Exception {
         List<HashMap<String, Object>> results = Database.getInstance().executeListQuery(SqlStatements.COURSE_GET_PROFESSION_COURSES, SqlColumns.COURSE_ALL_COLUMNS, professionId);
@@ -140,15 +149,15 @@ public class Course {
         return new Course(id, name, professionId);
     }
 
-    public List<Question> getQuestionsList() throws Exception{
+    public List<Question> getQuestionsList() throws Exception {
         return Question.getAllQuestionByCourseId(mId);
     }
 
-	public JSONObject toJSON() throws Exception{
+    public JSONObject toJSON() throws Exception {
         JSONObject json = new JSONObject();
         json.put("id", mId);
         json.put("name", mName);
         json.put("profession", mProfession.toJSON());
-		return json;
-	}
+        return json;
+    }
 }

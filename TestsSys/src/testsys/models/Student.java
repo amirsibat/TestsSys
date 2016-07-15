@@ -53,6 +53,19 @@ public class Student extends User {
         return Record.getRecordsByStudentId(this.mId);
     }
 
+    public static List<Student> getAllStudents() throws Exception{
+        List<Student> studentList = new ArrayList<>();
+        try {
+            List<HashMap<String, Object>> objectsList = Database.getInstance().executeListQuery(SqlStatements.USER_GET_ALL_STUDENTS, SqlColumns.USER_ALL_COLUMNS);
+            for (int i = 0; i < objectsList.size(); i++) {
+                studentList.add(new Student(hashMapToObject(objectsList.get(i)), (String) objectsList.get(i).get(SqlColumns.USER_ST_ID)));
+            }
+        } catch (Exception e) {
+            L.err(e);
+        }
+        return studentList;
+    }
+
     public static Student getStudentByStudentId(String studentId) {
         try {
             HashMap<String, Object> data = Database.getInstance().executeSingleQuery(SqlStatements.USER_GET_USER_BY_USER_ID, SqlColumns.USER_ALL_COLUMNS, studentId);
