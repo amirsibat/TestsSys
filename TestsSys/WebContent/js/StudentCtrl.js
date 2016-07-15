@@ -1,10 +1,12 @@
+var studentScope = null;
 (function (angular) {
     app.controller('StudentCtrl', ["$scope", "$rootScope", "PageNames", function ($scope, $rootScope, PageNames) {
-
+    	
+    	studentScope = $scope;
     	$scope.studentExams = [];
     	$scope.studentCourses = [];
     	$scope.ExamHolder = [];	
-    	$scope.studentSubmittedExams = [];
+    	$scope.submittedExams = [];
     	$scope.CourseDetailsHolder = {};
     	
         var exam = {
@@ -126,39 +128,49 @@
                          $scope.studentCourses = [];
                          return;
                      }
+                     
+                     
                      $scope.studentCourses = result.success;
-                    console.log($scope.studentCourses);
+                    /*console.log($scope.studentCourses);*/
 
                  });
              });
         	
         };
         
-        $scope.openCourseDetails = function (course) {
-        	var objectToSend = {
-                    courseId: course.id,
-                    name:  course.name,
-                    profession: course.profession
-                };
+        $scope.loadCourseDetails = function (course) {
+        	$scope.openCourseDetails();
         	
-            Http.get("/record/GetCourseDetails", null, objectToSend, function (result, error) {
+            Http.get("/record/GetCourseDetails", {courseId: course.id}, function (result, error) {
                 $scope.$apply(function () {
                     if (error != null) {
-                        $scope.studentSubmittedExams = [];
+                        $scope.submittedExams = [];
                         return;
                     }
-                    $scope.studentSubmittedExams = result.success;
-                    console.log($scope.studentSubmittedExams);
+                    $scope.submittedExams = result.success;
+                    console.log($scope.submittedExams);
                 });
+               
             });
         };
         
         
-        
+        $scope.openExamDetailsModal = function (exam) {
+            if (exam.type == 0) {
+                DOCXjs.fromExam(exam)
+            } else {
+                $('#examDetails').modal('show');
+                setTimeout(function () {
+                    $scope.$apply(function () {
+                        $scope.selectedExam = exam;
+                    });
+                }, 100);
+            }
+        };
         
         $scope.openExamModal = function (exam) {
             $scope.ExamHolder.exam = exam;
-            
+ 
             /*console.log($scope.ExamHolder);*/
             $('#startExamModal').modal("show");
         };

@@ -52,7 +52,7 @@ public class GetStudentCourses extends HttpServlet {
 			return;
 		}
 
-		if(user.mType == User.Type.MANAGER && user.mType == User.Type.TEACHER){
+		if(user.mType != User.Type.STUDENT ){
 			response.setStatus(400);
 			out.println("{\"error\":\"Bad request\"}");
 			out.close();

@@ -43,9 +43,10 @@ public class GetCourseDetails extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.setContentType("application/json; charset=UTF-8");
+		 response.setContentType("application/json; charset=UTF-8");
 		PrintWriter out = response.getWriter();
-
+        String courseId = request.getParameter("courseId");
+            
 
 		User user = Helper.validateSession(request);
 		if (user == null) {
@@ -55,36 +56,24 @@ public class GetCourseDetails extends HttpServlet {
 			return;
 		}
 
-		if(user.mType == User.Type.MANAGER && user.mType == User.Type.TEACHER){
+		if(user.mType != User.Type.STUDENT ){
 			response.setStatus(400);
 			out.println("{\"error\":\"Bad request\"}");
 			out.close();
 			return;
 		}
-
-		 //loop over inputStream
-        BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream(), "UTF-8"));
-        StringBuilder jsonFileContent = new StringBuilder();
-
-        //read line by line from file
-        String nextLine = null;
-        while ((nextLine = br.readLine()) != null) {
-            jsonFileContent.append(nextLine);
-        }
-        
-        try {
+    
+        try {    	
         	
-            JSONObject json = new JSONObject(jsonFileContent.toString());
-            List<Record> records = Record.getSubmittedExams(json.getString("courseId"), user.mId);
+            List<Record> records = Record.getSubmittedExams(courseId, user.mId);
+            JSONArray json = new JSONArray();
             
-            JSONArray jsonArray = new JSONArray();
             for (int i = 0; i < records.size(); i++) {
-            	jsonArray.put(records.get(i).toJSON());  
+            	json.put(records.get(i).toJSON());  
             }
 
-
             response.setStatus(200);
-            out.println("{\"success\":true}");
+            out.println("{\"success\":"+json.toString()+"}");
         } catch (Exception e) {
             L.err(e);
             response.setStatus(500);
@@ -92,10 +81,7 @@ public class GetCourseDetails extends HttpServlet {
         }
         out.close();
     }
-		
-		
-		
-	
+
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

@@ -2,20 +2,22 @@
     <div class="col-xs-12">
         <div class="box-container">
             <div class="row exams-header">
-                <div class="col-xs-1">ExamId</div>
-                <div class="col-xs-1">Duration</div>
-                <div class="col-xs-1">Grade</div>
+                <div class="col-xs-2">ExamDate</div>
+                <div class="col-xs-2">Duration</div>
+                <div class="col-xs-3">Teacher</div>
+                <div class="col-xs-2">Final Grade</div>
                 <div class="col-xs-2">Actions</div>
             </div>
             
-            <div class="no-data-message" ng-show="studentSubmittedExams == 0">No Exams to Show</div>
+            <div class="no-data-message" ng-show="submittedExams.length == 0">No Exams to Show</div>
             
             <div class="row">
                 <div class="col-xs-12">
-                    <div class="row exam-row" ng-repeat="record in studentSubmittedExams">
-                        <div class="col-xs-1">{{record.exam.id}}</div>
-                        <div class="col-xs-1">{{record.exam.duration + " mins"}}</div>
- 						<div class="col-xs-1">{{record.exam.extraData.totalGrade}}</div>
+                    <div class="row exam-row" ng-repeat="record in submittedExams">
+                        <div class="col-xs-2">{{record.exam.date}}</div>
+                        <div class="col-xs-2">{{record.exam.duration + " mins"}}</div>
+                        <div class="col-xs-3">{{record.teacher.firstName + "  " + record.teacher.lastName}}</div>
+                        <div class="col-xs-2">{{record.extraData.teacherGrade}}/100</div>					
                         <div class="col-xs-2">
                             <button class="btn btn-default" ng-click="openExamDetailsModal(record);">
                                More Info
@@ -27,3 +29,107 @@
         </div>
     </div>
 </div>
+<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" id="examDetails"
+     aria-labelledby="myLargeModalLabel">
+    <div class="modal-dialog modal-lg" style="z-index: 1100;">
+        <div class="modal-content ">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Exam: {{selectedExam.id}}</h4>
+            </div>
+            <div class="modal-body questions-list-modal-body">
+                <div class="box-row row check-exam-row">
+                    <div class="col-xs-3 title">
+                        Profession:
+                    </div>
+                    <div class="col-xs-9 box-content check-exam-content">
+                        {{selectedExam.exam.profession.name}}
+                    </div>
+                </div>
+                <div class="box-row row check-exam-row">
+                    <div class="col-xs-3 title">
+                        Course:
+                    </div>
+                    <div class="col-xs-9 box-content check-exam-content">
+                        {{selectedExam.course.name}}
+                    </div>
+                </div>
+                <div class="box-row row check-exam-row">
+                    <div class="col-xs-3 title">
+                        Teacher:
+                    </div>
+                    <div class="col-xs-9 box-content check-exam-content">
+                        {{selectedExam.teacher.firstName + " " + selectedExam.teacher.lastName}}
+                    </div>
+                </div>
+                <div class="box-row row check-exam-row">
+                    <div class="col-xs-3 title">
+                        Exam duration:
+                    </div>
+                    <div class="col-xs-9 box-content check-exam-content">
+                        {{selectedExam.exam.duration + " minutes"}}
+                    </div>
+                </div>
+                <div class="box-row row check-exam-row">
+                    <div class="col-xs-3 title">
+                        Code:
+                    </div>
+                    <div class="col-xs-9 box-content check-exam-content">
+                        {{selectedExam.exam.code}}
+                    </div>
+                </div>
+
+                <div class="box-row row check-exam-row">
+                    <div class="col-xs-12">
+                        <div class="row questions-header">
+                            <div class="col-xs-1">
+                                #
+                            </div>
+                            <div class="col-xs-9">
+                                The question text
+                            </div>
+                            <div class="col-xs-2" style="text-align: center">
+                                Grade
+                            </div>
+                        </div>
+                        
+                        <div class="row questions-row" ng-repeat="question in selectedExam.exam.questionsList">
+                            <div class="col-lg-12">
+                                <div class="row">
+                                    <div class="col-xs-10">
+                                        <b>{{$index + 1}}) </b>
+                                        {{question.question.text}}
+                                    </div>
+                                    <div class="col-xs-2" style="text-align: center">
+                                        {{question.grade}} 
+                                    </div> 
+                                    <div class="row collapse-question-options">
+                            <div class="col-lg-12">
+                                <div class="row" ng-repeat="option in question.question.options"
+                                     ng-class="{'correct':(($index + 1) == question.question.correctAnswer)}">
+                                    {{($index+1) +") "+ option}}
+                                </div>
+                            </div>
+                        </div>
+                        	 <div class="row">
+                                    <div class="col-xs-12">
+                                        <b>Student Answer:</b>
+                                        {{question.question.options[selectedExam.exam.extraData.answers[$index]]}}
+                                    </div>
+                                </div>
+                        
+                                     
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
