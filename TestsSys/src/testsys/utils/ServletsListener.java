@@ -271,7 +271,7 @@ public class ServletsListener implements ServletContextListener {
         try {
             Database.getInstance().executeUpdate(SqlStatements.RECORD_INSERT_NEW_RECORD, "1", "0007", "01", "010101", "{\"teacherId\":\"0006\",\"status\":1,\"answers\":[3,2,1,4,3],\"totalGrade\":30,\"startDate\":1466211816920, \"endDate\":1466213016920, \"duration\":40}");
             Database.getInstance().executeUpdate(SqlStatements.RECORD_INSERT_NEW_RECORD, "2", "0007", "01", "010100", "{\"teacherId\":\"0006\",\"status\":0,\"answers\":[3,2,1,1],\"totalGrade\":null,\"startDate\":1466298216920,\"endDate\":null, \"duration\":20}");
-            Database.getInstance().executeUpdate(SqlStatements.RECORD_INSERT_NEW_RECORD, "3", "0008", "02", "010101", "{\"teacherId\":\"0006\",\"status\":1,\"answers\":[3,2,1,4,3],\"totalGrade\":30,\"startDate\":1466211816920, \"endDate\":1466213016920, \"duration\":40}");
+            Database.getInstance().executeUpdate(SqlStatements.RECORD_INSERT_NEW_RECORD, "3", "0008", "01", "010101", "{\"teacherId\":\"0006\",\"status\":2,\"answers\":[3,2,1,4,3],\"totalGrade\":30,\"startDate\":1466211816920, \"endDate\":1466213016920, \"duration\":40}");
             
 
         } catch (Exception e) {
