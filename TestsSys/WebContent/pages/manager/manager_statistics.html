@@ -1,3 +1,160 @@
-<div class="" >
-    MANAGER_STATISTICS
+<div class="row">
+    <div class="col-xs-4">
+        <div class="large-button" ng-click="openCourseStats();">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="button-icon">
+                        <span class="glyphicon glyphicon-th-list"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="button-text">
+                        Courses
+                    </div>
+                </div>
+            </div>
+            <div class="button-badge">
+
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-4">
+        <div class="large-button" ng-click="">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="button-icon">
+                        <span class="glyphicon glyphicon-th-list"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="button-text">
+                        Students
+                    </div>
+                </div>
+            </div>
+            <div class="button-badge">
+
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-4">
+        <div class="large-button" ng-click="">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="button-icon">
+                        <span class="glyphicon glyphicon-th-list"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="button-text">
+                        Teachers
+                    </div>
+                </div>
+            </div>
+            <div class="button-badge">
+
+            </div>
+        </div>
+    </div>
 </div>
+<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" id="courseStats"
+     aria-labelledby="myLargeModalLabel">
+    <div class="modal-dialog modal-lg" style="z-index: 1100;">
+        <div class="modal-content ">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Exam: {{selectedExam.id}}</h4>
+            </div>
+            <div class="modal-body questions-list-modal-body">
+                <div class="box-row row check-exam-row">
+                    <div class="col-xs-3 title">
+                        Profession:
+                    </div>
+                    <div class="col-xs-9 box-content check-exam-content">
+                        {{selectedExam.profession.name}}
+                    </div>
+                </div>
+                <div class="box-row row check-exam-row">
+                    <div class="col-xs-3 title">
+                        Course:
+                    </div>
+                    <div class="col-xs-9 box-content check-exam-content">
+                        {{selectedExam.course.name}}
+                    </div>
+                </div>
+                <div class="box-row row check-exam-row">
+                    <div class="col-xs-3 title">
+                        Profession:
+                    </div>
+                    <div class="col-xs-9 box-content check-exam-content">
+                        {{selectedExam.author.firstName + " " + selectedExam.author.lastName}}
+                    </div>
+                </div>
+                <div class="box-row row check-exam-row">
+                    <div class="col-xs-3 title">
+                        Exam duration:
+                    </div>
+                    <div class="col-xs-9 box-content check-exam-content">
+                        {{selectedExam.duration + " minutes"}}
+                    </div>
+                </div>
+                <div class="box-row row check-exam-row">
+                    <div class="col-xs-3 title">
+                        Code:
+                    </div>
+                    <div class="col-xs-9 box-content check-exam-content">
+                        {{selectedExam.code}}
+                    </div>
+                </div>
+                <div class="box-row row check-exam-row">
+                    <div class="col-xs-3 title">
+                        Status:
+                    </div>
+                    <div class="col-xs-9 box-content check-exam-content">
+                        {{selectedExam.status == 0 ? "New" : "Used"}}
+                    </div>
+                </div>
+                <div class="box-row row check-exam-row">
+                    <div class="col-xs-12">
+                        <div class="row questions-header">
+                            <div class="col-xs-1">
+                                #
+                            </div>
+                            <div class="col-xs-9">
+                                The question text
+                            </div>
+                            <div class="col-xs-2" style="text-align: center">
+                                Grade
+                            </div>
+                        </div>
+                        <div class="row questions-row" ng-repeat="question in selectedExam.questionsList">
+                            <div class="col-lg-12">
+                                <div class="row">
+                                    <div class="col-xs-10">
+                                        <b>{{$index + 1}}) </b>
+                                        {{question.question.text}}
+                                    </div>
+                                    <div class="col-xs-2" style="text-align: center">
+                                        {{question.grade}}
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

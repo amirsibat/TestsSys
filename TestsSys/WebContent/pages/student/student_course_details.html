@@ -92,36 +92,46 @@
                             <div class="col-xs-2" style="text-align: center">
                                 Grade
                             </div>
+                             <!-- <div class="col-xs-1" >
+                                Check
+                            </div> -->
                         </div>
                         
                         <div class="row questions-row" ng-repeat="question in selectedExam.exam.questionsList">
                             <div class="col-lg-12">
-                                <div class="row">
-                                    <div class="col-xs-10">
+                        <div class="row">
+                            <div class="col-xs-10">
                                         <b>{{$index + 1}}) </b>
                                         {{question.question.text}}
                                     </div>
-                                    <div class="col-xs-2" style="text-align: center">
-                                        {{question.grade}} 
-                                    </div> 
-                                    <div class="row collapse-question-options">
-                            <div class="col-lg-12">
-                                <div class="row" ng-repeat="option in question.question.options"
-                                     ng-class="{'correct':(($index + 1) == question.question.correctAnswer)}">
-                                    {{($index+1) +") "+ option}}
-                                </div>
-                            </div>
+                            <div class="col-xs-2" style="text-align: center">
+                                        {{question.grade}}
+                                    </div>
+                           <!--  
+                            	  <span class="glyphicon glyphicon-remove wrong"  ></span>
+                                  <span class="glyphicon glyphicon-ok correct"   ></span>
+                                  
+                                   -->
                         </div>
-                        	 <div class="row">
+                        <div class="row">
                                     <div class="col-xs-12">
-                                        <b>Student Answer:</b>
-                                        {{question.question.options[selectedExam.exam.extraData.answers[$index]]}}
+                                        <b>Your Answer:</b>
+                                        {{question.question.options[selectedExam.extraData.answers[$index]]}} <span ng-show="isCorrect(question,$index);"  class="glyphicon glyphicon-ok correct"></span><span  ng-show="!isCorrect(question,$index);" class="glyphicon glyphicon-remove wrong"></span>
+                                        	
                                     </div>
                                 </div>
-                        
-                                     
+                        <div class="row collapse-question-options">
+                            <div class="col-lg-12">
+                                <div class="row" ng-repeat="option in question.question.options"
+                                     ng-class="{'correct' :(($index + 1) == question.question.correctAnswer)}">
+                                    {{($index+1) +") "+ option}}
                                 </div>
+                                
                             </div>
+                             
+                        </div>
+                        
+                    </div>
                         </div>
                     </div>
                 </div>

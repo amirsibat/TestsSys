@@ -154,6 +154,13 @@ var studentScope = null;
             });
         };
         
+        $scope.isCorrect = function(question,index) {
+        	
+        	if(question.question.options[selectedExam.extraData.answers[index]] == question.question.correctAnswer)
+        		return true;
+        	else 
+        		return false;
+        };
         
         $scope.openExamDetailsModal = function (exam) {
             if (exam.type == 0) {

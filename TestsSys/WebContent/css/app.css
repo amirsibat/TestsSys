@@ -464,6 +464,11 @@ input.question-modal-grade {
     font-weight: 500;
 }
 
+.wrong{
+	color: rgb(255,0,0);
+	font-weight: 500;
+}
+
 .selected-questions-row {
     padding-bottom: 6px;
     margin-bottom: 6px;
