@@ -1,3 +1,29 @@
-<div class="" >
-    STUDENT_COURSE_DETAILS
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box-container">
+            <div class="row exams-header">
+                <div class="col-xs-1">ExamId</div>
+                <div class="col-xs-1">Duration</div>
+                <div class="col-xs-1">Grade</div>
+                <div class="col-xs-2">Actions</div>
+            </div>
+            
+            <div class="no-data-message" ng-show="studentSubmittedExams == 0">No Exams to Show</div>
+            
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="row exam-row" ng-repeat="record in studentSubmittedExams">
+                        <div class="col-xs-1">{{record.exam.id}}</div>
+                        <div class="col-xs-1">{{record.exam.duration + " mins"}}</div>
+ 						<div class="col-xs-1">{{record.exam.extraData.totalGrade}}</div>
+                        <div class="col-xs-2">
+                            <button class="btn btn-default" ng-click="openExamDetailsModal(record);">
+                               More Info
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

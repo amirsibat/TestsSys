@@ -5,7 +5,7 @@
     	$scope.studentCourses = [];
     	$scope.ExamHolder = [];	
     	$scope.studentSubmittedExams = [];
-    	$scope.CourseHolder = [];
+    	$scope.CourseDetailsHolder = {};
     	
         var exam = {
             "date": "2016-07-11",
@@ -127,7 +127,7 @@
                          return;
                      }
                      $scope.studentCourses = result.success;
-                     console.log($scope.studentCourses);
+                    console.log($scope.studentCourses);
 
                  });
              });
@@ -148,15 +148,18 @@
                         return;
                     }
                     $scope.studentSubmittedExams = result.success;
+                    console.log($scope.studentSubmittedExams);
                 });
             });
         };
         
+        
+        
+        
         $scope.openExamModal = function (exam) {
             $scope.ExamHolder.exam = exam;
             
-            
-            console.log($scope.ExamHolder);
+            /*console.log($scope.ExamHolder);*/
             $('#startExamModal').modal("show");
         };
 
@@ -173,7 +176,6 @@
        $scope.openCourseDetails = function(updateH){
     	   $rootScope.currentPage = STUDENT_COURSE_DETAILS;
            $rootScope.currentPageName = PageNames[$rootScope.currentPage];
-           $scope.loadCourseDetails();
            if (updateH == null || updateH == true)
                updateHash($rootScope.currentPageName);
        };

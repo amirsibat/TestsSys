@@ -75,11 +75,11 @@ public class GetCourseDetails extends HttpServlet {
         try {
         	
             JSONObject json = new JSONObject(jsonFileContent.toString());
-            List<Exam> exams = Record.getSubmittedExams(json.getString("courseId"), user.mId);
+            List<Record> records = Record.getSubmittedExams(json.getString("courseId"), user.mId);
             
             JSONArray jsonArray = new JSONArray();
-            for (int i = 0; i < exams.size(); i++) {
-            	jsonArray.put(exams.get(i).toJSON());  
+            for (int i = 0; i < records.size(); i++) {
+            	jsonArray.put(records.get(i).toJSON());  
             }
 
 
