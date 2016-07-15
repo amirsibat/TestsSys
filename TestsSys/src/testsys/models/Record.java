@@ -298,6 +298,7 @@ public class Record {
         jsonObject.put("course", mCourse.toJSON());
         jsonObject.put("exam", mExam.toJSON());
         jsonObject.put("extraData", mExtraData);
+        jsonObject.put("teacher", Teacher.getTeacherByTeacherId(mExtraData.getString("teacherId")).toJSON());
         return jsonObject;
     }
 
@@ -355,15 +356,6 @@ public class Record {
         return null;
     }
 
-    public JSONObject toJSON() throws Exception {
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("id", mId);
-        jsonObject.put("student", mStudent.toJSON());
-        jsonObject.put("course", mCourse.toJSON());
-        jsonObject.put("exam", mExam.toJSON());
-        jsonObject.put("extraData", mExtraData);
-        jsonObject.put("teacher", Teacher.getTeacherByTeacherId(mExtraData.getString("teacherId")).toJSON());
-        return jsonObject;
-    }
+  
 
 }

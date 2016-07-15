@@ -339,23 +339,23 @@ var teacherScope = null;
             })
         };
 
-        $scope.publishExam = function(exam) {
-        	
-        	 var objectToSend = {
-                     courseId: exam.course.id,
-                     examId:  exam.id
-                 };
-        	
-        	Http.post("/exam/PublishExam", null, objectToSend, function (result, error) {
-        		 $scope.$apply(function () {
-                     if (error != null) {
-                    	 console.log(error);
-                         alert("Server Error");
-                         return;
-                     }
-                     $scope.loadExamsToPublish();
-                 });
-            })     
+        $scope.publishExam = function (exam) {
+
+            var objectToSend = {
+                courseId: exam.course.id,
+                examId: exam.id
+            };
+
+            Http.post("/exam/PublishExam", null, objectToSend, function (result, error) {
+                $scope.$apply(function () {
+                    if (error != null) {
+                        console.log(error);
+                        alert("Server Error");
+                        return;
+                    }
+                    $scope.loadExamsToPublish();
+                });
+            })
         };
 
         $scope.loadExamsToCheck = function () {
@@ -436,12 +436,12 @@ var teacherScope = null;
             return "-";
         };
         $scope.getCheckingExamFinishedIn = function () {
+            var minutes = null;
             if ($scope.checkingExamHolder != null && $scope.checkingExamHolder.record != null) {
-                return ((new Date($scope.checkingExamHolder.record.extraData.endDate).getTime() -
-                    new Date($scope.checkingExamHolder.record.extraData.startDate).getTime())
-                    / 1000 / 60) + " minutes";
+            	minutes = parseInt(((new Date($scope.checkingExamHolder.record.extraData.endDate).getTime() -
+                new Date($scope.checkingExamHolder.record.extraData.startDate).getTime()) / 1000 / 60));
             }
-            return "-";
+            return minutes != null ? (minutes + " minutes") : "-";
         };
 
 
