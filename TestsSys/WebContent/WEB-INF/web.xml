@@ -57,6 +57,16 @@
   <servlet-mapping>
     <servlet-name>GetCourseDetails</servlet-name>
     <url-pattern>/record/GetCourseDetails</url-pattern>
+    </servlet-mapping>
+    <servlet>
+    <description></description>
+    <display-name>GetAllRecords</display-name>
+    <servlet-name>GetAllRecords</servlet-name>
+    <servlet-class>testsys.servlets.records.GetAllRecords</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GetAllRecords</servlet-name>
+    <url-pattern>/record/GetAllRecords</url-pattern>
   </servlet-mapping>
   <servlet>
     <description></description>
@@ -98,6 +108,17 @@
     <servlet-name>GetPendingRequest</servlet-name>
     <url-pattern>/request/GetPendingRequest</url-pattern>
   </servlet-mapping>
+  
+  <servlet>
+    <description></description>
+    <display-name>AnswerRequest</display-name>
+    <servlet-name>AnswerRequest</servlet-name>
+    <servlet-class>testsys.servlets.requests.AnswerRequest</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AnswerRequest</servlet-name>
+    <url-pattern>/request/AnswerRequest</url-pattern>
+  </servlet-mapping>
   <servlet>
     <description></description>
     <display-name>GetRequestsByTeacher</display-name>
@@ -108,6 +129,7 @@
     <servlet-name>GetRequestsByTeacher</servlet-name>
     <url-pattern>/request/GetRequestsByTeacher</url-pattern>
   </servlet-mapping>
+  
   <servlet>
     <description></description>
     <display-name>getAllQuestions</display-name>

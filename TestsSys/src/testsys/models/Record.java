@@ -200,8 +200,22 @@ public class Record {
         return exams;
     }
 
+    public static List<Record> getCurrentRecordsByTeacher(String teacherId) throws Exception {
+        List<Record> recordList = getAllRecords();
+        List<Record> records = new ArrayList<>();
+        for (int i = 0; i < recordList.size(); i++) {
+            JSONObject jsonObject = recordList.get(i).mExtraData;
+            if (jsonObject.getString("teacherId").equals(teacherId)) {
+                if (jsonObject.getInt("status") == RecordExamStatus.IN_PROGRESS.ordinal()) {
+                    records.add(recordList.get(i));
+                }
+            }
+        }
+        return records;
+    }
 
-    public static List<Record> getCurrentExamByStudent(String studentId) throws Exception{
+
+    public static List<Record> getCurrentExamByStudent(String studentId) throws Exception {
         List<Record> recordList = getRecordsByStudentId(studentId);
         List<Record> returnRecords = new ArrayList<>();
         for (int i = 0; i < recordList.size(); i++) {
@@ -213,7 +227,7 @@ public class Record {
         return returnRecords;
     }
 
-    public static List<Record> getPendingExamsByStudent(String studentId) throws Exception{
+    public static List<Record> getPendingExamsByStudent(String studentId) throws Exception {
         List<Record> recordList = getRecordsByStudentId(studentId);
         List<Record> returnRecords = new ArrayList<>();
         for (int i = 0; i < recordList.size(); i++) {
@@ -239,43 +253,42 @@ public class Record {
         }
         return returnRecords;
     }
-    
-    public static List<Exam> getPublishedExams(String courseId, String studentId) throws Exception{
-    	
-    	List<Record> recordList = getRecordsByCourseId(courseId);
-    	List<Exam> exams = new ArrayList<>();
-    	List<Exam> returnedExams = new ArrayList<>();
-    	
-    	
-         
-         for(int i=0; i<recordList.size(); i++){
-             JSONObject extraData = recordList.get(i).mExtraData;
-             String student = recordList.get(i).mStudent.mId;
-             
-                 if(extraData.getInt("status") == RecordExamStatus.PUBLISHED.ordinal() && student.equals(studentId) ){
-                	 returnedExams.add(recordList.get(i).mExam);
-                 }  
-         }
-         return returnedExams;
-    	
+
+    public static List<Exam> getPublishedExams(String courseId, String studentId) throws Exception {
+
+        List<Record> recordList = getRecordsByCourseId(courseId);
+        List<Exam> exams = new ArrayList<>();
+        List<Exam> returnedExams = new ArrayList<>();
+
+
+        for (int i = 0; i < recordList.size(); i++) {
+            JSONObject extraData = recordList.get(i).mExtraData;
+            String student = recordList.get(i).mStudent.mId;
+
+            if (extraData.getInt("status") == RecordExamStatus.PUBLISHED.ordinal() && student.equals(studentId)) {
+                returnedExams.add(recordList.get(i).mExam);
+            }
+        }
+        return returnedExams;
+
     }
-  
- public static List<Record> getSubmittedExams(String courseId, String studentId) throws Exception{
-    	
-    	List<Record> recordList = getRecordsByCourseId(courseId);
-    	List<Exam> exams = new ArrayList<>();
-    	List<Record> returnedRecords = new ArrayList<>();
-    	    
-         for(int i=0; i<recordList.size(); i++){
-             JSONObject extraData = recordList.get(i).mExtraData;
-             String student = recordList.get(i).mStudent.mId;
-             
-                 if(extraData.getInt("status") == RecordExamStatus.SUBMITTED.ordinal() && student.equals(studentId) ){
-                	 returnedRecords.add(recordList.get(i));
-                 }  
-         }
-         return returnedRecords;
-    	
+
+    public static List<Record> getSubmittedExams(String courseId, String studentId) throws Exception {
+
+        List<Record> recordList = getRecordsByCourseId(courseId);
+        List<Exam> exams = new ArrayList<>();
+        List<Record> returnedRecords = new ArrayList<>();
+
+        for (int i = 0; i < recordList.size(); i++) {
+            JSONObject extraData = recordList.get(i).mExtraData;
+            String student = recordList.get(i).mStudent.mId;
+
+            if (extraData.getInt("status") == RecordExamStatus.SUBMITTED.ordinal() && student.equals(studentId)) {
+                returnedRecords.add(recordList.get(i));
+            }
+        }
+        return returnedRecords;
+
     }
 
     public JSONObject toJSON() throws Exception {
@@ -340,6 +353,17 @@ public class Record {
             L.err(e);
         }
         return null;
+    }
+
+    public JSONObject toJSON() throws Exception {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("id", mId);
+        jsonObject.put("student", mStudent.toJSON());
+        jsonObject.put("course", mCourse.toJSON());
+        jsonObject.put("exam", mExam.toJSON());
+        jsonObject.put("extraData", mExtraData);
+        jsonObject.put("teacher", Teacher.getTeacherByTeacherId(mExtraData.getString("teacherId")).toJSON());
+        return jsonObject;
     }
 
 }

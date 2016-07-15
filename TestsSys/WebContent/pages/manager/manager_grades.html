@@ -1,3 +1,153 @@
-<div class="">
-    MANAGER_GRADES
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box-container">
+            <div class="row exams-header">
+                <div class="col-xs-1">ID</div>
+                <div class="col-xs-2">St. ID</div>
+                <div class="col-xs-2">St. Name</div>
+                <div class="col-xs-1">Exam ID</div>
+                <div class="col-xs-1">Profession</div>
+                <div class="col-xs-2">Course</div>
+                <div class="col-xs-1">Teacher Grade</div>
+                <div class="col-xs-2">Actions</div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="row exam-row" ng-repeat="grade in allGrades">
+                        <div class="col-xs-1">{{grade.id}}</div>
+                        <div class="col-xs-2">{{grade.student.stId}}</div>
+                        <div class="col-xs-2">{{grade.student.firstName + " " +grade.student.lastName}}</div>
+                        <div class="col-xs-1">{{grade.exam.id}}</div>
+                        <div class="col-xs-1">{{grade.exam.profession.name}}</div>
+                        <div class="col-xs-2">{{grade.exam.course.name}}</div>
+                        <div class="col-xs-1">{{(grade.extraData.teacherGrade == null ? "0" : grade.extraData.teacherGrade)
+                            + "/100"}}
+                        </div>
+                        <div class="col-xs-2">
+                            <button class="btn btn-default" ng-click="openModalGrade(grade);">More info</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" id="gradeDetails"
+     aria-labelledby="myLargeModalLabel">
+    <div class="modal-dialog modal-lg" style="z-index: 1100;">
+        <div class="modal-content ">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Grade: {{selectedGrade.id}}</h4>
+            </div>
+            <div class="modal-body questions-list-modal-body">
+                <div class="box-row row check-exam-row">
+                    <div class="col-xs-3 title">
+                        Student ID:
+                    </div>
+                    <div class="col-xs-9 box-content check-exam-content">
+                        {{selectedGrade.student.stId}}
+                    </div>
+                </div>
+                <div class="box-row row check-exam-row">
+                    <div class="col-xs-3 title">
+                        Student Name:
+                    </div>
+                    <div class="col-xs-9 box-content check-exam-content">
+                        {{selectedGrade.student.firstName + " " + selectedGrade.student.lastName}}
+                    </div>
+                </div>
+                <div class="box-row row check-exam-row">
+                    <div class="col-xs-3 title">
+                        Profession:
+                    </div>
+                    <div class="col-xs-9 box-content check-exam-content">
+                        {{selectedGrade.exam.profession.name}}
+                    </div>
+                </div>
+                <div class="box-row row check-exam-row">
+                    <div class="col-xs-3 title">
+                        Course:
+                    </div>
+                    <div class="col-xs-9 box-content check-exam-content">
+                        {{selectedGrade.exam.course.name}}
+                    </div>
+                </div>
+                <div class="box-row row check-exam-row">
+                    <div class="col-xs-3 title">
+                        Exam ID:
+                    </div>
+                    <div class="col-xs-9 box-content check-exam-content">
+                        {{selectedGrade.exam.id}}
+                    </div>
+                </div>
+                <div class="box-row row check-exam-row">
+                    <div class="col-xs-3 title">
+                        Exam Author:
+                    </div>
+                    <div class="col-xs-9 box-content check-exam-content">
+                        {{selectedGrade.exam.author.firstName + " " + selectedGrade.exam.author.lastName}}
+                    </div>
+                </div>
+                <div class="box-row row check-exam-row">
+                    <div class="col-xs-3 title">
+                        Exam Publisher:
+                    </div>
+                    <div class="col-xs-9 box-content check-exam-content">
+                        {{selectedGrade.teacher.firstName + " " + selectedGrade.teacher.lastName}}
+                    </div>
+                </div>
+                <div class="box-row row check-exam-row">
+                    <div class="col-xs-3 title">
+                        Grade:
+                    </div>
+                    <div class="col-xs-9 box-content check-exam-content">
+                        {{(selectedGrade.extraData.teacherGrade == null ? "0" : selectedGrade.extraData.teacherGrade)
+                        + "/100"}}
+                    </div>
+                </div>
+                <div class="box-row row check-exam-row">
+                    <div class="col-xs-12">
+                        <div class="row questions-header">
+                            <div class="col-xs-1">
+                                #
+                            </div>
+                            <div class="col-xs-5">
+                                Question
+                            </div>
+                            <div class="col-xs-4">
+                                Answer
+                            </div>
+                            <div class="col-xs-2" style="text-align: center">
+                                Grade
+                            </div>
+                        </div>
+                        <div class="row questions-row" ng-repeat="question in selectedGrade.exam.questionsList">
+                            <div class="col-lg-12">
+                                <div class="row">
+                                    <div class="col-xs-1">
+                                        <b>{{$index + 1}}) </b>
+                                        </div>
+                                    <div class="col-xs-5">
+                                        {{question.question.text}}
+                                    </div>
+                                    <div class="col-xs-4">
+                                        {{question.question.options[selectedGrade.extraData.answers[$index]]}}
+                                    </div>
+                                    <div class="col-xs-2" style="text-align: center">
+                                        {{selectedGrade.extraData.teacherCheck[$index] + "/" + question.grade}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

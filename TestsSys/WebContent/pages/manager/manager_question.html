@@ -14,11 +14,11 @@
                     <div class="row exam-row" ng-repeat="question in allQuestions">
                         <div class="col-xs-1">{{question.id}}</div>
                         <div class="col-xs-3">{{question.text}}</div>
-                        <div class="col-xs-2">{{question.author.firstName + " " +question.author.lastNAme}}</div>
+                        <div class="col-xs-2">{{question.author.firstName + " " +question.author.lastName}}</div>
                         <div class="col-xs-2">{{question.profession.name}}</div>
                         <div class="col-xs-2">{{getCoursesNames(question.courses)}}</div>
                         <div class="col-xs-2">
-                            <button class="btn btn-default">More info</button>
+                            <button class="btn btn-default" ng-click="openModalQuestion(question);">More info</button>
                         </div>
                     </div>
                 </div>
@@ -26,3 +26,76 @@
         </div>
     </div>
 </div>
+<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" id="questionDetails"
+     aria-labelledby="myLargeModalLabel">
+    <div class="modal-dialog modal-lg" style="z-index: 1100;">
+        <div class="modal-content ">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Question: {{selectedQuestion.id}}</h4>
+            </div>
+            <div class="modal-body questions-list-modal-body">
+                <div class="box-row row check-exam-row">
+                    <div class="col-xs-3 title">
+                        Profession:
+                    </div>
+                    <div class="col-xs-9 box-content check-exam-content">
+                        {{selectedQuestion.profession.name}}
+                    </div>
+                </div>
+                <div class="box-row row check-exam-row">
+                    <div class="col-xs-3 title">
+                        Courses:
+                    </div>
+                    <div class="col-xs-9 box-content check-exam-content">
+                        {{getCoursesNames(selectedQuestion.courses)}}
+                    </div>
+                </div>
+                <div class="box-row row check-exam-row">
+                    <div class="col-xs-3 title">
+                        Author:
+                    </div>
+                    <div class="col-xs-9 box-content check-exam-content">
+                        {{selectedQuestion.author.firstName + " " + selectedQuestion.author.lastName}}
+                    </div>
+                </div>
+                <div class="box-row row check-exam-row">
+                    <div class="col-xs-3 title">
+                        Text:
+                    </div>
+                    <div class="col-xs-9 box-content check-exam-content">
+                        {{selectedQuestion.text}}
+                    </div>
+                </div>
+                <div class="box-row row check-exam-row">
+                    <div class="col-xs-12">
+                        <div class="row questions-header">
+                            <div class="col-xs-1">
+                                #
+                            </div>
+                            <div class="col-xs-11">
+                                Answer text
+                            </div>
+                        </div>
+                        <div class="row questions-row" ng-repeat="option in selectedQuestion.options">
+                            <div class="col-lg-12">
+                                <div class="row">
+                                    <div class="col-xs-1">
+                                        <b>{{$index + 1}}) </b>
+                                    </div>
+                                    <div class="col-xs-11">
+                                        {{option}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

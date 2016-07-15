@@ -177,6 +177,7 @@ public class SqlStatements {
     /**
      * RequestTable Statements
      */
+    public static final String REQUEST_GET_REQUEST_BY_REQUEST_ID = "SELECT * FROM " + REQUEST_TABLE + " WHERE " + SqlColumns.REQUEST_ID + "=?";
     public static final String REQUEST_GET_REQUESTS_BY_TEACHER = "SELECT * FROM " + REQUEST_TABLE + " WHERE " + SqlColumns.REQUEST_TEACHER_ID + "=?";
     public static final String REQUEST_GET_PINDEING_REQUESTS = "SELECT * FROM " + REQUEST_TABLE + " WHERE " + SqlColumns.REQUEST_PENDING + "=?";
     public static final String REQUEST_INSERT_NEW_REQUEST = "INSERT INTO " + REQUEST_TABLE + " ("
@@ -189,7 +190,7 @@ public class SqlStatements {
             + ") VALUES(?,?,?,?,?,?)";
 
     public static final String REQUEST_UPDATE_REQUEST = "UPDATE " + REQUEST_TABLE + " SET "
-            + SqlColumns.REQUEST_PENDING + "=? , "
+            + SqlColumns.REQUEST_PENDING + "=? "
             + " WHERE " + SqlColumns.REQUEST_ID + "=?";
 }
 

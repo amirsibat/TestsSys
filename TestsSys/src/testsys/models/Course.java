@@ -148,8 +148,7 @@ public class Course {
         JSONObject json = new JSONObject();
         json.put("id", mId);
         json.put("name", mName);
-        json.put("profession", mProfession.mId);
-        json.put("profession", mProfession.mName);
+        json.put("profession", mProfession.toJSON());
 		return json;
 	}
 }

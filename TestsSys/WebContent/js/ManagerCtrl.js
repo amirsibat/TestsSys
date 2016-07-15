@@ -5,9 +5,14 @@ var managerScope;
         managerScope = $scope;
         $scope.allExams = [];
         $scope.allQuestions = [];
+        $scope.allGrades = [];
         $scope.selectedExam = {};
+        $scope.selectedQuestion = {};
+        $scope.selectedGrade = {};
         $scope.pendingRequests = [];
         $('#examDetails').modal({show: false});
+        $('#questionDetails').modal({show: false});
+        $('#gradeDetails').modal({show: false});
 
 
         $scope.loadAllExams = function () {
@@ -35,6 +40,20 @@ var managerScope;
                     }
 
                     $scope.allQuestions = result.success;
+                });
+            })
+        };
+        $scope.loadAllGrades = function () {
+            Http.get("/record/GetAllRecords", null, function (result, error) {
+                $scope.$apply(function () {
+
+                    if (error != null) {
+                        console.log(error);
+                        $scope.allGrades = [];
+                        return;
+                    }
+
+                    $scope.allGrades = result.success;
                 });
             })
         };
@@ -68,6 +87,22 @@ var managerScope;
             }
         };
 
+        $scope.openModalQuestion = function (question) {
+            $('#questionDetails').modal('show');
+            setTimeout(function () {
+                $scope.$apply(function () {
+                    $scope.selectedQuestion = question;
+                });
+            }, 100);
+        };
+        $scope.openModalGrade = function (grade) {
+            $('#gradeDetails').modal('show');
+            setTimeout(function () {
+                $scope.$apply(function () {
+                    $scope.selectedGrade = grade;
+                });
+            }, 100);
+        };
 
         $scope.getCoursesNames = function (courses) {
             var coursesString = "";
@@ -75,6 +110,20 @@ var managerScope;
                 coursesString += courses[i].name + (i < courses.length - 1 ? ", " : "");
             }
             return coursesString;
+        };
+
+
+        $scope.answerRequest = function (request, accept) {
+            Http.post("/request/AnswerRequest", null, {"id": request.id, "accept": accept}, function (result, error) {
+                $scope.$apply(function () {
+                    if (error != null) {
+                        console.log(error);
+                        alert("Error");
+                        return;
+                    }
+                    $scope.loadPendingRequests();
+                });
+            })
         };
 
 
@@ -95,6 +144,7 @@ var managerScope;
         $scope.openGrades = function (updatH) {
             $rootScope.currentPage = MANAGER_GRADES;
             $rootScope.currentPageName = PageNames[$rootScope.currentPage];
+            $scope.loadAllGrades();
             if (updatH == null || updatH == true)
                 updateHash($rootScope.currentPageName);
         };
@@ -112,6 +162,8 @@ var managerScope;
                 updateHash($rootScope.currentPageName);
         };
 
+
+        $scope.loadPendingRequests();
 
         var currentHash = decodeURI(window.location.hash.substring(2));
         switch (currentHash) {

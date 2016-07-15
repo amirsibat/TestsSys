@@ -55,6 +55,10 @@ public class Request {
                 mDurationToAdd);
     }
 
+    public static Request getRequestById(String id) throws Exception{
+        return hashMapToObject(Database.getInstance().executeSingleQuery(SqlStatements.REQUEST_GET_REQUEST_BY_REQUEST_ID, SqlColumns.REQUEST_ALL_COLUMNS, id));
+    }
+
     public void answerRequest(RequestStatus requestStatus) throws Exception {
         Database.getInstance().executeUpdate(SqlStatements.REQUEST_UPDATE_REQUEST, requestStatus.ordinal(),
                 mId);
