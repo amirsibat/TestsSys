@@ -365,7 +365,29 @@ public class Record {
         jsonObject.put("studentExamAverage", getStudentsExamAverage(records));
         return jsonObject;
     }
+    
+    public static JSONObject getStatisticsTeacher(String teacherId) throws Exception {
+    	
+        List<Record> records = getAllRecords();
+     
+        JSONObject json = new JSONObject();
+        json.put("teacherExamAverage", getTeacherPublishedExamsAverage(records,teacherId));
+       
+        return json;
+    }
 
+    public static JSONArray getTeacherPublishedExamsAverage(List<Record> records, String teacherId) throws Exception {
+        JSONArray jsonArray = new JSONArray();
+        
+        for (int j = 0; j < records.size(); j++) {
+            JSONObject examDetails = new JSONObject();
+            examDetails.put("exam", records.get(j).mExam.toJSON());
+            examDetails.put("statistics", getTeacherExamsAverage(records, Teacher.getTeacherByTeacherId(teacherId) ));
+            jsonArray.put(examDetails);
+        }
+        return jsonArray;
+    }
+    
 
     public static JSONArray getTeachersExamAverage(List<Record> records) throws Exception {
         JSONArray jsonArray = new JSONArray();
@@ -382,6 +404,7 @@ public class Record {
     public static JSONObject getTeacherExamsAverage(List<Record> records, Teacher teacher) throws Exception {
         List<String> uniqueExams = new ArrayList<>();
         JSONArray jsonArray = new JSONArray();
+       
         for (int i = 0; i < records.size(); i++) {
             if (records.get(i).mExtraData.getInt("status") == RecordExamStatus.SUBMITTED.ordinal()) {
                 if (records.get(i).mExam.mAuthor.mId.equals(teacher.mId)) {
@@ -396,6 +419,8 @@ public class Record {
                 }
             }
         }
+        int[] gradesArray = new int[jsonArray.length()];
+        
         for (int i = 0; i < jsonArray.length(); i++) {
             for (int j = 0; j < records.size(); j++) {
                 if (records.get(j).mExtraData.getInt("status") == RecordExamStatus.SUBMITTED.ordinal()) {
@@ -404,6 +429,7 @@ public class Record {
                         if (records.get(j).mExam.mId.equals(jsonArray.getJSONObject(i).getJSONObject("exam").getString("id"))) {
                             jsonArray.getJSONObject(i).put("average", jsonArray.getJSONObject(i).getInt("average") + records.get(j).mExtraData.getInt("teacherGrade"));
                             jsonArray.getJSONObject(i).put("totalExams", jsonArray.getJSONObject(i).getInt("totalExams") + 1);
+                            gradesArray[i] = records.get(j).mExtraData.getInt("teacherGrade");
                         }
                     }
                 }
@@ -414,7 +440,8 @@ public class Record {
         JSONObject teacherExamStatistics = new JSONObject();
         teacherExamStatistics.put("average", 0);
         teacherExamStatistics.put("middle", 0);
-        teacherExamStatistics.put("probability", 0);
+        teacherExamStatistics.put("probability", getTeacherProbability(gradesArray));
+       /* teacherExamStatistics.put("probability", 0);*/
 
         for (int i = 0; i < jsonArray.length(); i++) {
             teacherExamAverage += jsonArray.getJSONObject(i).getInt("average");
@@ -433,7 +460,70 @@ public class Record {
         }
         return teacherExamStatistics;
     }
-
+    public static JSONArray getTeacherProbability(int[] grades)  throws Exception {
+    	float[] counter = new float[10];
+    	JSONArray jsonArray = new JSONArray();
+    	JSONObject jsonObject = new JSONObject();
+    	
+    	for(int i=0; i< 10; i++){
+    		counter[i] = 0;
+    	}
+    	
+    	for(int i=0; i< grades.length; i++){
+    		int grade = grades[i];
+    		
+    		if(grade >= 0 && grade<=10) counter[0]++;
+    		else{
+    			if(grade >= 11 && grade<=20) counter[1]++;
+    			else{
+    				if(grade >= 21 && grade<=30) counter[2]++;
+    				else{
+    					if(grade >= 31 && grade<=40) counter[3]++;
+    					else {
+    						if(grade >= 41 && grade<=50) counter[4]++;
+    						else{
+    							if(grade >= 51 && grade<=60) counter[5]++;
+    							else{
+    								if(grade >= 61 && grade<=70) counter[6]++;
+    								else{
+    									if(grade >= 71 && grade<=80) counter[7]++;
+    									else{
+    										if(grade >= 81 && grade<=90) counter[8]++;
+    										else{
+    											counter[9]++;
+    										}
+    									}
+    								}
+    							}
+    						}
+    					}
+    				}
+    			}
+    		}
+    	}
+    	if(grades.length != 0){
+    		for(int i=0; i< 10; i++){
+        		counter[i] = counter[i] / grades.length;
+        	}
+    		
+    		
+    	}
+    	
+    	
+    	jsonObject.put("prob0", counter[0]);
+    	jsonObject.put("prob1", counter[1]);
+    	jsonObject.put("prob2", counter[2]);
+    	jsonObject.put("prob3", counter[3]);
+    	jsonObject.put("prob4", counter[4]);
+    	jsonObject.put("prob5", counter[5]);
+    	jsonObject.put("prob6", counter[6]);
+    	jsonObject.put("prob7", counter[7]);
+    	jsonObject.put("prob8", counter[8]);
+    	jsonObject.put("prob9", counter[9]);
+    	jsonArray.put(jsonObject);
+    		
+    	return jsonArray;
+    }
 
     public static JSONArray getCoursesExamsAverage(List<Record> records)  throws Exception {
         JSONArray jsonArray = new JSONArray();
@@ -464,6 +554,8 @@ public class Record {
                 }
             }
         }
+        int[] gradesArray = new int[jsonArray.length()];
+        
         for (int i = 0; i < jsonArray.length(); i++) {
             for (int j = 0; j < records.size(); j++) {
                 if (records.get(j).mExtraData.getInt("status") == RecordExamStatus.SUBMITTED.ordinal()) {
@@ -471,6 +563,7 @@ public class Record {
                         if (records.get(j).mExam.mId.equals(jsonArray.getJSONObject(i).getJSONObject("exam").getString("id"))) {
                             jsonArray.getJSONObject(i).put("average", jsonArray.getJSONObject(i).getInt("average") + records.get(j).mExtraData.getInt("teacherGrade"));
                             jsonArray.getJSONObject(i).put("totalExams", jsonArray.getJSONObject(i).getInt("totalExams") + 1);
+                            gradesArray[i] = records.get(j).mExtraData.getInt("teacherGrade");
                         }
                     }
                 }
@@ -481,7 +574,7 @@ public class Record {
         JSONObject courseExamStatistics = new JSONObject();
         courseExamStatistics.put("average", 0);
         courseExamStatistics.put("middle", 0);
-        courseExamStatistics.put("probability", 0);
+        courseExamStatistics.put("probability", getTeacherProbability(gradesArray));
 
         for (int i = 0; i < jsonArray.length(); i++) {
             courseExamAverage += jsonArray.getJSONObject(i).getInt("average");
@@ -529,6 +622,8 @@ public class Record {
                 }
             }
         }
+        int[] gradesArray = new int[jsonArray.length()];
+        
         for (int i = 0; i < jsonArray.length(); i++) {
             for (int j = 0; j < records.size(); j++) {
                 if (records.get(j).mExtraData.getInt("status") == RecordExamStatus.SUBMITTED.ordinal()) {
@@ -547,7 +642,7 @@ public class Record {
         JSONObject studentExamStatistics = new JSONObject();
         studentExamStatistics.put("average", 0);
         studentExamStatistics.put("middle", 0);
-        studentExamStatistics.put("probability", 0);
+        studentExamStatistics.put("probability", getTeacherProbability(gradesArray));
 
         for (int i = 0; i < jsonArray.length(); i++) {
             studentExamAverage += jsonArray.getJSONObject(i).getInt("average");

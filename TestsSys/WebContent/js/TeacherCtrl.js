@@ -57,9 +57,12 @@ var teacherScope = null;
         $scope.examsToCheck = [];
         $scope.examsToPublish = [];
         $scope.oldTeacherRequest = [];
+        $scope.examStas = [];
+        $scope.probStats = [];
         $scope.checkingExamHolder = {};
         $scope.publishExamHolder = {};
         $('#alertView').fadeOut(0);
+        $('#ProbabilityDetails').modal({show: false});
 
 
         $scope.loadTeacherProfessions = function () {
@@ -338,7 +341,24 @@ var teacherScope = null;
                 });
             })
         };
+        
+        $scope.loadTeacherStats = function(){
+        	Http.get("/record/GetTeacherStatistics", null, function (result, error) {
+                $scope.$apply(function () {
 
+                    if (error != null) {
+                        console.log(error);
+                        $scope.examStas = [];
+                        return;
+                    }
+
+                    $scope.examStas = result.success;
+                });
+            })
+        };
+        
+        
+        
         $scope.publishExam = function (exam) {
 
             var objectToSend = {
@@ -401,6 +421,15 @@ var teacherScope = null;
             }
             console.log($scope.checkingExamHolder);
             $('#checkExamModal').modal("show");
+        };
+        
+        $scope.openProbabilityModal = function (probs) {
+        	$('#ProbabilityDetails').modal('show');
+            setTimeout(function () {
+                $scope.$apply(function () {
+                    $scope.probStats = probs[0];
+                });
+            }, 100);
         };
 
         $scope.submitCheckedExam = function () {
@@ -495,6 +524,7 @@ var teacherScope = null;
         $scope.openStatistics = function (updateH) {
             $rootScope.currentPage = TEACHER_STATISTICS;
             $rootScope.currentPageName = PageNames[$rootScope.currentPage];
+            $scope.loadTeacherStats();
             if (updateH == null || updateH == true)
                 updateHash($rootScope.currentPageName);
         };

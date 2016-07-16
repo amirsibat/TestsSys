@@ -9,6 +9,8 @@ var studentScope = null;
     	$scope.submittedExams = [];
     	$scope.CourseDetailsHolder = {};
     	
+    	
+    	
         var exam = {
             "date": "2016-07-11",
             "duration": 20,
@@ -156,10 +158,12 @@ var studentScope = null;
         
         $scope.isCorrect = function(question,index) {
         	
-        	if(question.question.options[selectedExam.extraData.answers[index]] == question.question.correctAnswer)
-        		return true;
-        	else 
-        		return false;
+        	if($scope.selectedExam.extraData.answers[index] >= 4)
+            	return false;
+            	if($scope.selectedExam.extraData.answers[index] != question.question.correctAnswer)
+            		return true;
+            	else 
+            		return false;
         };
         
         $scope.openExamDetailsModal = function (exam) {

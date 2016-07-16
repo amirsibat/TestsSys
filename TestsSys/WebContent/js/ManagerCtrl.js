@@ -10,9 +10,18 @@ var managerScope;
         $scope.selectedQuestion = {};
         $scope.selectedGrade = {};
         $scope.pendingRequests = [];
+        $scope.allStats = [];
+        $scope.courseStats = [];
+        $scope.studentStats = [];
+        $scope.teacherStats = [];
+        $scope.probStats = [];
         $('#examDetails').modal({show: false});
         $('#questionDetails').modal({show: false});
         $('#gradeDetails').modal({show: false});
+        $('#courseExamsStats').modal({show: false});
+        $('#studentExamsStats').modal({show: false});
+        $('#teacherExamsStats').modal({show: false});
+        $('#ProbabilityDetails').modal({show: false});
 
 
         $scope.loadAllExams = function () {
@@ -125,8 +134,59 @@ var managerScope;
                 });
             })
         };
-
-
+        
+        $scope.loadManagerStats = function(){
+        	Http.get("/record/GetAdminStatistics", null, function (result, error) {
+                $scope.$apply(function () {
+                    if (error != null) {
+                    	$scope.allStats = [];  
+                        return;
+                    }
+                    $scope.allStats = result.success;
+                });
+            })
+        	
+        };
+        
+        $scope.openCourseStatsModal = function(){
+        	$('#courseExamsStats').modal('show');
+            setTimeout(function () {
+                $scope.$apply(function () {
+                    $scope.courseStats = $scope.allStats.courseExamAverage;
+                });
+            }, 100);
+        };
+        
+        
+        $scope.openProbabilityModal = function(probs){
+        	$('#ProbabilityDetails').modal('show');
+        	$scope.probStats = [];
+            setTimeout(function () {
+                $scope.$apply(function () {
+                    $scope.probStats = probs[0];;
+                });
+            }, 100);
+        };
+       
+        
+        $scope.openStudentStatsModal = function(){
+        	$('#studentExamsStats').modal('show');
+            setTimeout(function () {
+                $scope.$apply(function () {
+                    $scope.studentStats = $scope.allStats.studentExamAverage;
+                });
+            }, 100);
+        };
+        
+        $scope.openTeacherStatsModal = function(){
+        	$('#teacherExamsStats').modal('show');
+            setTimeout(function () {
+                $scope.$apply(function () {
+                    $scope.teacherStats = $scope.allStats.teacherExamAverage;
+                });
+            }, 100);
+        };
+        
         $scope.openExams = function (updatH) {
             $rootScope.currentPage = MANAGER_EXAMS;
             $rootScope.currentPageName = PageNames[$rootScope.currentPage];
@@ -151,6 +211,7 @@ var managerScope;
         $scope.openStatistics = function (updatH) {
             $rootScope.currentPage = MANAGER_STATISTICS;
             $rootScope.currentPageName = PageNames[$rootScope.currentPage];
+            $scope.loadManagerStats();
             if (updatH == null || updatH == true)
                 updateHash($rootScope.currentPageName);
         };

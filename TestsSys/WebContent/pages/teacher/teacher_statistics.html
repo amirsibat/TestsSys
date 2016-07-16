@@ -1,3 +1,131 @@
-<div class="" >
-    TEACHER_STATISTICS
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box-container">
+            <div class="row exams-header">
+                <div class="col-xs-1">Id</div>
+                <div class="col-xs-2">Profession</div>
+                <div class="col-xs-3">Course</div>
+                <div class="col-xs-2">Average</div>
+                <div class="col-xs-2">Median</div>
+                <div class="col-xs-2">Probability</div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="row exam-row" ng-repeat="exam in examStas.teacherExamAverage">
+                        <div class="col-xs-1">{{exam.exam.id}}</div>
+                        <div class="col-xs-2">{{exam.exam.profession.name}}</div>
+                        <div class="col-xs-3">{{exam.exam.course.name}}</div>
+                        <div class="col-xs-2">{{exam.statistics.average}}</div>
+                        <div class="col-xs-2">{{exam.statistics.middle}}</div>
+                        <div class="col-xs-2">
+                        <button class="btn btn-default" ng-click="openProbabilityModal(exam.statistics.probability);">
+                               More Info
+                            </button>
+                            </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" id="ProbabilityDetails"
+     aria-labelledby="myLargeModalLabel">
+    <div class="modal-dialog modal-lg" style="z-index: 1100;">
+        <div class="modal-content ">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Probability Distribution</h4>
+            </div>
+            <div class="modal-body questions-list-modal-body">
+                
+                <div class="box-row row check-exam-row">
+                    <div class="col-xs-12">
+                        <div class="row questions-header">
+                        <div class="col-xs-1" style="text-align: center">
+                                #
+                            </div>
+                            <div class="col-xs-1" style="text-align: center">
+                                0-10
+                            </div>
+                            <div class="col-xs-1" style="text-align: center">
+                                11-20
+                            </div>
+                            <div class="col-xs-1" style="text-align: center">
+                                21-30
+                            </div>
+                            <div class="col-xs-1" style="text-align: center">
+                                31-40
+                            </div>
+                            <div class="col-xs-1" style="text-align: center">
+                                41-50
+                            </div>
+                            <div class="col-xs-1" style="text-align: center">
+                                51-60
+                            </div>
+                            <div class="col-xs-1" style="text-align: center">
+                                61-70
+                            </div>
+                            <div class="col-xs-1" style="text-align: center">
+                                71-80
+                            </div>
+                            <div class="col-xs-1" style="text-align: center">
+                                81-90
+                            </div>
+                            <div class="col-xs-2" style="text-align: center">
+                                91-100
+                            </div>
+                        </div>
+                        <div class="row questions-row">
+                            <div class="col-lg-12">
+                                <div class="row">
+                                    <div class="col-xs-1" style="text-align: center">
+                                        <b>{{$index + 1}}) </b>
+                                    </div>
+                                    <div class="col-xs-1" style="text-align: center">
+                                         {{probStats.prob0}}
+                                    </div>
+                                    <div class="col-xs-1" style="text-align: center">
+                                         {{probStats.prob1}}
+                                    </div>
+                                    <div class="col-xs-1" style="text-align: center">
+                                         {{probStats.prob2}}
+                                    </div>
+                                    <div class="col-xs-1" style="text-align: center">
+                                         {{probStats.prob3}}
+                                    </div>
+                                    <div class="col-xs-1" style="text-align: center">
+                                         {{probStats.prob4}}
+                                    </div>
+                                    <div class="col-xs-1" style="text-align: center">
+                                         {{probStats.prob5}}
+                                    </div>
+                                    <div class="col-xs-1" style="text-align: center">
+                                         {{probStats.prob6}}
+                                    </div>
+                                    <div class="col-xs-1" style="text-align: center">
+                                         {{probStats.prob7}}
+                                    </div>
+                                    <div class="col-xs-1" style="text-align: center">
+                                         {{probStats.prob8}}
+                                    </div>
+                                    <div class="col-xs-2" style="text-align: center">
+                                         {{probStats.prob9}}
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

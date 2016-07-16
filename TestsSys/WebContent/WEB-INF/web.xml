@@ -18,7 +18,16 @@
   <listener>
     <listener-class>testsys.utils.ServletsListener</listener-class>
   </listener>
-  
+  <servlet>
+    <description></description>
+    <display-name>GetTeacherStatistics</display-name>
+    <servlet-name>GetTeacherStatistics</servlet-name>
+    <servlet-class>testsys.servlets.records.GetTeacherStatistics</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GetTeacherStatistics</servlet-name>
+    <url-pattern>/record/GetTeacherStatistics</url-pattern>
+  </servlet-mapping>
   <servlet>
     <description></description>
     <display-name>GetAdminStatistics</display-name>
@@ -68,8 +77,8 @@
   <servlet-mapping>
     <servlet-name>GetCourseDetails</servlet-name>
     <url-pattern>/record/GetCourseDetails</url-pattern>
-    </servlet-mapping>
-    <servlet>
+  </servlet-mapping>
+  <servlet>
     <description></description>
     <display-name>GetAllRecords</display-name>
     <servlet-name>GetAllRecords</servlet-name>
@@ -119,7 +128,6 @@
     <servlet-name>GetPendingRequest</servlet-name>
     <url-pattern>/request/GetPendingRequest</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <description></description>
     <display-name>AnswerRequest</display-name>
@@ -140,7 +148,6 @@
     <servlet-name>GetRequestsByTeacher</servlet-name>
     <url-pattern>/request/GetRequestsByTeacher</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <description></description>
     <display-name>getAllQuestions</display-name>
