@@ -112,8 +112,11 @@
                         <div class="row">
                                     <div class="col-xs-12">
                                         <b>Your Answer:</b>
-                                        {{question.question.options[selectedExam.extraData.answers[$index]]}} <span ng-show="isCorrect(question,$index);"  class="glyphicon glyphicon-ok correct"></span><span  ng-show="!isCorrect(question,$index);" class="glyphicon glyphicon-remove wrong"></span>
-                                        	
+                                        {{selectedExam.extraData.answers[$index]}}<br>
+                                        {{question.question.correctAnswer - 1}}<br>
+                                        {{question.question.options[selectedExam.extraData.answers[$index]]}}
+                                        <span ng-show="isCorrect(question,$index);"  class="glyphicon glyphicon-ok correct"></span>
+                                        <span  ng-show="!isCorrect(question,$index);" class="glyphicon glyphicon-remove wrong"></span>
                                     </div>
                                 </div>
                         <div class="row collapse-question-options">

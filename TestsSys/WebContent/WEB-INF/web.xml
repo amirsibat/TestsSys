@@ -30,6 +30,46 @@
   </servlet-mapping>
   <servlet>
     <description></description>
+    <display-name>CheckExtraTime</display-name>
+    <servlet-name>CheckExtraTime</servlet-name>
+    <servlet-class>testsys.servlets.exams.CheckExtraTime</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CheckExtraTime</servlet-name>
+    <url-pattern>/exam/CheckExtraTime</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>SubmitExam</display-name>
+    <servlet-name>SubmitExam</servlet-name>
+    <servlet-class>testsys.servlets.exams.SubmitExam</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SubmitExam</servlet-name>
+    <url-pattern>/exam/SubmitExam</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>SaveLastChanges</display-name>
+    <servlet-name>SaveLastChanges</servlet-name>
+    <servlet-class>testsys.servlets.exams.SaveLastChanges</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SaveLastChanges</servlet-name>
+    <url-pattern>/exam/SaveLastChanges</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>StartExam</display-name>
+    <servlet-name>StartExam</servlet-name>
+    <servlet-class>testsys.servlets.exams.StartExam</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>StartExam</servlet-name>
+    <url-pattern>/exam/StartExam</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
     <display-name>GetAdminStatistics</display-name>
     <servlet-name>GetAdminStatistics</servlet-name>
     <servlet-class>testsys.servlets.records.GetAdminStatistics</servlet-class>

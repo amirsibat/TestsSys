@@ -413,7 +413,7 @@ var teacherScope = null;
         $scope.openCheckExamModal = function (record) {
             $scope.checkingExamHolder.record = record;
             for (var i = 0; i < $scope.checkingExamHolder.record.exam.questionsList.length; i++) {
-                if ($scope.checkingExamHolder.record.exam.questionsList[i].question.correctAnswer == $scope.checkingExamHolder.record.extraData.answers[i]) {
+                if ($scope.checkingExamHolder.record.exam.questionsList[i].question.correctAnswer - 1 == $scope.checkingExamHolder.record.extraData.answers[i]) {
                     $scope.checkingExamHolder.record.exam.questionsList[i].teacherGrade = $scope.checkingExamHolder.record.exam.questionsList[i].grade;
                 } else {
                     $scope.checkingExamHolder.record.exam.questionsList[i].teacherGrade = 0;

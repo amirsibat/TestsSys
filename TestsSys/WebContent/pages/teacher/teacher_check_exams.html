@@ -96,7 +96,7 @@
                                         {{question.question.text}}
                                     </div>
                                     <div class="col-xs-2">
-                                        {{(question.question.correctAnswer == checkingExamHolder.record.extraData.answers[$index] ? "True" : "False")}}
+                                        {{(question.question.correctAnswer - 1 == checkingExamHolder.record.extraData.answers[$index] ? "True" : "False")}}
                                     </div>
                                     <div class="col-xs-2">
                                         <input type="number" aria-valuemin="0" aria-valuemax="{{question.grade}}" class="question-grade-input" ng-model="question.teacherGrade" width="40px"> / {{question.grade}}

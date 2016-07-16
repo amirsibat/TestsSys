@@ -1,3 +1,108 @@
-<div class="row">
-    EXAMs
+<div class="row" ng-switch="performExamHolder.pageStatus">
+    <div class="start-exam-container" ng-switch-when="WAITING_STUDENT_ID">
+        <div class="row">
+            <div class="col-xs-4"></div>
+            <div class="col-xs-4">
+                <div class="box-container" style="background: white;">
+                    <div class="row exams-header" style="background: whitesmoke;margin-top: -10px;padding-top: 10px;">
+                        Enter your ID to start
+                    </div>
+                    <div class="box-row row" style=" margin-top: 7px; text-align: center;">
+                        <div class="col-xs-3 title">
+                            Student ID:
+                        </div>
+                        <div class="col-xs-9 box-content">
+                            <input width="40px" class="duration-input" id="examStudentInput" maxlength="9"
+                                   placeholder="">
+                        </div>
+                    </div>
+                    <div class="row" style="text-align: center;">
+                        <div class="col-xs-12">
+                            <button type="button" class="btn btn-success" ng-click="startPerformExam();">
+                                Start
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-4"></div>
+        </div>
+    </div>
+    <div class="start-exam-container" ng-switch-when="IN_PROGRESS_WORD">
+        <div class="row">
+            <div class="col-xs-4"></div>
+            <div class="col-xs-4">
+                <div class="box-container" style="background: white;">
+                    <div class="row exams-header" style="background: whitesmoke;margin-top: -10px;padding-top: 10px;">
+                        Upload after finish exam
+                    </div>
+                    <div class="row" style=" margin-top: 7px; text-align: center;margin-bottom: 7px;">
+                        <div class="col-xs-12">
+                            <label class="control-label">Select File</label>
+                            <input type="file" id="uploadExamInput" class="file">
+                        </div>
+                    </div>
+                    <div class="row" style="text-align: center;">
+                        <div class="col-xs-12">
+                            <button type="button" class="btn btn-success" ng-click="uploadAndSubmit();">
+                                Upload
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-4"></div>
+        </div>
+    </div>
+    <div class="exam-question-container" ng-switch-when="IN_PROGRESS">
+        <div class="col-xs-1"></div>
+        <div class="col-xs-10">
+            <div class="row exam-row-pg">
+                <div class="col-xs-12">
+                    <div class="row exam-timer">
+                        {{performExamHolder.timerText}}
+                    </div>
+                    <div class="row exam-date">
+                        {{performExamHolder.exam.exam.date}}
+                    </div>
+                    <div class="row exam-title">
+                        {{performExamHolder.exam.exam.course.name + " Exam"}}
+                    </div>
+                    <div class="row exam-teacher">
+                        <b>Teacher: </b>
+                        {{performExamHolder.exam.teacher.firstName + " " + performExamHolder.exam.teacher.lastName}}
+                    </div>
+                    <div class="row exam-duration">
+                        <b>Duration: </b>
+                        {{performExamHolder.exam.exam.duration + " minutes"}}
+                    </div>
+                    <div class="row exam-notes">
+                        <b>Notes: </b>
+                        {{performExamHolder.exam.exam.description}}
+                    </div>
+                    <div class="separator"></div>
+                    <div class="exam-questions-container">
+                        <div class="row exam-question-row"
+                             ng-repeat="question in performExamHolder.exam.exam.questionsList">
+                            <div class="row question-text"><b>{{($index + 1) + ") "}}</b>{{question.question.text + "
+                                ("+ question.grade+" points)"}}
+                            </div>
+                            <div class="row exam-answer-row" ng-repeat="answer in question.question.options">
+                                <input questionId="{{question.question.id}}" answerIndex="{{$index}}" type="radio"
+                                       id="{{'ans' + $index}}" name="{{'answer' + question.question.id}}" height="20px"
+                                       width="20px"/>
+                                <label for="{{'ans' + $index}}">{{answer}}</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row exam-footer">
+                        <button type="button" class="btn btn-success" ng-click="submitExam();">
+                            Submit
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-1"></div>
+    </div>
 </div>

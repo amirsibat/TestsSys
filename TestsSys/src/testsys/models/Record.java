@@ -254,11 +254,11 @@ public class Record {
         return returnRecords;
     }
 
-    public static List<Exam> getPublishedExams(String courseId, String studentId) throws Exception {
+    public static List<Record> getPublishedExams(String courseId, String studentId) throws Exception {
 
         List<Record> recordList = getRecordsByCourseId(courseId);
         List<Exam> exams = new ArrayList<>();
-        List<Exam> returnedExams = new ArrayList<>();
+        List<Record> returnedExams = new ArrayList<>();
 
 
         for (int i = 0; i < recordList.size(); i++) {
@@ -266,7 +266,7 @@ public class Record {
             String student = recordList.get(i).mStudent.mId;
 
             if (extraData.getInt("status") == RecordExamStatus.PUBLISHED.ordinal() && student.equals(studentId)) {
-                returnedExams.add(recordList.get(i).mExam);
+                returnedExams.add(recordList.get(i));
             }
         }
         return returnedExams;

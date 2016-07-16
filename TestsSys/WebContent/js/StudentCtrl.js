@@ -1,16 +1,20 @@
 var studentScope = null;
 (function (angular) {
     app.controller('StudentCtrl', ["$scope", "$rootScope", "PageNames", function ($scope, $rootScope, PageNames) {
-    	
-    	studentScope = $scope;
-    	$scope.studentExams = [];
-    	$scope.studentCourses = [];
-    	$scope.ExamHolder = [];	
-    	$scope.submittedExams = [];
-    	$scope.CourseDetailsHolder = {};
-    	
-    	
-    	
+
+        studentScope = $scope;
+        $scope.studentExams = [];
+        $scope.studentCourses = [];
+        $scope.ExamHolder = [];
+        $scope.submittedExams = [];
+        $scope.CourseDetailsHolder = {};
+        $scope.performExamHolder = {
+            pageStatus: IN_PROGRESS_WORD,
+            exam: null,
+            timerText: "",
+            startTime: 0
+        };
+
         var exam = {
             "date": "2016-07-11",
             "duration": 20,
@@ -107,42 +111,40 @@ var studentScope = null;
 
         $scope.generateDocxFile = function (exam) {
             DOCXjs.fromExam(exam);
-        };      
-        
-        $scope.loadStudentExams = function(){       	
-        	 Http.get("/record/GetPublishedExamsByCourse", null, function (result, error) {
-                 $scope.$apply(function () {
-                     if (error != null) {
-                         $scope.studentExams = [];
-                         return;
-                     }
-                     $scope.studentExams = result.success;
-                    /* console.log($scope.studentExams);*/
-                 });
-             });
-        	
         };
-        
-        $scope.loadStudentCourses = function(){
-        	 Http.get("/student/GetStudentCourses", null, function (result, error) {
-                 $scope.$apply(function () {
-                     if (error != null) {
-                         $scope.studentCourses = [];
-                         return;
-                     }
-                     
-                     
-                     $scope.studentCourses = result.success;
+
+        $scope.loadStudentExams = function () {
+            Http.get("/record/GetPublishedExamsByCourse", null, function (result, error) {
+                $scope.$apply(function () {
+                    if (error != null) {
+                        $scope.studentExams = [];
+                        return;
+                    }
+                    $scope.studentExams = result.success;
+                    /* console.log($scope.studentExams);*/
+                });
+            });
+
+        };
+
+        $scope.loadStudentCourses = function () {
+            Http.get("/student/GetStudentCourses", null, function (result, error) {
+                $scope.$apply(function () {
+                    if (error != null) {
+                        $scope.studentCourses = [];
+                        return;
+                    }
+                    $scope.studentCourses = result.success;
                     /*console.log($scope.studentCourses);*/
 
-                 });
-             });
-        	
+                });
+            });
+
         };
-        
+
         $scope.loadCourseDetails = function (course) {
-        	$scope.openCourseDetails();
-        	
+            $scope.openCourseDetails();
+
             Http.get("/record/GetCourseDetails", {courseId: course.id}, function (result, error) {
                 $scope.$apply(function () {
                     if (error != null) {
@@ -152,20 +154,20 @@ var studentScope = null;
                     $scope.submittedExams = result.success;
                     console.log($scope.submittedExams);
                 });
-               
+
             });
         };
-        
-        $scope.isCorrect = function(question,index) {
-        	
-        	if($scope.selectedExam.extraData.answers[index] >= 4)
-            	return false;
-            	if($scope.selectedExam.extraData.answers[index] != question.question.correctAnswer)
-            		return true;
-            	else 
-            		return false;
+
+        $scope.isCorrect = function (question, index) {
+
+            if ($scope.selectedExam.extraData.answers[index] >= 4)
+                return false;
+            if ($scope.selectedExam.extraData.answers[index] == question.question.correctAnswer - 1)
+                return true;
+            else
+                return false;
         };
-        
+
         $scope.openExamDetailsModal = function (exam) {
             if (exam.type == 0) {
                 DOCXjs.fromExam(exam)
@@ -178,12 +180,11 @@ var studentScope = null;
                 }, 100);
             }
         };
-        
+
         $scope.openExamModal = function (exam) {
-            $scope.ExamHolder.exam = exam;
- 
-            /*console.log($scope.ExamHolder);*/
+            $scope.ExamHolder = exam;
             $('#startExamModal').modal("show");
+            $("#examCodeInput").val("");
         };
 
         $scope.getExamName = function () {
@@ -192,50 +193,209 @@ var studentScope = null;
             return $scope.ExamHolder.exam.profession.name +
                 ", " + $scope.ExamHolder.exam.course.name + ", " + $scope.ExamHolder.exam.id;
         };
-        
-       $scope.loadStudentExams();
-       $scope.loadStudentCourses();
-       
-       $scope.openCourseDetails = function(updateH){
-    	   $rootScope.currentPage = STUDENT_COURSE_DETAILS;
-           $rootScope.currentPageName = PageNames[$rootScope.currentPage];
-           if (updateH == null || updateH == true)
-               updateHash($rootScope.currentPageName);
-       };
-       
-       
-       var currentHash = decodeURI(window.location.hash.substring(2));
-       switch (currentHash) {
-           case PageNames[STUDENT_COURSE_DETAILS]:
-        	   $scope.openCourseDetails(false);
-               break;
-           case PageNames[STUDENT_EXAM]:
-               $scope.openExam(false);
-               break;
-           default:
-               $rootScope.currentPage = STUDENT_HOME;
-               $rootScope.currentPageName = PageNames[$rootScope.currentPage];
-               break;
-       }
 
-       window.addEventListener('popstate', function (event) {
-           var currentHash = decodeURI(window.location.hash.substring(2));
-           $scope.$apply(function () {
-               switch (currentHash) {
-                   case PageNames[STUDENT_COURSE_DETAILS]:
-                       $scope.openCourseDetails(false);
-                       break;
-                   case PageNames[STUDENT_EXAM]:
-                       $scope.openExam(false);
-                       break;
-                   default:
-                       $rootScope.currentPage = STUDENT_HOME;
-                       $rootScope.currentPageName = PageNames[$rootScope.currentPage];
-                       break;
-               }
-           });
-           event.preventDefault();
-       });
+        $scope.loadStudentExams();
+        $scope.loadStudentCourses();
+
+        $scope.openCourseDetails = function (updateH) {
+            $rootScope.currentPage = STUDENT_COURSE_DETAILS;
+            $rootScope.currentPageName = PageNames[$rootScope.currentPage];
+            if (updateH == null || updateH == true)
+                updateHash($rootScope.currentPageName);
+        };
+
+        $scope.openStartExam = function (updateH) {
+            $rootScope.currentPage = STUDENT_EXAM;
+            $rootScope.currentPageName = PageNames[$rootScope.currentPage];
+            if (updateH == null || updateH == true)
+                updateHash($rootScope.currentPageName);
+        };
+
+        $scope.checkExamCode = function () {
+            var code = $("#examCodeInput").val();
+            $("#examCodeInput").val("");
+            if (code == $scope.ExamHolder.exam.code) {
+                $('#startExamModal').modal("hide");
+                $scope.performExamHolder.pageStatus = WAITING_STUDENT_ID;
+                $scope.performExamHolder.exam = $scope.ExamHolder;
+                localStorage.setItem("EXAM", JSON.stringify($scope.performExamHolder));
+                setTimeout(function () {
+                    $scope.$apply(function () {
+                        $scope.openStartExam(true);
+                    });
+                }, 300);
+            } else {
+                alert("Invalid code");
+            }
+        };
+
+
+        $scope.startPerformExam = function () {
+            var studentId = $('#examStudentInput').val();
+            $('#examStudentInput').val("");
+            if ($scope.performExamHolder.exam.student.stId != studentId) {
+                alert("Invalid student id");
+                return;
+            }
+            $scope.performExamHolder.exam.extraData.answers = [];
+            for (var i = 0; i < $scope.performExamHolder.exam.exam.questionsList.length; i++) {
+                $scope.performExamHolder.exam.extraData.answers.push(4);
+            }
+            Http.post("/exam/StartExam", null, {
+                recordId: $scope.performExamHolder.exam.id,
+                answers: $scope.performExamHolder.exam.extraData.answers
+            }, function (result, error) {
+                $scope.$apply(function () {
+                    if (error != null) {
+                        alert("Server Error");
+                        return;
+                    }
+                    if ($scope.performExamHolder.exam.exam.type == 1) {
+                        $scope.performExamHolder.pageStatus = IN_PROGRESS;
+                    } else {
+                        $scope.performExamHolder.pageStatus = IN_PROGRESS_WORD;
+                    }
+                    $scope.performExamHolder.startTime = new Date().getTime();
+                    $scope.performExamHolder.exam.extraData.startDate = new Date().getTime();
+                    $scope.performExamHolder.endTime = $scope.performExamHolder.startTime + $scope.performExamHolder.exam.exam.duration * 60 * 1000;
+                    localStorage.setItem("EXAM", JSON.stringify($scope.performExamHolder));
+                });
+            });
+        };
+
+        $('body').on('change', 'input:radio', function () {
+            if ($scope.performExamHolder.exam != null && $scope.performExamHolder.exam.exam != null) {
+                var questionId = $(this).attr("questionId");
+                var answer = $(this).attr("answerIndex");
+                for (var i = 0; i < $scope.performExamHolder.exam.exam.questionsList.length; i++) {
+                    if ($scope.performExamHolder.exam.exam.questionsList[i].question.id == questionId) {
+                        $scope.performExamHolder.exam.extraData.answers[i] = answer - 1 + 1;
+                        return;
+                    }
+                }
+                localStorage.setItem("EXAM", JSON.stringify($scope.performExamHolder));
+                Http.post("/exam/SaveLastChanges", null, {
+                    recordId: $scope.performExamHolder.exam.id,
+                    answers: $scope.performExamHolder.exam.extraData.answers
+                }, function (result, error) {
+                    if (error != null) {
+                        alert("Server Error");
+                        return;
+                    }
+                });
+            }
+        });
+
+        $scope.submitExam = function () {
+            Http.post("/exam/SubmitExam", null, $scope.performExamHolder.exam, function (result, error) {
+                $scope.$apply(function () {
+                    if (error != null) {
+                        alert("Server Error");
+                        return;
+                    }
+                    localStorage.removeItem("EXAM");
+                    $scope.performExamHolder = {
+                        pageStatus: WAITING_STUDENT_ID,
+                        exam: null,
+                        timerText: "",
+                        startTime: 0
+                    };
+                    $scope.loadStudentExams();
+                    $rootScope.currentPage = STUDENT_HOME;
+                    $rootScope.currentPageName = PageNames[$rootScope.currentPage];
+                    updateHash($rootScope.currentPageName);
+                });
+            });
+        };
+
+        $scope.uploadAndSubmit = function () {
+            if ($('#uploadExamInput')[0].files.length != 0) {
+                $scope.submitExam();
+                return;
+            }
+            alert("Choose the exam file");
+        };
+
+
+        var currentHash = decodeURI(window.location.hash.substring(2));
+        switch (currentHash) {
+            case PageNames[STUDENT_COURSE_DETAILS]:
+                $scope.openCourseDetails(false);
+                break;
+            case PageNames[STUDENT_EXAM]:
+                if (localStorage.getItem("EXAM") == null) {
+                    $rootScope.currentPage = STUDENT_HOME;
+                    $rootScope.currentPageName = PageNames[$rootScope.currentPage];
+                } else {
+                    $scope.performExamHolder = JSON.parse(localStorage.getItem("EXAM"));
+                    $scope.openStartExam(false);
+                }
+                break;
+            default:
+                $rootScope.currentPage = STUDENT_HOME;
+                $rootScope.currentPageName = PageNames[$rootScope.currentPage];
+                break;
+        }
+
+
+        setInterval(function () {
+            if ($scope.performExamHolder != null && $scope.performExamHolder.exam != null) {
+                var time = ($scope.performExamHolder.endTime - new Date()) / 1000;
+                var hours = parseInt(time / 60 / 60);
+                var minutes = parseInt(time / 60 % 60);
+                var seconds = parseInt(time % 60 % 60);
+                minutes = minutes > 9 ? minutes : "0" + minutes;
+                seconds = seconds > 9 ? seconds : "0" + seconds;
+                $scope.$apply(function () {
+                    $scope.performExamHolder.timerText = hours + ":" + minutes + ":" + seconds;
+                });
+
+                Http.post("/exam/CheckExtraTime", null, {recordId: $scope.performExamHolder.exam.id}, function (result, error) {
+                    if (error != null) {
+                        //alert("Server Error");
+                        return;
+                    }
+                    $scope.$apply(function () {
+                        if (result.success != -1) {
+                            $scope.performExamHolder.endTime = $scope.performExamHolder.startTime + $scope.performExamHolder.exam.exam.duration * 60 * 1000 + result.success * 1000 * 60;
+                        } else {
+                            ocalStorage.removeItem("EXAM");
+                            $scope.performExamHolder = {
+                                pageStatus: WAITING_STUDENT_ID,
+                                exam: null,
+                                timerText: "",
+                                startTime: 0
+                            };
+                            $scope.loadStudentExams();
+                            $rootScope.currentPage = STUDENT_HOME;
+                            $rootScope.currentPageName = PageNames[$rootScope.currentPage];
+                            updateHash($rootScope.currentPageName);
+                        }
+                    });
+                });
+            }
+        }, 1000);
+
+        window.addEventListener('popstate', function (event) {
+            var currentHash = decodeURI(window.location.hash.substring(2));
+            setTimeout(function () {
+                $scope.$apply(function () {
+                    switch (currentHash) {
+                        case PageNames[STUDENT_COURSE_DETAILS]:
+                            $scope.openCourseDetails(false);
+                            break;
+                        case PageNames[STUDENT_EXAM]:
+                            $scope.openStartExam(false);
+                            break;
+                        default:
+                            $rootScope.currentPage = STUDENT_HOME;
+                            $rootScope.currentPageName = PageNames[$rootScope.currentPage];
+                            break;
+                    }
+                });
+            }, 100);
+            event.preventDefault();
+        });
 
     }]);
 })();

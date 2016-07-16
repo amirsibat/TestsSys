@@ -65,7 +65,7 @@ public class GetPublishedExamsByCourse extends HttpServlet {
 			JSONArray json = new JSONArray();
 			
 			for(int i=0; i<courses.size(); i++){
-				List<Exam> exams = Record.getPublishedExams(courses.get(i).mId.toString(), user.mId);
+				List<Record> exams = Record.getPublishedExams(courses.get(i).mId.toString(), user.mId);
 				if(exams.size() > 0){
 					for(int j=0; j<exams.size(); j++){
 

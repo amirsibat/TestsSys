@@ -21,6 +21,9 @@ var MANAGER_GRADES = "MANAGER_GRADES";
 
 var ONLINE = "ONLINE";
 var WORD_FILE = "WORD_FILE";
+var WAITING_STUDENT_ID = "WAITING_STUDENT_ID";
+var IN_PROGRESS = "IN_PROGRESS";
+var IN_PROGRESS_WORD = "IN_PROGRESS_WORD";
 
 app.value("PageNames", {
     STUDENT_HOME : "Home",
@@ -55,6 +58,6 @@ app.value("UserType", {
 });
 
 function updateHash(hash) {
-    event.preventDefault();
     window.location.hash = "/"+ hash.replace(/ /g, "%20");
+    event.preventDefault();
 }
